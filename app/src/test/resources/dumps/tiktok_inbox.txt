@@ -1,0 +1,46 @@
+=== WINDOW id=572 type=APPLICATION layer=0 pkg=com.zhiliaoapp.musically title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+    [2] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+      [3] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+        [4] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=2
+          [5] id=com.zhiliaoapp.musically:id/a47 cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=0
+          [5] id=com.zhiliaoapp.musically:id/j28 cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+            [6] id=com.zhiliaoapp.musically:id/ogy cls=android.widget.LinearLayout bounds=[0,108][1080,2277] children=5 flags=clickable
+              [7] id=com.zhiliaoapp.musically:id/c0s cls=android.widget.FrameLayout bounds=[0,108][1080,245] children=1
+                [8] id=com.zhiliaoapp.musically:id/pud cls=android.view.ViewGroup bounds=[0,108][1080,245] children=3
+                  [9] id=com.zhiliaoapp.musically:id/pui cls=android.widget.LinearLayout bounds=[21,108][126,245] children=1
+                    [10] id=- cls=android.widget.Button desc="h_a688ef" bounds=[21,118][126,234] children=0 flags=clickable
+                  [9] id=com.zhiliaoapp.musically:id/ptz cls=android.widget.LinearLayout bounds=[535,108][546,245] children=3 flags=clickable
+                    [10] id=- cls=android.view.View bounds=[540,108][540,148] children=0 flags=invisible
+                    [10] id=com.zhiliaoapp.musically:id/ptx cls=android.widget.TextView text="h_b858cb" desc="h_b858cb" bounds=[535,148][546,206] children=0
+                    [10] id=- cls=android.view.View bounds=[540,206][540,245] children=0 flags=invisible
+                  [9] id=com.zhiliaoapp.musically:id/pu9 cls=android.widget.LinearLayout bounds=[1059,108][1059,245] children=0 flags=invisible
+              [7] id=com.zhiliaoapp.musically:id/c0u cls=android.view.ViewGroup bounds=[0,245][1080,440] children=1
+                [8] id=com.zhiliaoapp.musically:id/f97 cls=android.widget.TextView text="h_aaf374" bounds=[84,340][996,440] children=0
+              [7] id=com.zhiliaoapp.musically:id/f7b cls=android.widget.LinearLayout bounds=[0,440][1080,1929] children=1
+                [8] id=com.zhiliaoapp.musically:id/r5z cls=android.view.ViewGroup bounds=[0,440][1080,1929] children=3
+                  [9] id=com.zhiliaoapp.musically:id/r65 cls=android.widget.LinearLayout bounds=[84,503][996,640] children=1
+                    [10] id=- cls=android.widget.LinearLayout bounds=[84,503][996,640] children=1
+                      [11] id=com.zhiliaoapp.musically:id/r5t cls=android.widget.FrameLayout bounds=[84,503][996,640] children=1
+                        [12] id=- cls=android.widget.LinearLayout bounds=[84,503][996,640] children=3
+                          [13] id=com.zhiliaoapp.musically:id/j1k cls=android.widget.FrameLayout bounds=[84,503][996,503] children=0 flags=invisible
+                          [13] id=com.zhiliaoapp.musically:id/j1i cls=android.widget.FrameLayout bounds=[84,503][996,640] children=1
+                            [14] id=- cls=android.widget.LinearLayout bounds=[84,503][996,640] children=4
+                              [15] id=com.zhiliaoapp.musically:id/r65 cls=android.widget.LinearLayout bounds=[137,542][366,600] children=1 flags=clickable
+                                [16] id=com.zhiliaoapp.musically:id/fd4 cls=android.widget.LinearLayout bounds=[137,542][366,600] children=2
+                                  [17] id=com.zhiliaoapp.musically:id/r66 cls=android.widget.LinearLayout bounds=[137,542][331,600] children=3
+                                    [18] id=com.zhiliaoapp.musically:id/fd0 cls=android.widget.TextView text="h_0452ba" bounds=[137,542][192,600] children=0
+                                    [18] id=com.zhiliaoapp.musically:id/fd2 cls=android.widget.TextView text="h_030c4c" bounds=[203,542][278,600] children=0
+                                    [18] id=- cls=android.widget.ImageView desc="h_bf93e5" bounds=[289,550][331,592] children=0
+                                  [17] id=- cls=android.view.View bounds=[363,544][366,597] children=0
+                              [15] id=- cls=android.view.View bounds=[387,503][392,640] children=0
+                              [15] id=- cls=android.widget.EditText text="h_8961d3" bounds=[392,543][938,600] children=0 flags=clickable,longClickable,editable
+                              [15] id=- cls=android.view.View bounds=[938,503][943,640] children=0
+                          [13] id=com.zhiliaoapp.musically:id/j1j cls=android.widget.FrameLayout bounds=[84,640][996,640] children=0 flags=invisible
+                  [9] id=com.zhiliaoapp.musically:id/r5y cls=android.widget.Button text="h_7d02bd" bounds=[105,703][501,761] children=0 flags=clickable
+                  [9] id=com.zhiliaoapp.musically:id/r5x cls=android.widget.ScrollView bounds=[105,804][975,945] children=1
+                    [10] id=com.zhiliaoapp.musically:id/r5w cls=android.widget.TextView text="h_5bd672" bounds=[105,804][975,945] children=0
+              [7] id=com.zhiliaoapp.musically:id/fpe cls=android.widget.Button text="h_2e0262" bounds=[84,1929][996,2066] children=0 flags=clickable,disabled
+              [7] id=com.zhiliaoapp.musically:id/k_e cls=android.widget.TextView text="h_afdff0" bounds=[126,2092][954,2240] children=0

@@ -1,0 +1,25 @@
+=== WINDOW id=570 type=APPLICATION layer=0 pkg=com.zhiliaoapp.musically title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+    [2] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+      [3] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+        [4] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=2
+          [5] id=com.zhiliaoapp.musically:id/a47 cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=0
+          [5] id=com.zhiliaoapp.musically:id/j3j cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1 flags=clickable
+            [6] id=com.zhiliaoapp.musically:id/f_d cls=android.view.ViewGroup bounds=[0,187][1080,2277] children=1
+              [7] id=com.zhiliaoapp.musically:id/uy9 cls=android.widget.LinearLayout bounds=[0,187][1080,2277] children=3
+                [8] id=- cls=android.widget.RelativeLayout bounds=[0,187][1080,324] children=3
+                  [9] id=com.zhiliaoapp.musically:id/zqt cls=android.widget.ImageView desc="h_bbfa77" bounds=[11,192][127,308] children=0 flags=clickable
+                  [9] id=com.zhiliaoapp.musically:id/zeb cls=android.widget.TextView text="h_a5020b" bounds=[127,187][953,324] children=0 flags=invisible
+                  [9] id=com.zhiliaoapp.musically:id/zs_ cls=android.widget.ImageView desc="h_24f3f5" bounds=[953,192][1069,308] children=0 flags=clickable
+                [8] id=com.zhiliaoapp.musically:id/gdi cls=android.view.View bounds=[0,324][1080,325] children=0 flags=invisible
+                [8] id=com.zhiliaoapp.musically:id/wjr cls=android.widget.FrameLayout bounds=[0,325][1080,2277] children=1
+                  [9] id=- cls=androidx.compose.ui.platform.ComposeView bounds=[0,325][1080,2277] children=1
+                    [10] id=- cls=android.view.View bounds=[0,325][1080,2277] children=1
+                      [11] id=- cls=android.view.View bounds=[0,325][1080,2277] children=4
+                        [12] id=- cls=android.widget.TextView text="h_113441" bounds=[63,1029][1017,1231] children=0
+                        [12] id=- cls=android.view.View bounds=[158,1315][922,1441] children=1 flags=clickable
+                          [13] id=- cls=android.widget.TextView text="h_f7c400" bounds=[483,1351][598,1406] children=0
+                        [12] id=- cls=android.widget.TextView text="h_5dcc79" bounds=[63,1467][1017,1593] children=0 flags=clickable
+                        [12] id=- cls=android.widget.TextView text="h_3f4f54" bounds=[63,2137][1017,2263] children=0 flags=clickable

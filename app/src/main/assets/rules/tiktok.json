@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "app": "tiktok",
+  "packages": ["com.zhiliaoapp.musically"],
+
+  "playerSignature": {
+    "allOf": [
+      { "viewId": "com.zhiliaoapp.musically:id/long_press_layout" },
+      { "viewId": "com.zhiliaoapp.musically:id/title" }
+    ]
+  },
+
+  "feedEntrySignatures": [
+    {
+      "name": "home_tab_selected",
+      "signature": { "desc": "Home", "selected": true }
+    }
+  ],
+
+  "fingerprintNodes": [
+    { "name": "author", "viewId": "com.zhiliaoapp.musically:id/title" }
+  ],
+
+  "scrollSignal": {
+    "viewId": "com.zhiliaoapp.musically:id/viewpager",
+    "className": "androidx.viewpager.widget.ViewPager"
+  }
+}
