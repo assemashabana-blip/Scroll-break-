@@ -201,4 +201,44 @@ class EntryStateMachineTest {
         assertNull(m.onObservation(Observation(ig, false)).reason)
         assertEquals(State.ALLOW_ONE, m.state(yt))
     }
+
+    private fun scroll(i: Int) = Observation(yt, true, scrollIndex = i)
+
+    @Test
+    fun scrollIndexChangeWhileAllowedIsBlocked() {
+        openFromWhatsApp()
+        m.onObservation(player())
+        assertEquals(Action.NONE, m.onObservation(scroll(4)).action)   // baseline
+        assertEquals(Action.NONE, m.onObservation(scroll(4)).action)   // settling, same page
+        val r = m.onObservation(scroll(5))
+        assertEquals(Action.BLOCK, r.action)
+        assertEquals("block:scrolled", r.reason)
+    }
+
+    @Test
+    fun scrollBackwardsIsAlsoANewVideo() {
+        openFromWhatsApp()
+        m.onObservation(player())
+        m.onObservation(scroll(4))
+        assertEquals(Action.BLOCK, m.onObservation(scroll(3)).action)
+    }
+
+    @Test
+    fun scrollIndexIsIgnoredWhenNotAllowed() {
+        m.onForeground(yt)
+        assertEquals(Action.BLOCK, m.onObservation(scroll(2)).action)   // entry itself is blocked
+    }
+
+    @Test
+    fun scrollBaselineResetsAfterLeaving() {
+        openFromWhatsApp()
+        m.onObservation(player())
+        m.onObservation(scroll(4))
+        m.onObservation(notPlayer)
+        m.onForeground(wa)
+        now += 500
+        m.onForeground(yt)
+        m.onObservation(player())
+        assertEquals(Action.NONE, m.onObservation(scroll(9)).action)   // new session, new baseline
+    }
 }

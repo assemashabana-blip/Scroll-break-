@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "app": "instagram",
+  "packages": ["com.instagram.android", "com.instagram.lite"],
+
+  "playerSignature": {
+    "anyOf": [
+      { "viewId": "com.instagram.android:id/clips_viewer_view_pager" },
+      { "viewId": "com.instagram.android:id/clips_viewer_container" },
+      {
+        "allOf": [
+          { "desc": "Double tap to play or pause" },
+          { "viewId": "com.instagram.android:id/clips_tab", "selected": true }
+        ]
+      }
+    ]
+  },
+
+  "feedEntrySignatures": [
+    {
+      "name": "reels_tab_selected",
+      "signature": { "viewId": "com.instagram.android:id/clips_tab", "selected": true }
+    }
+  ],
+
+  "fingerprintNodes": [
+    { "name": "author", "viewId": "com.instagram.android:id/clips_author_username" }
+  ],
+
+  "scrollSignal": { "viewId": "com.instagram.android:id/clips_viewer_view_pager" }
+}

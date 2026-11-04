@@ -14,6 +14,11 @@ data class AppRule(
     val dmSignature: Signature? = null,
     /** Nodes whose text identifies the video on screen (author handle, caption, ...). */
     val fingerprintNodes: List<FingerprintNode> = emptyList(),
+    /**
+     * The scrollable whose VIEW_SCROLLED events carry the current video index (from == to).
+     * Matched against the event source; null when the app reports no usable index.
+     */
+    val scrollSignal: Leaf? = null,
 ) {
     fun isPlayer(screen: ScreenView) = playerSignature.evaluate(screen)
 

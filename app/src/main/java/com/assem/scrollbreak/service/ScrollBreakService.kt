@@ -34,6 +34,7 @@ import java.util.concurrent.Executors
 class ScrollBreakService : AccessibilityService() {
 
     private val contentThrottle = Throttle(CONTENT_THROTTLE_MS) { SystemClock.elapsedRealtime() }
+    private val fingerprintThrottle = Throttle(FINGERPRINT_THROTTLE_MS) { SystemClock.elapsedRealtime() }
     private val machine = EntryStateMachine(
         isMessaging = { it in TargetPackages.messaging },
         clock = { SystemClock.elapsedRealtime() },
@@ -110,7 +111,7 @@ class ScrollBreakService : AccessibilityService() {
             ) return
 
             val rule = rules.forPackage(pkg)
-            val state = if (rule != null) observe(pkg, rule, event.eventTime) else "n/a"
+            val state = if (rule != null) observe(pkg, rule, event.eventTime, scrollIndexOf(event, pkg, rule)) else "n/a"
 
             val detail = if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED) {
                 "from=${event.fromIndex} to=${event.toIndex} count=${event.itemCount}"
@@ -159,19 +160,29 @@ class ScrollBreakService : AccessibilityService() {
      * Observes [pkg], advances its state machine and fires the block action when due.
      * [eventUptimeMs] is when the triggering event happened (for the latency figure).
      */
-    private fun observe(pkg: String, rule: AppRule, eventUptimeMs: Long): String {
+    private fun observe(pkg: String, rule: AppRule, eventUptimeMs: Long, scrollIndex: Int? = null): String {
+        val t0 = SystemClock.uptimeMillis()
         val screen = AndroidScreen.forPackage(this, pkg)
+        val t1 = SystemClock.uptimeMillis()
         val inPlayer: Boolean
         val result: EntryStateMachine.Result
         try {
             inPlayer = rule.isPlayer(screen)
+            val t2 = SystemClock.uptimeMillis()
             val inDm = !inPlayer && rule.isDm(screen)
             // The fingerprint costs a tree walk, so only read it while one video is allowed.
-            val fingerprint = if (inPlayer && machine.state(pkg) == State.ALLOW_ONE) {
+            // A swipe fires a burst of events; reading it every time would queue them up.
+            val fingerprint = if (inPlayer && machine.state(pkg) == State.ALLOW_ONE &&
+                fingerprintThrottle.shouldPass(pkg)
+            ) {
                 rule.fingerprint(screen)
             } else Fingerprint.EMPTY
-            result = machine.onObservation(Observation(pkg, inPlayer, inDm, fingerprint))
-            if (debuggable && inPlayer) Log.d("ScrollBreakEv", "observe $pkg fp=${fingerprint.hash()} -> ${result.action}")
+            val t3 = SystemClock.uptimeMillis()
+            result = machine.onObservation(Observation(pkg, inPlayer, inDm, fingerprint, scrollIndex))
+            if (debuggable && inPlayer) {
+                Log.d("ScrollBreakEv", "observe $pkg fp=${fingerprint.hash()} -> ${result.action} " +
+                    "windows=${t1 - t0}ms player=${t2 - t1}ms fingerprint=${t3 - t2}ms")
+            }
         } finally {
             screen.close()
         }
@@ -203,6 +214,22 @@ class ScrollBreakService : AccessibilityService() {
                 AppLog.error("allow poll failed", t)
             }
         }, ALLOW_POLL_MS)
+    }
+
+    /**
+     * The video index a scroll event reports, if the rule names a scrollable that carries one.
+     * Only read while one video is allowed: it costs a call to fetch the event's source node.
+     */
+    private fun scrollIndexOf(event: AccessibilityEvent, pkg: String, rule: AppRule): Int? {
+        val signal = rule.scrollSignal ?: return null
+        if (event.eventType != AccessibilityEvent.TYPE_VIEW_SCROLLED || event.toIndex < 0) return null
+        if (machine.state(pkg) != State.ALLOW_ONE) return null
+        val node = AndroidNode(event.source ?: return null)
+        return try {
+            if (signal.copy(visible = false).matches(node.snapshot())) event.toIndex else null
+        } finally {
+            node.release()
+        }
     }
 
     /** Block decisions go to the event log and to logcat (tag ScrollBreak) for debugging. */
@@ -279,6 +306,7 @@ class ScrollBreakService : AccessibilityService() {
         private const val ESCALATE_DELAY_MS = 300L
         private const val OVERLAY_POLL_MS = 500L
         private const val ALLOW_POLL_MS = 250L
+        private const val FINGERPRINT_THROTTLE_MS = 120L
 
         @Volatile var instance: ScrollBreakService? = null
             private set

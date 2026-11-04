@@ -23,6 +23,8 @@ class EntryStateMachine(
         val inPlayer: Boolean,
         val inDm: Boolean = false,
         val fingerprint: Fingerprint = Fingerprint.EMPTY,
+        /** Current video index from a scroll event, for apps that report one. */
+        val scrollIndex: Int? = null,
     )
 
     /** [reason] is set whenever something worth logging happened. */
@@ -33,6 +35,7 @@ class EntryStateMachine(
         var fingerprint = Fingerprint.EMPTY
         var lastBlockAt: Long? = null
         var dmSeenAt: Long? = null
+        var scrollIndex: Int? = null
     }
 
     private class Foreground(val pkg: String, val enteredAt: Long)
@@ -67,6 +70,7 @@ class EntryStateMachine(
             val was = s.state
             s.state = State.IDLE
             s.fingerprint = Fingerprint.EMPTY
+            s.scrollIndex = null
             s.lastBlockAt = null
             return Result(Action.NONE, if (was != State.IDLE) "left_player" else null)
         }
@@ -77,6 +81,7 @@ class EntryStateMachine(
                 if (why != null) {
                     s.state = State.ALLOW_ONE
                     s.fingerprint = o.fingerprint
+                    s.scrollIndex = o.scrollIndex
                     Result(Action.NONE, "allow:$why")
                 } else {
                     s.state = State.BLOCK
@@ -85,11 +90,17 @@ class EntryStateMachine(
                 }
             }
             State.ALLOW_ONE -> {
-                if (o.fingerprint.differsFrom(s.fingerprint)) {
+                val baseline = s.scrollIndex
+                if (o.scrollIndex != null && baseline != null && o.scrollIndex != baseline) {
+                    s.state = State.BLOCK
+                    s.lastBlockAt = now
+                    Result(Action.BLOCK, "block:scrolled")
+                } else if (o.fingerprint.differsFrom(s.fingerprint)) {
                     s.state = State.BLOCK
                     s.lastBlockAt = now
                     Result(Action.BLOCK, "block:next_video")
                 } else {
+                    if (baseline == null) s.scrollIndex = o.scrollIndex
                     // An empty component that has now loaded becomes part of the baseline.
                     s.fingerprint = s.fingerprint.fillGapsFrom(o.fingerprint)
                     Result(Action.NONE)

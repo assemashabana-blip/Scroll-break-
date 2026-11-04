@@ -59,6 +59,9 @@ object RuleParser {
             feedEntrySignatures = entries,
             dmSignature = root["dmSignature"]?.let { signature(it, "dmSignature") },
             fingerprintNodes = fingerprint,
+            scrollSignal = root["scrollSignal"]?.let {
+                leaf(it as? JsonObject ?: throw RuleParseException("scrollSignal must be an object"), "scrollSignal")
+            },
         )
     }
 

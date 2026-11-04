@@ -66,6 +66,19 @@ class RuleParserTest {
     }
 
     @Test
+    fun parsesScrollSignal() {
+        val r = RuleParser.parse(rule("""{"viewId":"a:id/x"}""", ""","scrollSignal":{"viewId":"a:id/pager"}"""))
+        assertEquals(Leaf(viewId = "a:id/pager"), r.scrollSignal)
+        assertNull(RuleParser.parse(rule("""{"viewId":"a:id/x"}""")).scrollSignal)
+    }
+
+    @Test
+    fun rejectsBadScrollSignal() {
+        assertRejects(rule("""{"viewId":"a:id/x"}""", ""","scrollSignal":{}"""), "scrollSignal")
+        assertRejects(rule("""{"viewId":"a:id/x"}""", ""","scrollSignal":"x""""), "scrollSignal")
+    }
+
+    @Test
     fun dmIsOptional() {
         assertNull(RuleParser.parse(rule("""{"viewId":"a:id/x"}""")).dmSignature)
     }
