@@ -8,7 +8,7 @@ class DumpWindow(val pkg: String, val nodes: List<NodeSnapshot>)
 object DumpParser {
     private val windowRe = Regex("""^=== WINDOW .*? pkg=(\S+) """)
     private val nodeRe = Regex(
-        """^\s*\[\d+] id=(\S+) cls=(\S+)(?: text="([^"]*)")?(?: desc="([^"]*)")? bounds=(\S+) children=(\d+)(?: flags=(\S+))?$"""
+        """^\s*\[\d+] id=(.+?) cls=(\S+)(?: text="([^"]*)")?(?: desc="([^"]*)")? bounds=(\S+) children=(\d+)(?: flags=(\S+))?$"""
     )
 
     fun parse(text: String): List<DumpWindow> {
