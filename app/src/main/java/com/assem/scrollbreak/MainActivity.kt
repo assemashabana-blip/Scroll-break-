@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -18,17 +19,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.core.content.FileProvider
+import com.assem.scrollbreak.core.BlockStats
+import com.assem.scrollbreak.core.rules.Purpose
+import com.assem.scrollbreak.service.AdminReceiver
 import com.assem.scrollbreak.service.DumpNotification
 import com.assem.scrollbreak.service.ScrollBreakService
 import com.assem.scrollbreak.service.ServiceStatus
 import com.assem.scrollbreak.ui.DumpsScreen
 import com.assem.scrollbreak.ui.EventLogScreen
+import com.assem.scrollbreak.ui.HealthScreen
+import com.assem.scrollbreak.ui.HomeActions
 import com.assem.scrollbreak.ui.HomeScreen
+import com.assem.scrollbreak.ui.HomeState
+import com.assem.scrollbreak.ui.RulesScreen
+import com.assem.scrollbreak.ui.SettingsScreen
 import com.assem.scrollbreak.ui.SetupScreen
 import com.assem.scrollbreak.ui.theme.ScrollBreakTheme
+import java.io.File
 
 class MainActivity : ComponentActivity() {
 
@@ -37,6 +49,15 @@ class MainActivity : ComponentActivity() {
 
     /** Bumped whenever something outside the app may have changed (resume, a setup action). */
     private var refreshTick by mutableIntStateOf(0)
+
+    private val importRule =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri == null) return@registerForActivityResult
+            val error = RuleRepository.importUri(this, uri)
+            Toast.makeText(
+                this, if (error == null) "Rule imported" else "Not imported: $error", Toast.LENGTH_LONG,
+            ).show()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +75,8 @@ class MainActivity : ComponentActivity() {
                 BackHandler(enabled = screen != "home") { screen = "home" }
                 val tick = refreshTick
                 val latency by AppLog.latency.summary.collectAsState()
+                val loaded by RuleStore.loaded.collectAsState()
+                val errors by RuleStore.errors.collectAsState()
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
                     val m = Modifier.padding(padding)
                     when (screen) {
@@ -64,27 +87,76 @@ class MainActivity : ComponentActivity() {
                             onChanged = { refreshTick++ },
                             modifier = m,
                         )
-                        else -> HomeScreen(
-                            serviceEnabled = serviceEnabled,
-                            onOpenAccessibilitySettings = {
-                                startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-                            },
-                            onOpenEventLog = { screen = "log" },
-                            onOpenDumps = { screen = "dumps" },
-                            onOpenSetup = { screen = "setup" },
-                            setupRemaining = Setup.remaining(this@MainActivity).also { tick.hashCode() },
-                            blockingEnabled = blockingEnabled,
-                            onBlockingChange = {
-                                AppSettings.blockingEnabled = it
-                                blockingEnabled = it
-                            },
-                            latency = latency,
+                        "settings" -> SettingsScreen(
+                            adminActive = AdminReceiver.isActive(this@MainActivity).also { tick.hashCode() },
+                            onEnableAdmin = { startActivity(AdminReceiver.enableIntent(this@MainActivity)) },
+                            onOpenAdminSettings = { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) },
                             modifier = m,
                         )
+                        "rules" -> RulesScreen(
+                            loaded = loaded,
+                            errors = errors,
+                            onImport = { importRule.launch(arrayOf("application/json", "text/plain", "*/*")) },
+                            onExport = { shareFiles(listOf(RuleRepository.exportFile(this@MainActivity, it)), "Export rule") },
+                            onReset = { RuleRepository.reset(this@MainActivity, it.rule.app) },
+                            modifier = m,
+                        )
+                        "health" -> HealthScreen(
+                            loaded = loaded,
+                            onExportLogs = { shareFiles(AppLog.logFiles(), "Export logs") },
+                            modifier = m,
+                        )
+                        else -> {
+                            val stats = remember(tick, latency.count) {
+                                BlockStats.summarize(AppLog.readBlockLines(), System.currentTimeMillis())
+                            }
+                            HomeScreen(
+                                state = HomeState(
+                                    serviceEnabled = serviceEnabled,
+                                    setupRemaining = Setup.remaining(this@MainActivity).also { tick.hashCode() },
+                                    blockingEnabled = blockingEnabled,
+                                    latency = latency,
+                                    stats = stats,
+                                    apps = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
+                                        .map { it.rule.app to AppSettings.isAppEnabled(it.rule.app) },
+                                ),
+                                actions = HomeActions(
+                                    openAccessibilitySettings = {
+                                        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                                    },
+                                    openSetup = { screen = "setup" },
+                                    setBlocking = {
+                                        AppSettings.blockingEnabled = it
+                                        blockingEnabled = it
+                                    },
+                                    setAppEnabled = { app, on ->
+                                        AppSettings.setAppEnabled(app, on)
+                                        refreshTick++
+                                    },
+                                    navigate = { screen = it },
+                                ),
+                                modifier = m,
+                            )
+                        }
                     }
                 }
             }
         }
+    }
+
+    /** Hands files to the share sheet through the FileProvider, so no storage permission is needed. */
+    private fun shareFiles(files: List<File>, title: String) {
+        if (files.isEmpty()) {
+            Toast.makeText(this, "Nothing to export yet", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val uris = ArrayList(files.map { FileProvider.getUriForFile(this, "$packageName.fileprovider", it) })
+        val send = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+            type = "text/plain"
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivity(Intent.createChooser(send, title))
     }
 
     private val notificationPermission =

@@ -13,6 +13,7 @@ class ScrollBreakApp : Application() {
         super.onCreate()
         AppLog.init(this)
         AppSettings.init(this)
+        RuleStore.reload(this)
         WatchdogWorker.schedule(this)
 
         val previous = Thread.getDefaultUncaughtExceptionHandler()

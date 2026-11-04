@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "app": "settings_friction",
+  "purpose": "friction",
+  "packages": ["com.android.settings"],
+
+  "playerSignature": {
+    "allOf": [
+      { "viewId": "com.android.settings:id/settingslib_main_switch_bar" },
+      { "viewId": "com.android.settings:id/collapsing_toolbar", "desc": "ScrollBreak", "match": "equals" }
+    ]
+  }
+}

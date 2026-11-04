@@ -2,6 +2,9 @@ package com.assem.scrollbreak.core.rules
 
 data class NamedSignature(val name: String, val signature: Signature)
 
+/** What a rule is for. FRICTION rules recognise a system screen to slow down, not a video. */
+enum class Purpose { SHORT_VIDEO, FRICTION }
+
 /** Detection rules for one app. Unknown JSON keys are ignored so the schema can grow. */
 data class AppRule(
     val app: String,
@@ -26,6 +29,7 @@ data class AppRule(
     val urlBarIds: List<String> = emptyList(),
     /** Browsers: URL shapes that mean "short-video page", matched on the canonical host/path. */
     val urlPatterns: List<UrlPattern> = emptyList(),
+    val purpose: Purpose = Purpose.SHORT_VIDEO,
 ) {
     fun isPlayer(screen: ScreenView) = playerSignature?.evaluate(screen) ?: false
 
@@ -36,6 +40,15 @@ data class AppRule(
         urlBarIds.firstNotNullOfOrNull { screen.textOf(Leaf(viewId = it)) }
 
     fun matchUrl(url: String): UrlPattern? = Urls.firstMatch(urlPatterns, url)
+
+    /** Every signal this rule can report, for the detection-health screen. */
+    fun signalNames(): List<String> = buildList {
+        if (playerSignature != null) add("player")
+        urlPatterns.forEach { add("url:${it.name}") }
+        feedEntrySignatures.forEach { add("feed:${it.name}") }
+        allowSources.forEach { add("source:${it.name}") }
+        if (fingerprintNodes.isNotEmpty()) add("fingerprint")
+    }
 
     /** Names of the feed-entry signatures that currently match. */
     fun matchingFeedEntries(screen: ScreenView): List<String> =

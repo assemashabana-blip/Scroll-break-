@@ -13,8 +13,9 @@ import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
 import com.assem.scrollbreak.AppLog
 import com.assem.scrollbreak.AppSettings
-import com.assem.scrollbreak.RuleRepository
+import com.assem.scrollbreak.RuleStore
 import com.assem.scrollbreak.core.EntryStateMachine
+import com.assem.scrollbreak.core.FrictionGate
 import com.assem.scrollbreak.core.EntryStateMachine.Action
 import com.assem.scrollbreak.core.EntryStateMachine.Observation
 import com.assem.scrollbreak.core.EntryStateMachine.State
@@ -22,10 +23,11 @@ import com.assem.scrollbreak.core.TargetPackages
 import com.assem.scrollbreak.core.Throttle
 import com.assem.scrollbreak.core.rules.AppRule
 import com.assem.scrollbreak.core.rules.Fingerprint
-import com.assem.scrollbreak.core.rules.RuleSet
+import com.assem.scrollbreak.core.rules.Purpose
 import com.assem.scrollbreak.core.rules.UrlTracker
 import java.util.Collections
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Observes target apps, detects short-video players with the rules engine and decides, per
@@ -42,7 +44,7 @@ class ScrollBreakService : AccessibilityService() {
     private val contentThrottle = Throttle(CONTENT_THROTTLE_MS) { SystemClock.elapsedRealtime() }
     private val fingerprintThrottle = Throttle(FINGERPRINT_THROTTLE_MS) { SystemClock.elapsedRealtime() }
     private val machine = EntryStateMachine(
-        isMessaging = { it in TargetPackages.messaging },
+        isMessaging = { it in AppSettings.friendApps },
         clock = { SystemClock.elapsedRealtime() },
     )
     private val mainHandler = Handler(Looper.getMainLooper())
@@ -59,7 +61,9 @@ class ScrollBreakService : AccessibilityService() {
     private val windowCache = WindowPackageCache()
 
     private val debuggable by lazy { applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0 }
-    @Volatile private var rules = RuleSet(emptyList())
+    private val frictionGate = FrictionGate { SystemClock.elapsedRealtime() }
+    private val frictionTickScheduled = AtomicBoolean(false)
+    private val frictionOverlay by lazy { FrictionOverlay(this) { performGlobalAction(GLOBAL_ACTION_BACK) } }
     private var foregroundPkg: String? = null            // main thread only
     private val pollingPackages = HashSet<String>()      // eval thread only
     private val urls = UrlTracker()
@@ -114,7 +118,7 @@ class ScrollBreakService : AccessibilityService() {
             AppLog.init(this)
             AppSettings.init(this)
             instance = this
-            rules = RuleRepository.load(this)
+            RuleStore.reload(this)
             DumpNotification.show(this)
             serviceInfo = (serviceInfo ?: AccessibilityServiceInfo()).apply {
                 eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED or
@@ -143,11 +147,18 @@ class ScrollBreakService : AccessibilityService() {
                 !contentThrottle.shouldPass(pkg)
             ) return
 
-            val rule = rules.forPackage(pkg)
+            contentThrottle.intervalMs = AppSettings.throttleMs.toLong()
+            val rule = RuleStore.current.forPackage(pkg)
+            val enabled = rule == null || AppSettings.isAppEnabled(rule.app)
             val detail = if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED) {
                 "from=${event.fromIndex} to=${event.toIndex} count=${event.itemCount}"
             } else ""
-            val state = if (rule != null) machine.state(pkg).name else "n/a"
+            val state = when {
+                rule == null -> "n/a"
+                !enabled -> "OFF"
+                rule.purpose == Purpose.FRICTION -> "FRICTION"
+                else -> machine.state(pkg).name
+            }
             if (debuggable) {
                 Log.d("ScrollBreakEv", "${AccessibilityEvent.eventTypeToString(event.eventType)} $pkg " +
                     "${event.className} $detail state=$state")
@@ -160,17 +171,18 @@ class ScrollBreakService : AccessibilityService() {
                 detail = detail,
                 state = state,
             )
-            if (rule == null) return
+            if (rule == null || !enabled) return
 
             val eventTime = event.eventTime
-            val scroll = scrollIndexOf(event, pkg, rule)
+            val scroll = if (rule.purpose == Purpose.SHORT_VIDEO) scrollIndexOf(event, pkg, rule) else null
             // Events arrive in bursts; one queued evaluation reads the freshest screen for all of
             // them. Scroll events carry an index of their own, so each of those is evaluated.
             if (scroll == null && !pendingEval.add(pkg)) return
             evalHandler.post {
                 safely("observe") {
                     if (scroll == null) pendingEval.remove(pkg)
-                    observe(pkg, rule, eventTime, scroll)
+                    if (rule.purpose == Purpose.FRICTION) observeFriction(pkg, rule)
+                    else observe(pkg, rule, eventTime, scroll)
                 }
             }
         }
@@ -205,6 +217,38 @@ class ScrollBreakService : AccessibilityService() {
         return has
     }
 
+    /**
+     * Friction: while the "turn ScrollBreak off" page is open, cover it with a countdown. The
+     * page is recognised by the rule (a system screen, not a video), and the countdown is
+     * re-checked every second so leaving the page removes the overlay straight away.
+     * Runs on the evaluation thread.
+     */
+    private fun observeFriction(pkg: String, rule: AppRule) {
+        frictionGate.durationMs = AppSettings.frictionSeconds * 1000L
+        val screen = AndroidScreen.forPackage(this, pkg, windowCache)
+        val visible = try {
+            !screen.isEmpty && rule.isPlayer(screen)
+        } finally {
+            screen.close()
+        }
+        val status = frictionGate.update(visible)
+        if (status.locked) {
+            val seconds = (status.remainingMs + 999) / 1000
+            mainHandler.post { frictionOverlay.show(seconds) }
+            scheduleFrictionTick(pkg, rule)
+        } else if (frictionOverlay.isShowing) {
+            mainHandler.post { frictionOverlay.dismiss() }
+        }
+    }
+
+    private fun scheduleFrictionTick(pkg: String, rule: AppRule) {
+        if (!frictionTickScheduled.compareAndSet(false, true)) return
+        evalHandler.postDelayed({
+            frictionTickScheduled.set(false)
+            safely("friction tick") { observeFriction(pkg, rule) }
+        }, 1000)
+    }
+
     /** What a screen says right now: is it a short-video player, and (browsers) which page. */
     private class Reading(val inPlayer: Boolean, val urlKey: String?)
 
@@ -234,6 +278,7 @@ class ScrollBreakService : AccessibilityService() {
      */
     private fun observe(pkg: String, rule: AppRule, eventUptimeMs: Long, scrollIndex: Int? = null) {
         val t0 = SystemClock.uptimeMillis()
+        machine.allowWindowMs = AppSettings.allowWindowSeconds * 1000L
         val screen = AndroidScreen.forPackage(this, pkg, windowCache)
         val t1 = SystemClock.uptimeMillis()
         val inPlayer: Boolean
@@ -254,13 +299,14 @@ class ScrollBreakService : AccessibilityService() {
             val t3 = SystemClock.uptimeMillis()
             // A messaging app that is still on screen (split-screen) was never left: not a link tap.
             val sourceVisible = inPlayer && machine.state(pkg) == State.IDLE &&
-                machine.candidateSource(pkg)?.let { it in TargetPackages.messaging && hasWindow(it) } == true
+                machine.candidateSource(pkg)?.let { it in AppSettings.friendApps && hasWindow(it) } == true
             result = machine.onObservation(
                 Observation(pkg, inPlayer, source, fingerprint, scrollIndex, sourceVisible),
             )
-            if (debuggable && inPlayer) {
-                Log.d("ScrollBreakEv", "observe $pkg fp=${fingerprint.hash()} -> ${result.action} " +
-                    "windows=${t1 - t0}ms player=${t2 - t1}ms fingerprint=${t3 - t2}ms")
+            recordHealth(rule, reading, source, fingerprint, result, screen)
+            if (debuggable) {
+                Log.d("ScrollBreakEv", "observe $pkg player=$inPlayer fp=${fingerprint.hash()} -> ${result.action} " +
+                    "queued=${t0 - eventUptimeMs}ms windows=${t1 - t0}ms player=${t2 - t1}ms fingerprint=${t3 - t2}ms")
             }
         } finally {
             screen.close()
@@ -278,6 +324,26 @@ class ScrollBreakService : AccessibilityService() {
         when {
             machine.state(pkg) == State.ALLOW_ONE -> schedulePoll(pkg, rule, ALLOW_POLL_MS)
             source != null -> schedulePoll(pkg, rule, SOURCE_POLL_MS)
+        }
+    }
+
+    /** Feeds the detection-health screen: which of this rule's signatures matched just now. */
+    private fun recordHealth(
+        rule: AppRule,
+        reading: Reading,
+        source: String?,
+        fingerprint: Fingerprint,
+        result: EntryStateMachine.Result,
+        screen: AndroidScreen,
+    ) {
+        val health = AppLog.health
+        if (reading.inPlayer) health.hit(rule.app, "player")
+        reading.urlKey?.let { url -> rule.matchUrl(url)?.let { health.hit(rule.app, "url:${it.name}") } }
+        if (source != null) health.hit(rule.app, "source:$source")
+        if (!fingerprint.isEmpty) health.hit(rule.app, "fingerprint")
+        // Feed entries cost extra lookups, so they are only checked when something just changed.
+        if (reading.inPlayer && result.reason != null) {
+            rule.matchingFeedEntries(screen).forEach { health.hit(rule.app, "feed:$it") }
         }
     }
 
@@ -362,6 +428,7 @@ class ScrollBreakService : AccessibilityService() {
         instance = null
         evalHandler.removeCallbacksAndMessages(null)
         overlay.dismiss()
+        frictionOverlay.dismiss()
         DumpNotification.cancel(this)
         // Unbind without a reconnect means switched off or killed: say so right away; the
         // watchdog repeats this later in case the process is gone before it can.
@@ -375,6 +442,7 @@ class ScrollBreakService : AccessibilityService() {
         evalHandler.removeCallbacksAndMessages(null)
         evalThread.quitSafely()
         overlay.dismiss()
+        frictionOverlay.dismiss()
         dumpExecutor.shutdown()
         super.onDestroy()
     }

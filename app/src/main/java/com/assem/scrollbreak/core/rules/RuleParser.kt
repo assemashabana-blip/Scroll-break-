@@ -72,6 +72,11 @@ object RuleParser {
             fingerprintNodes = fingerprint,
             urlBarIds = urlBarIds,
             urlPatterns = urlPatterns,
+            purpose = when (val p = (root["purpose"] as? JsonPrimitive)?.contentOrNull) {
+                null, "shortVideo" -> Purpose.SHORT_VIDEO
+                "friction" -> Purpose.FRICTION
+                else -> throw RuleParseException("purpose must be shortVideo or friction, not $p")
+            },
             scrollSignal = root["scrollSignal"]?.let {
                 leaf(it as? JsonObject ?: throw RuleParseException("scrollSignal must be an object"), "scrollSignal")
             },

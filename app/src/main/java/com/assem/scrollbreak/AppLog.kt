@@ -3,6 +3,7 @@ package com.assem.scrollbreak
 import android.content.Context
 import android.util.Log
 import com.assem.scrollbreak.core.EventLog
+import com.assem.scrollbreak.core.HealthBoard
 import com.assem.scrollbreak.core.LatencyStats
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,9 @@ object AppLog {
     private const val MAX_FILE_BYTES = 256 * 1024L
 
     val events = EventLog(500)
+
+    /** When each signature of each app last matched (the detection-health screen). */
+    val health = HealthBoard { System.currentTimeMillis() }
 
     private val _serviceConnected = MutableStateFlow(false)
     /** True while the accessibility service is bound in this process. */
@@ -50,6 +54,18 @@ object AppLog {
         } catch (_: Throwable) {
         }
     }
+
+    /** Raw lines of blocks.csv, for the statistics. */
+    @Synchronized
+    fun readBlockLines(): List<String> = try {
+        errorFile?.parentFile?.let { File(it, "blocks.csv") }?.takeIf { it.exists() }?.readLines().orEmpty()
+    } catch (_: Throwable) {
+        emptyList()
+    }
+
+    /** The error log and the block history, for exporting. */
+    fun logFiles(): List<File> = errorFile?.parentFile?.listFiles { f -> f.extension in setOf("log", "csv") }
+        ?.sortedBy { it.name }.orEmpty()
 
     private fun loadLatencyHistory(dir: File) {
         try {
