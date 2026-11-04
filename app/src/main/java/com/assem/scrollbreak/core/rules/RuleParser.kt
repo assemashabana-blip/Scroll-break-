@@ -80,6 +80,9 @@ object RuleParser {
             scrollSignal = root["scrollSignal"]?.let {
                 leaf(it as? JsonObject ?: throw RuleParseException("scrollSignal must be an object"), "scrollSignal")
             },
+            redirectTo = root["redirectTo"]?.let {
+                leaf(it as? JsonObject ?: throw RuleParseException("redirectTo must be an object"), "redirectTo")
+            },
         )
     }
 

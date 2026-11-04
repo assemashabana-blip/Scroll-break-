@@ -23,6 +23,7 @@ import com.assem.scrollbreak.core.TargetPackages
 import com.assem.scrollbreak.core.Throttle
 import com.assem.scrollbreak.core.rules.AppRule
 import com.assem.scrollbreak.core.rules.Fingerprint
+import com.assem.scrollbreak.core.rules.Leaf
 import com.assem.scrollbreak.core.rules.Purpose
 import com.assem.scrollbreak.core.rules.UrlTracker
 import java.util.Collections
@@ -392,13 +393,27 @@ class ScrollBreakService : AccessibilityService() {
         }
     }
 
-    /** Stage 1: BACK. Stage 2 (after [ESCALATE_DELAY_MS]): overlay if still in the player. */
+    /**
+     * Stage 1: switch to the rule's redirect tab if it has one and it can be clicked, else BACK.
+     * Stage 2 (after [ESCALATE_DELAY_MS]): overlay if still in the player.
+     */
     private fun block(eventUptimeMs: Long, pkg: String, rule: AppRule, reason: String) {
+        val redirect = rule.redirectTo
+        val redirected = redirect != null && redirectTo(pkg, redirect)
+        if (!redirected) performGlobalAction(GLOBAL_ACTION_BACK)
         val latencyMs = SystemClock.uptimeMillis() - eventUptimeMs
-        performGlobalAction(GLOBAL_ACTION_BACK)
         AppLog.recordBlock(rule.app, reason, latencyMs)
-        action(pkg, "BLOCK", "BACK", "app=${rule.app} $reason latency=${latencyMs}ms")
+        action(pkg, "BLOCK", if (redirected) "REDIRECT" else "BACK", "app=${rule.app} $reason latency=${latencyMs}ms")
         evalHandler.postDelayed({ safely("escalate") { escalateIfStillThere(pkg, rule) } }, ESCALATE_DELAY_MS)
+    }
+
+    private fun redirectTo(pkg: String, target: Leaf): Boolean {
+        val screen = AndroidScreen.forPackage(this, pkg, windowCache)
+        return try {
+            screen.click(target)
+        } finally {
+            screen.close()
+        }
     }
 
     private fun escalateIfStillThere(pkg: String, rule: AppRule) {

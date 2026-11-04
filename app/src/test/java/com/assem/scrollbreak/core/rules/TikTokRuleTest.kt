@@ -56,4 +56,25 @@ class TikTokRuleTest {
         assertTrue(pagers.any { signal.matches(it) })
         assertTrue("outer tab pagers must not match", pagers.any { !signal.matches(it) })
     }
+
+    @Test
+    fun friendsTabIsNeverTheBlockedFeed() {
+        val s = screen("tiktok_friends.txt")
+        assertFalse(rule.isPlayer(s))
+        // Even if a friends video were on screen, the selected Friends tab keeps it allowed.
+        val withVideo = javaClass.getResource("/dumps/tiktok_feed.txt")!!.readText()
+            .replace("desc=\"Home\"", "desc=\"Friends\"")
+        assertFalse(rule.isPlayer(DumpParser.screenFor(DumpParser.parse(withVideo), pkg)))
+    }
+
+    @Test
+    fun blockedVideoRedirectsToTheFriendsTab() {
+        val target = rule.redirectTo!!
+        val nodes = DumpParser.parse(
+            javaClass.getResource("/dumps/tiktok_feed.txt")!!.readText(),
+        ).flatMap { it.nodes }
+        val hits = nodes.filter { target.matches(it) }
+        assertEquals(1, hits.size)
+        assertTrue(hits[0].viewId!!.startsWith(pkg))
+    }
 }

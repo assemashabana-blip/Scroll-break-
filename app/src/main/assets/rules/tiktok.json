@@ -6,7 +6,8 @@
   "playerSignature": {
     "allOf": [
       { "viewId": "com.zhiliaoapp.musically:id/long_press_layout" },
-      { "viewId": "com.zhiliaoapp.musically:id/title" }
+      { "viewId": "com.zhiliaoapp.musically:id/title" },
+      { "not": { "desc": "Friends", "selected": true } }
     ]
   },
 
@@ -24,5 +25,7 @@
   "scrollSignal": {
     "viewId": "com.zhiliaoapp.musically:id/viewpager",
     "className": "androidx.viewpager.widget.ViewPager"
-  }
+  },
+
+  "redirectTo": { "desc": "Friends", "clickable": true }
 }

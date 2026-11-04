@@ -60,6 +60,26 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
         return out
     }
 
+    /** Clicks the first clickable node matching [leaf]; false if none was found or the click failed. */
+    fun click(leaf: Leaf): Boolean {
+        var budget = MAX_NODES
+        fun walk(info: AccessibilityNodeInfo, depth: Int): Boolean {
+            if (budget-- <= 0) return false
+            if (info.isClickable && leaf.matches(AndroidNode(info).snapshot()) &&
+                info.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            ) return true
+            if (depth >= MAX_DEPTH) return false
+            for (i in 0 until info.childCount) {
+                val child = info.getChild(i) ?: continue
+                val hit = walk(child, depth + 1)
+                release(child)
+                if (hit) return true
+            }
+            return false
+        }
+        return roots.any { walk(it, 0) }
+    }
+
     fun close() = roots.forEach(::release)
 
     companion object {

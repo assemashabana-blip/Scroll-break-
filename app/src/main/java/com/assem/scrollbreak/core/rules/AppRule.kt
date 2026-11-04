@@ -30,6 +30,11 @@ data class AppRule(
     /** Browsers: URL shapes that mean "short-video page", matched on the canonical host/path. */
     val urlPatterns: List<UrlPattern> = emptyList(),
     val purpose: Purpose = Purpose.SHORT_VIDEO,
+    /**
+     * A tab to switch to when a video is blocked, instead of leaving the app (TikTok: Friends).
+     * If it cannot be clicked the block falls back to Back.
+     */
+    val redirectTo: Leaf? = null,
 ) {
     fun isPlayer(screen: ScreenView) = playerSignature?.evaluate(screen) ?: false
 
