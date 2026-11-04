@@ -31,14 +31,8 @@ object RuleParser {
         }.toSet()
         if (packages.isEmpty()) throw RuleParseException("packages must not be empty")
 
-        val entries = (root["feedEntrySignatures"] as? JsonArray).orEmpty().mapIndexed { i, e ->
-            val obj = e as? JsonObject ?: throw RuleParseException("feedEntrySignatures[$i] must be an object")
-            NamedSignature(
-                obj.string("name", "feedEntrySignatures[$i].name"),
-                signature(obj["signature"] ?: throw RuleParseException("feedEntrySignatures[$i].signature missing"),
-                    "feedEntrySignatures[$i].signature"),
-            )
-        }
+        val entries = namedSignatures(root, "feedEntrySignatures")
+        val sources = namedSignatures(root, "allowSources")
 
         val fingerprint = (root["fingerprintNodes"] as? JsonArray).orEmpty().mapIndexed { i, e ->
             val path = "fingerprintNodes[$i]"
@@ -57,13 +51,22 @@ object RuleParser {
                 "playerSignature",
             ),
             feedEntrySignatures = entries,
-            dmSignature = root["dmSignature"]?.let { signature(it, "dmSignature") },
+            allowSources = sources,
             fingerprintNodes = fingerprint,
             scrollSignal = root["scrollSignal"]?.let {
                 leaf(it as? JsonObject ?: throw RuleParseException("scrollSignal must be an object"), "scrollSignal")
             },
         )
     }
+
+    private fun namedSignatures(root: JsonObject, key: String): List<NamedSignature> =
+        (root[key] as? JsonArray).orEmpty().mapIndexed { i, e ->
+            val obj = e as? JsonObject ?: throw RuleParseException("$key[$i] must be an object")
+            NamedSignature(
+                obj.string("name", "$key[$i].name"),
+                signature(obj["signature"] ?: throw RuleParseException("$key[$i].signature missing"), "$key[$i].signature"),
+            )
+        }
 
     private fun signature(e: JsonElement, path: String): Signature {
         val obj = e as? JsonObject ?: throw RuleParseException("$path must be an object")

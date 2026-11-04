@@ -165,11 +165,12 @@ class ScrollBreakService : AccessibilityService() {
         val screen = AndroidScreen.forPackage(this, pkg)
         val t1 = SystemClock.uptimeMillis()
         val inPlayer: Boolean
+        var source: String? = null
         val result: EntryStateMachine.Result
         try {
             inPlayer = rule.isPlayer(screen)
             val t2 = SystemClock.uptimeMillis()
-            val inDm = !inPlayer && rule.isDm(screen)
+            source = if (!inPlayer) rule.matchingSource(screen) else null
             // The fingerprint costs a tree walk, so only read it while one video is allowed.
             // A swipe fires a burst of events; reading it every time would queue them up.
             val fingerprint = if (inPlayer && machine.state(pkg) == State.ALLOW_ONE &&
@@ -178,7 +179,7 @@ class ScrollBreakService : AccessibilityService() {
                 rule.fingerprint(screen)
             } else Fingerprint.EMPTY
             val t3 = SystemClock.uptimeMillis()
-            result = machine.onObservation(Observation(pkg, inPlayer, inDm, fingerprint, scrollIndex))
+            result = machine.onObservation(Observation(pkg, inPlayer, source, fingerprint, scrollIndex))
             if (debuggable && inPlayer) {
                 Log.d("ScrollBreakEv", "observe $pkg fp=${fingerprint.hash()} -> ${result.action} " +
                     "windows=${t1 - t0}ms player=${t2 - t1}ms fingerprint=${t3 - t2}ms")
@@ -196,24 +197,29 @@ class ScrollBreakService : AccessibilityService() {
         } else if (reason != null && reason.startsWith("allow")) {
             action(pkg, "ALLOW_ONE", rule.app, reason)
         }
-        if (machine.state(pkg) == State.ALLOW_ONE) pollWhileAllowed(pkg, rule)
+        when {
+            machine.state(pkg) == State.ALLOW_ONE -> schedulePoll(pkg, rule, ALLOW_POLL_MS)
+            source != null -> schedulePoll(pkg, rule, SOURCE_POLL_MS)
+        }
         return machine.state(pkg).name
     }
 
     /**
-     * YouTube goes quiet once a swipe settles, so events alone would never see the next video's
-     * fingerprint. While one video is allowed, re-observe on a timer until the player is left.
+     * Re-observes [pkg] after [delayMs], which keeps the state machine fed when the app goes quiet:
+     * YouTube emits nothing once a swipe settles, and a DM or story you sit in emits nothing, so
+     * the "just saw an allowed source" sighting would expire before you tap the reel.
+     * Each observation decides whether to schedule the next one.
      */
-    private fun pollWhileAllowed(pkg: String, rule: AppRule) {
+    private fun schedulePoll(pkg: String, rule: AppRule, delayMs: Long) {
         if (!pollingPackages.add(pkg)) return
         mainHandler.postDelayed({
             pollingPackages.remove(pkg)
             try {
-                if (machine.state(pkg) == State.ALLOW_ONE) observe(pkg, rule, SystemClock.uptimeMillis())
+                observe(pkg, rule, SystemClock.uptimeMillis())
             } catch (t: Throwable) {
-                AppLog.error("allow poll failed", t)
+                AppLog.error("poll failed", t)
             }
-        }, ALLOW_POLL_MS)
+        }, delayMs)
     }
 
     /**
@@ -306,6 +312,7 @@ class ScrollBreakService : AccessibilityService() {
         private const val ESCALATE_DELAY_MS = 300L
         private const val OVERLAY_POLL_MS = 500L
         private const val ALLOW_POLL_MS = 250L
+        private const val SOURCE_POLL_MS = 700L
         private const val FINGERPRINT_THROTTLE_MS = 120L
 
         @Volatile var instance: ScrollBreakService? = null

@@ -10,8 +10,11 @@ data class AppRule(
     val playerSignature: Signature,
     /** Screens that lead into the player (Shorts tab, Reels tab, ...). */
     val feedEntrySignatures: List<NamedSignature> = emptyList(),
-    /** In-app chat screens, used to recognise "a friend sent this". */
-    val dmSignature: Signature? = null,
+    /**
+     * In-app screens a video may legitimately be opened from (a DM thread, a story, ...).
+     * Reaching the player within the allow window of seeing one of these allows one video.
+     */
+    val allowSources: List<NamedSignature> = emptyList(),
     /** Nodes whose text identifies the video on screen (author handle, caption, ...). */
     val fingerprintNodes: List<FingerprintNode> = emptyList(),
     /**
@@ -26,7 +29,9 @@ data class AppRule(
     fun matchingFeedEntries(screen: ScreenView): List<String> =
         feedEntrySignatures.filter { it.signature.evaluate(screen) }.map { it.name }
 
-    fun isDm(screen: ScreenView) = dmSignature?.evaluate(screen) ?: false
+    /** Name of the first allow-source screen currently showing, if any. */
+    fun matchingSource(screen: ScreenView): String? =
+        allowSources.firstOrNull { it.signature.evaluate(screen) }?.name
 
     fun fingerprint(screen: ScreenView): Fingerprint = Fingerprint.compute(fingerprintNodes, screen)
 }

@@ -1,0 +1,103 @@
+=== WINDOW id=634 type=APPLICATION layer=0 pkg=com.instagram.android title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+    [2] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=com.instagram.android:id/action_bar_root cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+        [4] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+          [5] id=com.instagram.android:id/layout_container_parent cls=android.view.ViewGroup bounds=[0,0][1080,2340] children=1
+            [6] id=com.instagram.android:id/layout_container_main cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=2
+              [7] id=com.instagram.android:id/root_clips_layout cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=1
+                [8] id=com.instagram.android:id/clips_linear_layout_container cls=android.widget.LinearLayout bounds=[0,108][1080,2277] children=2
+                  [9] id=com.instagram.android:id/gesture_manager cls=android.widget.FrameLayout bounds=[0,108][1080,2119] children=4 flags=focused
+                    [10] id=com.instagram.android:id/clips_viewer_debug_container cls=android.widget.LinearLayout bounds=[0,108][0,108] children=0 flags=invisible
+                    [10] id=com.instagram.android:id/emoji_reaction_container cls=android.widget.FrameLayout bounds=[0,108][1080,2119] children=1
+                      [11] id=com.instagram.android:id/background_dimmer cls=android.view.View bounds=[0,108][1080,2119] children=0 flags=invisible
+                    [10] id=com.instagram.android:id/clips_viewer_container cls=android.widget.FrameLayout bounds=[0,108][1080,2119] children=1
+                      [11] id=com.instagram.android:id/clips_swipe_refresh_container cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=1 flags=disabled
+                        [12] id=com.instagram.android:id/clips_viewer_view_pager cls=androidx.viewpager.widget.ViewPager bounds=[0,108][1080,2119] children=1 flags=scrollable
+                          [13] id=- cls=androidx.recyclerview.widget.RecyclerView bounds=[0,108][1080,2119] children=1 flags=scrollable
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2119] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=2
+                                [16] id=com.instagram.android:id/clips_media_component cls=android.view.ViewGroup desc="Reel by h_e03a75. Double tap to play or pause." bounds=[0,108][1080,2119] children=1
+                                  [17] id=com.instagram.android:id/clips_single_media_component cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=1
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=1
+                                      [19] id=com.instagram.android:id/clips_viewer_video_layout cls=android.widget.FrameLayout bounds=[0,108][1080,2119] children=1
+                                        [20] id=com.instagram.android:id/clips_video_container cls=android.widget.FrameLayout desc="Reel by h_e03a75. Double tap to play or pause." bounds=[0,108][1080,2119] children=1
+                                          [21] id=- cls=android.view.SurfaceView bounds=[0,108][1080,2119] children=0
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=5
+                                  [17] id=com.instagram.android:id/clips_touchable_background cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=0 flags=clickable,invisible
+                                  [17] id=com.instagram.android:id/clips_item_overlay_component cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=2
+                                    [18] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2119] children=1
+                                      [19] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2119] children=0
+                                    [18] id=- cls=android.view.ViewGroup bounds=[540,1114][540,1114] children=0 flags=invisible
+                                  [17] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2119] children=4
+                                    [18] id=com.instagram.android:id/clips_media_info_component cls=android.view.ViewGroup bounds=[0,1752][943,2093] children=1
+                                      [19] id=- cls=android.view.ViewGroup bounds=[0,1752][943,2056] children=1
+                                        [20] id=- cls=android.view.ViewGroup bounds=[0,1752][943,2056] children=3
+                                          [21] id=- cls=android.view.ViewGroup bounds=[42,1752][943,1752] children=0 flags=invisible
+                                          [21] id=- cls=android.view.ViewGroup bounds=[42,1752][943,1752] children=0 flags=invisible
+                                          [21] id=- cls=android.view.ViewGroup bounds=[42,1752][943,2056] children=3
+                                            [22] id=- cls=android.view.ViewGroup bounds=[42,1752][943,1893] children=2
+                                              [23] id=com.instagram.android:id/clips_author_info_component cls=android.view.ViewGroup bounds=[42,1752][503,1893] children=3 flags=clickable
+                                                [24] id=- cls=android.view.View bounds=[42,1778][157,1893] children=0
+                                                [24] id=com.instagram.android:id/clips_author_profile_pic cls=android.widget.Button desc="h_7bcb7a" bounds=[52,1788][147,1883] children=0 flags=clickable
+                                                [24] id=- cls=android.view.ViewGroup bounds=[157,1812][503,1860] children=1 flags=clickable
+                                                  [25] id=com.instagram.android:id/clips_author_username cls=android.widget.Button text="h_e03a75" desc="h_e03a75" bounds=[157,1812][503,1860] children=0 flags=clickable
+                                              [23] id=- cls=android.view.ViewGroup bounds=[503,1779][733,1892] children=1 flags=clickable
+                                                [24] id=com.instagram.android:id/inline_follow_button cls=android.widget.TextView text="Follow" desc="h_e9bb9d" bounds=[519,1800][696,1876] children=0 flags=clickable,longClickable
+                                            [22] id=com.instagram.android:id/clips_caption_component cls=android.view.ViewGroup bounds=[42,1893][943,1983] children=1
+                                              [23] id=- cls=android.widget.ScrollView bounds=[42,1893][943,1983] children=1
+                                                [24] id=- cls=android.view.ViewGroup bounds=[42,1904][943,1983] children=1
+                                                  [25] id=- cls=android.view.ViewGroup desc="h_5bd777" bounds=[42,1904][943,1983] children=0 flags=clickable
+                                            [22] id=- cls=android.view.ViewGroup bounds=[42,1983][943,2056] children=1
+                                              [23] id=- cls=android.view.ViewGroup bounds=[42,1983][943,2056] children=2
+                                                [24] id=- cls=android.view.ViewGroup bounds=[42,2004][89,2051] children=0 flags=clickable
+                                                [24] id=- cls=android.view.ViewGroup text="h_281625" desc="h_281625" bounds=[89,2007][943,2048] children=0 flags=clickable
+                                    [18] id=com.instagram.android:id/clips_ufi_component cls=android.view.ViewGroup bounds=[943,1045][1080,2093] children=1
+                                      [19] id=- cls=android.view.ViewGroup bounds=[943,1045][1059,2051] children=1
+                                        [20] id=- cls=android.view.ViewGroup bounds=[943,1045][1059,2051] children=11
+                                          [21] id=com.instagram.android:id/like_button cls=android.view.ViewGroup desc="Like" bounds=[943,1045][1059,1161] children=0 flags=clickable,longClickable
+                                          [21] id=com.instagram.android:id/like_count cls=android.widget.Button text="h_ef8291" desc="h_ef8291" bounds=[943,1161][1059,1223] children=0 flags=clickable,longClickable
+                                          [21] id=com.instagram.android:id/comment_button cls=android.widget.Button desc="Comment" bounds=[943,1223][1059,1339] children=0 flags=clickable
+                                          [21] id=com.instagram.android:id/comment_count cls=android.widget.Button text="h_7a86b7" desc="h_7a86b7" bounds=[943,1339][1059,1401] children=0 flags=clickable
+                                          [21] id=- cls=android.widget.Button desc="h_98dd47" bounds=[943,1401][1059,1517] children=0 flags=clickable
+                                          [21] id=com.instagram.android:id/repost_count cls=android.widget.Button text="h_cd6bb2" desc="h_cd6bb2" bounds=[943,1517][1059,1579] children=0 flags=clickable
+                                          [21] id=com.instagram.android:id/direct_share_button cls=android.widget.Button desc="Share" bounds=[943,1579][1059,1695] children=0 flags=clickable,longClickable
+                                          [21] id=com.instagram.android:id/ufi_text_component cls=android.widget.Button text="h_155dba" desc="h_155dba" bounds=[943,1695][1059,1757] children=0 flags=clickable,longClickable
+                                          [21] id=com.instagram.android:id/save_button cls=android.widget.ImageView desc="Save" bounds=[943,1757][1059,1873] children=0 flags=clickable,longClickable
+                                          [21] id=com.instagram.android:id/save_count cls=android.widget.Button text="h_efdef2" desc="h_efdef2" bounds=[943,1873][1059,1935] children=0 flags=clickable,longClickable
+                                          [21] id=com.instagram.android:id/clips_ufi_more_button_component cls=android.widget.Button desc="More" bounds=[943,1935][1059,2051] children=0 flags=clickable
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,2093][1080,2093] children=0 flags=invisible
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,2093][1080,2119] children=0
+                                  [17] id=com.instagram.android:id/clips_bottom_legibility_gradient_component cls=android.view.ViewGroup bounds=[0,1506][1080,2119] children=1
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,1506][1080,2119] children=0
+                                  [17] id=- cls=android.view.ViewGroup bounds=[0,2119][1080,2119] children=0 flags=invisible
+                    [10] id=com.instagram.android:id/clips_viewer_action_bar cls=android.widget.RelativeLayout bounds=[0,108][1080,255] children=4
+                      [11] id=com.instagram.android:id/clips_action_bar_start_action_buttons cls=android.widget.LinearLayout bounds=[0,108][125,255] children=1
+                        [12] id=- cls=android.widget.ImageView desc="Back" bounds=[0,119][125,244] children=0 flags=clickable,longClickable
+                      [11] id=- cls=android.widget.RelativeLayout bounds=[125,108][351,255] children=3
+                        [12] id=com.instagram.android:id/sender_profile_pic cls=android.widget.FrameLayout bounds=[125,145][223,243] children=1 flags=clickable
+                          [13] id=com.instagram.android:id/faceswarm_container cls=android.widget.FrameLayout bounds=[125,145][223,243] children=1
+                            [14] id=com.instagram.android:id/faceswarm_item_1 cls=android.widget.ImageView bounds=[125,145][223,243] children=0
+                        [12] id=com.instagram.android:id/sender_username_or_fullname cls=android.widget.Button text="You" desc="You" bounds=[249,140][323,194] children=0 flags=clickable
+                        [12] id=com.instagram.android:id/sender_timestamp cls=android.widget.TextView text="h_68cddd" bounds=[249,194][351,235] children=0
+                      [11] id=com.instagram.android:id/clips_viewer_action_bar_title_container cls=android.widget.LinearLayout bounds=[892,108][934,255] children=1
+                        [12] id=com.instagram.android:id/clips_viewer_action_bar_title cls=android.widget.TextView bounds=[892,108][934,255] children=0
+                      [11] id=com.instagram.android:id/clips_action_bar_end_action_buttons cls=android.widget.LinearLayout bounds=[934,108][1059,255] children=1
+                        [12] id=- cls=android.widget.ImageView desc="Create a reel" bounds=[934,119][1059,244] children=0 flags=clickable,longClickable
+                  [9] id=com.instagram.android:id/clips_footer_mask_container cls=android.widget.LinearLayout bounds=[0,2119][1080,2277] children=1
+                    [10] id=com.instagram.android:id/reply_bar_container_and_title cls=android.widget.LinearLayout bounds=[0,2119][1080,2277] children=1
+                      [11] id=com.instagram.android:id/reply_bar_container_scroll_view cls=android.widget.HorizontalScrollView bounds=[0,2119][1080,2277] children=1
+                        [12] id=com.instagram.android:id/reply_bar_container cls=android.widget.LinearLayout bounds=[0,2119][1080,2277] children=2
+                          [13] id=com.instagram.android:id/reply_bar_facepile cls=android.widget.ImageView bounds=[0,2198][0,2198] children=0 flags=invisible
+                          [13] id=com.instagram.android:id/reel_viewer_message_composer cls=android.widget.LinearLayout bounds=[21,2140][1059,2256] children=5
+                            [14] id=com.instagram.android:id/reply_bar_edittext cls=android.widget.AutoCompleteTextView text="h_840116" bounds=[79,2140][649,2256] children=0 flags=clickable,longClickable,editable
+                            [14] id=- cls=android.widget.FrameLayout bounds=[702,2164][770,2232] children=1
+                              [15] id=com.instagram.android:id/item_emoji cls=android.widget.Button desc="h_ef2a3a" bounds=[702,2164][770,2232] children=0
+                            [14] id=- cls=android.widget.FrameLayout bounds=[791,2164][859,2232] children=1
+                              [15] id=com.instagram.android:id/item_emoji cls=android.widget.Button desc="h_df5759" bounds=[791,2164][859,2232] children=0
+                            [14] id=- cls=android.widget.FrameLayout bounds=[880,2164][948,2232] children=1
+                              [15] id=com.instagram.android:id/item_emoji cls=android.widget.Button desc="h_a03222" bounds=[880,2164][948,2232] children=0
+                            [14] id=com.instagram.android:id/reply_bar_reaction_sheet_button cls=android.widget.FrameLayout desc="h_01d67d" bounds=[969,2166][1032,2229] children=1 flags=clickable
+                              [15] id=com.instagram.android:id/reply_bar_emoji_button_inside_composer cls=android.widget.ImageView bounds=[979,2176][1021,2218] children=0
+              [7] id=com.instagram.android:id/clips_expanded_touch_view cls=android.view.View bounds=[0,2041][1080,2145] children=0

@@ -35,15 +35,15 @@ class RuleParserTest {
     }
 
     @Test
-    fun parsesFeedEntriesAndDm() {
+    fun parsesFeedEntriesAndSources() {
         val r = RuleParser.parse(
             rule(
                 """{"viewId":"a:id/x"}""",
-                ""","feedEntrySignatures":[{"name":"tab","signature":{"desc":"Reels","selected":true}}],"dmSignature":{"text":"Message"}""",
+                ""","feedEntrySignatures":[{"name":"tab","signature":{"desc":"Reels","selected":true}}],"allowSources":[{"name":"dm","signature":{"viewId":"a:id/thread"}},{"name":"story","signature":{"viewId":"a:id/story"}}]""",
             )
         )
         assertEquals("tab", r.feedEntrySignatures.single().name)
-        assertNotNull(r.dmSignature)
+        assertEquals(listOf("dm", "story"), r.allowSources.map { it.name })
     }
 
     @Test
@@ -79,8 +79,8 @@ class RuleParserTest {
     }
 
     @Test
-    fun dmIsOptional() {
-        assertNull(RuleParser.parse(rule("""{"viewId":"a:id/x"}""")).dmSignature)
+    fun sourcesAreOptional() {
+        assertEquals(emptyList<NamedSignature>(), RuleParser.parse(rule("""{"viewId":"a:id/x"}""")).allowSources)
     }
 
     @Test

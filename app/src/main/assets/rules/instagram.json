@@ -23,6 +23,29 @@
     }
   ],
 
+  "allowSources": [
+    {
+      "name": "dm",
+      "signature": {
+        "anyOf": [
+          { "viewId": "com.instagram.android:id/thread_view_root" },
+          { "viewId": "com.instagram.android:id/message_thread_container" },
+          { "viewId": "com.instagram.android:id/direct_thread_header" }
+        ]
+      }
+    },
+    {
+      "name": "story",
+      "signature": {
+        "anyOf": [
+          { "viewId": "com.instagram.android:id/reel_viewer_root" },
+          { "viewId": "com.instagram.android:id/reel_viewer_media_container" },
+          { "viewId": "com.instagram.android:id/reel_viewer_progress_bar" }
+        ]
+      }
+    }
+  ],
+
   "fingerprintNodes": [
     { "name": "author", "viewId": "com.instagram.android:id/clips_author_username" }
   ],

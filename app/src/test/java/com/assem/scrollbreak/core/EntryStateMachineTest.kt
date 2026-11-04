@@ -158,17 +158,35 @@ class EntryStateMachineTest {
     }
 
     @Test
-    fun dmSeenRecentlyAllowsPlayer() {
+    fun sourceSeenRecentlyAllowsPlayer() {
         m.onForeground(ig)
-        m.onObservation(Observation(ig, false, inDm = true))
+        m.onObservation(Observation(ig, false, source = "dm"))
         now += 2000
-        assertEquals("allow:dm", m.onObservation(Observation(ig, true)).reason)
+        assertEquals("allow:source:dm", m.onObservation(Observation(ig, true)).reason)
     }
 
     @Test
-    fun dmTooOldDoesNotAllow() {
+    fun storyIsAnAllowedSourceToo() {
         m.onForeground(ig)
-        m.onObservation(Observation(ig, false, inDm = true))
+        m.onObservation(Observation(ig, false, source = "story"))
+        now += 1000
+        assertEquals("allow:source:story", m.onObservation(Observation(ig, true)).reason)
+    }
+
+    @Test
+    fun mostRecentSourceIsReported() {
+        m.onForeground(ig)
+        m.onObservation(Observation(ig, false, source = "dm"))
+        now += 1000
+        m.onObservation(Observation(ig, false, source = "story"))
+        now += 1000
+        assertEquals("allow:source:story", m.onObservation(Observation(ig, true)).reason)
+    }
+
+    @Test
+    fun sourceTooOldDoesNotAllow() {
+        m.onForeground(ig)
+        m.onObservation(Observation(ig, false, source = "dm"))
         now += 6000
         assertEquals(Action.BLOCK, m.onObservation(Observation(ig, true)).action)
     }

@@ -76,4 +76,48 @@ class InstagramRuleTest {
         assertTrue(pagers.any { signal.matches(it) })
         assertTrue("the tab pager must not match", pagers.any { !signal.matches(it) })
     }
+
+    @Test
+    fun dmThreadIsAnAllowSourceNotAPlayer() {
+        val s = screen("instagram_dm_thread.txt")
+        assertFalse(rule.isPlayer(s))
+        assertEquals("dm", rule.matchingSource(s))
+    }
+
+    @Test
+    fun storyViewerIsAnAllowSourceNotAPlayer() {
+        val s = screen("instagram_story.txt")
+        assertFalse(rule.isPlayer(s))
+        assertEquals("story", rule.matchingSource(s))
+    }
+
+    @Test
+    fun readingStoriesAndDmsIsNeverBlocked() {
+        // Neither screen may look like a player, or just viewing them would be blocked.
+        for (dump in listOf("instagram_dm_thread.txt", "instagram_story.txt")) {
+            assertFalse(dump, rule.isPlayer(screen(dump)))
+        }
+    }
+
+    @Test
+    fun reelOpenedFromDmIsAPlayerWithAFingerprint() {
+        val s = screen("instagram_dm_reel.txt")
+        assertTrue(rule.isPlayer(s))
+        assertTrue(rule.fingerprint(s).values[0].isNotEmpty())
+        assertEquals(null, rule.matchingSource(s))   // the player is not itself a source
+    }
+
+    @Test
+    fun reelOpenedFromStoryIsAPlayer() {
+        val s = screen("instagram_story_ad_reel.txt")
+        assertTrue(rule.isPlayer(s))
+        assertEquals(null, rule.matchingSource(s))
+    }
+
+    @Test
+    fun otherScreensAreNotSources() {
+        for (dump in listOf("instagram_home.txt", "instagram_inbox.txt", "instagram_reel1.txt")) {
+            assertEquals(dump, null, rule.matchingSource(screen(dump)))
+        }
+    }
 }

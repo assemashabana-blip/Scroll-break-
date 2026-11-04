@@ -21,7 +21,8 @@ class EntryStateMachine(
     data class Observation(
         val pkg: String,
         val inPlayer: Boolean,
-        val inDm: Boolean = false,
+        /** Name of the allow-source screen showing now (e.g. "dm", "story"), if any. */
+        val source: String? = null,
         val fingerprint: Fingerprint = Fingerprint.EMPTY,
         /** Current video index from a scroll event, for apps that report one. */
         val scrollIndex: Int? = null,
@@ -34,7 +35,8 @@ class EntryStateMachine(
         var state = State.IDLE
         var fingerprint = Fingerprint.EMPTY
         var lastBlockAt: Long? = null
-        var dmSeenAt: Long? = null
+        var sourceSeenAt: Long? = null
+        var sourceName: String? = null
         var scrollIndex: Int? = null
     }
 
@@ -64,7 +66,10 @@ class EntryStateMachine(
     fun onObservation(o: Observation): Result {
         val s = sessions.getOrPut(o.pkg) { Session() }
         val now = clock()
-        if (o.inDm) s.dmSeenAt = now
+        if (o.source != null) {
+            s.sourceSeenAt = now
+            s.sourceName = o.source
+        }
 
         if (!o.inPlayer) {
             val was = s.state
@@ -123,8 +128,8 @@ class EntryStateMachine(
             val exitedAt = history.last().enteredAt
             if (isMessaging(source.pkg) && now - exitedAt <= allowWindowMs) return "messaging:${source.pkg}"
         }
-        val dm = s.dmSeenAt
-        if (dm != null && now - dm <= allowWindowMs) return "dm"
+        val seen = s.sourceSeenAt
+        if (seen != null && now - seen <= allowWindowMs) return "source:${s.sourceName}"
         return null
     }
 
