@@ -1,0 +1,97 @@
+=== WINDOW id=714 type=APPLICATION layer=0 pkg=com.android.chrome title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+    [2] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=com.android.chrome:id/action_bar_root cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+        [4] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+          [5] id=com.android.chrome:id/edge_to_edge_base_layout cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=3
+              [7] id=com.android.chrome:id/coordinator cls=android.view.ViewGroup bounds=[0,108][1080,2340] children=5
+                [8] id=com.android.chrome:id/compositor_view_holder cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=2
+                  [9] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=1
+                    [10] id=- cls=android.view.SurfaceView bounds=[0,108][1080,2340] children=0
+                  [9] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=1
+                    [10] id=- cls=android.webkit.WebView text="h_da39a3" bounds=[0,255][1080,2277] children=1 flags=focused
+                      [11] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,381] children=4 flags=clickable
+                        [12] id=global-loader cls=android.widget.TextView text="h_da39a3" bounds=[0,255][1080,255] children=0 flags=invisible
+                        [12] id=player-container-id cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=3
+                          [13] id=player-cinematics-container cls=android.widget.TextView text="h_da39a3" bounds=[0,255][1080,2277] children=0
+                          [13] id=player-shorts-container cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                            [14] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=2
+                              [15] id=- cls=android.view.View text="h_da39a3" bounds=[0,381][34,444] children=2
+                                [16] id=- cls=android.widget.Button text="h_da39a3" desc="h_3a02b7" bounds=[0,381][34,415] children=0 flags=clickable
+                                [16] id=- cls=android.widget.Button text="h_da39a3" desc="h_68ef4c" bounds=[0,417][34,454] children=0 flags=clickable
+                              [15] id=carousel-scrollable-wrapper cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                [16] id=carousel-items cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                  [17] id=carousel-item-2 cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                    [18] id=shorts-moveable-container cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                      [19] id=shorts-video cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                        [20] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=3 flags=clickable
+                                          [21] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                              [23] id=player cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                                [24] id=movie_player cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=3 flags=clickable
+                                                  [25] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=1
+                                                    [26] id=- cls=android.view.View text="h_da39a3" bounds=[0,304][1080,2229] children=0
+                                                  [25] id=- cls=android.widget.TextView text="h_da39a3" bounds=[28,255][1050,2247] children=0
+                                                  [25] id=ytp-caption-window-container cls=android.widget.TextView text="h_da39a3" bounds=[0,255][955,2277] children=0
+                                          [21] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=7
+                                            [22] id=gesture-layer cls=android.widget.TextView text="h_da39a3" bounds=[0,255][1080,2277] children=0
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[0,1853][913,2277] children=1
+                                              [23] id=- cls=android.view.View text="h_da39a3" bounds=[0,1956][913,2277] children=2
+                                                [24] id=- cls=android.view.View text="h_da39a3" bounds=[42,1998][913,2236] children=4 flags=clickable
+                                                  [25] id=- cls=android.view.View text="h_da39a3" bounds=[42,2003][126,2092] children=1
+                                                    [26] id=- cls=android.widget.Button text="h_da39a3" desc="h_87404c" bounds=[42,2003][126,2092] children=0 flags=clickable
+                                                  [25] id=- cls=android.widget.TextView text="h_87404c" bounds=[149,2000][320,2045] children=0
+                                                  [25] id=- cls=android.widget.TextView text="h_a0a85f" bounds=[149,2047][307,2100] children=0
+                                                  [25] id=- cls=android.widget.TextView text="h_288b75" bounds=[42,2126][913,2236] children=0
+                                                [24] id=- cls=android.view.View text="h_da39a3" desc="h_824d76" bounds=[42,2231][913,2277] children=1 flags=clickable
+                                                  [25] id=- cls=android.widget.TextView text="h_824d76" bounds=[354,2231][598,2277] children=0
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[963,276][1050,373] children=2
+                                              [23] id=- cls=android.widget.Button text="h_da39a3" desc="h_d5eccf" bounds=[963,276][1050,360] children=0 flags=clickable
+                                              [23] id=- cls=android.widget.TextView text="h_da39a3" bounds=[1005,367][1050,367] children=0 flags=invisible
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[952,1662][1039,1822] children=1
+                                              [23] id=- cls=android.view.View text="h_da39a3" bounds=[952,1672][1039,1801] children=2
+                                                [24] id=- cls=android.widget.ToggleButton text="h_da39a3" bounds=[952,1672][1039,1759] children=0 flags=clickable
+                                                [24] id=- cls=android.widget.TextView text="h_260426" bounds=[960,1756][1029,1801] children=0
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[952,1830][1039,1958] children=2
+                                              [23] id=- cls=android.widget.Button text="h_da39a3" desc="h_476738" bounds=[952,1830][1039,1916] children=0 flags=clickable,disabled
+                                              [23] id=- cls=android.widget.TextView text="h_b6589f" bounds=[987,1914][1005,1958] children=0
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[952,1987][1039,2116] children=2
+                                              [23] id=- cls=android.widget.Button text="h_da39a3" desc="h_d38be6" bounds=[952,1987][1039,2074] children=0 flags=clickable
+                                              [23] id=- cls=android.widget.TextView text="Share" bounds=[952,2071][1039,2116] children=0
+                                            [22] id=- cls=android.widget.Button text="h_da39a3" desc="h_6ac9e0" bounds=[945,2134][1047,2236] children=0 flags=clickable
+                                          [21] id=sticker-layer cls=android.widget.TextView text="h_da39a3" bounds=[0,255][1080,2277] children=0
+                          [13] id=full-screen-content-id cls=android.widget.TextView text="h_da39a3" bounds=[0,255][1080,255] children=0 flags=invisible
+                        [12] id=app cls=android.view.View text="h_da39a3" bounds=[0,255][1080,381] children=4
+                          [13] id=header-bar cls=android.view.View text="h_da39a3" bounds=[0,255][1080,381] children=1
+                            [14] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,381] children=2
+                              [15] id=- cls=android.view.View text="h_da39a3" desc="h_582ca2" bounds=[0,255][309,381] children=1 flags=clickable
+                                [16] id=home-icon cls=android.widget.TextView text="h_da39a3" bounds=[0,289][309,346] children=0
+                              [15] id=- cls=android.view.View text="h_da39a3" bounds=[826,255][955,381] children=1
+                                [16] id=- cls=android.widget.Button text="h_da39a3" desc="h_e17e23" bounds=[826,255][955,381] children=0 flags=clickable
+                          [13] id=- cls=android.widget.TextView text="h_da39a3" bounds=[0,2276][1080,2276] children=0 flags=invisible
+                          [13] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][0,2277] children=1 flags=invisible
+                            [14] id=- cls=android.widget.TextView text="h_da39a3" bounds=[0,255][0,2277] children=0 flags=invisible
+                          [13] id=- cls=android.widget.TextView text="h_da39a3" bounds=[0,255][0,255] children=0 flags=invisible
+                        [12] id=watch7-content cls=android.widget.TextView text="h_da39a3" bounds=[0,381][1080,381] children=0 flags=invisible
+                [8] id=com.android.chrome:id/control_container cls=android.widget.FrameLayout bounds=[0,108][1080,258] children=1
+                  [9] id=com.android.chrome:id/toolbar_container cls=android.view.ViewGroup bounds=[0,108][1080,258] children=2
+                    [10] id=com.android.chrome:id/toolbar cls=android.widget.FrameLayout bounds=[0,108][1080,255] children=3 flags=longClickable
+                      [11] id=com.android.chrome:id/home_button cls=android.widget.ImageButton desc="h_310a72" bounds=[0,108][126,255] children=0 flags=clickable,longClickable
+                      [11] id=com.android.chrome:id/location_bar cls=android.view.ViewGroup bounds=[126,108][691,255] children=2
+                        [12] id=com.android.chrome:id/url_bar cls=android.widget.EditText text="m.youtube.com/shorts/hGZj8FaVas4" bounds=[147,108][691,255] children=0 flags=clickable,longClickable,selected,editable
+                        [12] id=com.android.chrome:id/focus_thief cls=android.view.View bounds=[147,108][148,109] children=0
+                      [11] id=com.android.chrome:id/toolbar_buttons cls=android.widget.LinearLayout bounds=[691,108][1080,255] children=3
+                        [12] id=com.android.chrome:id/optional_toolbar_button_container cls=android.widget.FrameLayout bounds=[691,108][828,255] children=1
+                          [13] id=com.android.chrome:id/optional_toolbar_button cls=android.widget.ImageButton desc="h_6f23a3" bounds=[691,108][828,255] children=0 flags=clickable,longClickable
+                        [12] id=com.android.chrome:id/tab_switcher_button cls=android.widget.ImageButton desc="h_254163" bounds=[828,108][954,255] children=0 flags=clickable,longClickable
+                        [12] id=com.android.chrome:id/menu_button_wrapper cls=android.widget.FrameLayout bounds=[954,108][1080,255] children=1
+                          [13] id=com.android.chrome:id/menu_button cls=android.widget.ImageButton desc="h_1a2a29" bounds=[954,108][1080,255] children=0 flags=clickable
+                    [10] id=com.android.chrome:id/toolbar_hairline cls=android.widget.ImageView bounds=[0,255][1080,258] children=0
+                [8] id=com.android.chrome:id/toolbar_progress_bar_container cls=android.widget.FrameLayout bounds=[0,256][1080,261] children=1
+                  [9] id=com.android.chrome:id/progress_bar_animating_view cls=android.widget.ImageView bounds=[0,256][1080,261] children=0 flags=invisible
+                [8] id=com.android.chrome:id/edge_to_edge_bottom_chin cls=android.view.View bounds=[0,2277][1080,2340] children=0
+                [8] id=com.android.chrome:id/bottom_container cls=android.widget.FrameLayout bounds=[0,2340][1080,2340] children=0 flags=invisible
+              [7] id=com.android.chrome:id/navigation_popup_anchor_stub cls=android.view.View bounds=[0,2340][1080,2340] children=0 flags=invisible
+              [7] id=com.android.chrome:id/menu_anchor_stub cls=android.view.View bounds=[0,2340][0,2340] children=0 flags=invisible

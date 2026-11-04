@@ -6,8 +6,8 @@ data class NamedSignature(val name: String, val signature: Signature)
 data class AppRule(
     val app: String,
     val packages: Set<String>,
-    /** The full-screen short-video player. */
-    val playerSignature: Signature,
+    /** The full-screen short-video player; null for apps (browsers) that are judged by URL alone. */
+    val playerSignature: Signature?,
     /** Screens that lead into the player (Shorts tab, Reels tab, ...). */
     val feedEntrySignatures: List<NamedSignature> = emptyList(),
     /**
@@ -22,8 +22,20 @@ data class AppRule(
      * Matched against the event source; null when the app reports no usable index.
      */
     val scrollSignal: Leaf? = null,
+    /** Browsers: view ids of the URL bar, tried in order. */
+    val urlBarIds: List<String> = emptyList(),
+    /** Browsers: URL shapes that mean "short-video page", matched on the canonical host/path. */
+    val urlPatterns: List<UrlPattern> = emptyList(),
 ) {
-    fun isPlayer(screen: ScreenView) = playerSignature.evaluate(screen)
+    fun isPlayer(screen: ScreenView) = playerSignature?.evaluate(screen) ?: false
+
+    val isBrowser: Boolean get() = urlBarIds.isNotEmpty() && urlPatterns.isNotEmpty()
+
+    /** Raw text of the URL bar, or null if none is on screen. */
+    fun urlText(screen: ScreenView): String? =
+        urlBarIds.firstNotNullOfOrNull { screen.textOf(Leaf(viewId = it)) }
+
+    fun matchUrl(url: String): UrlPattern? = Urls.firstMatch(urlPatterns, url)
 
     /** Names of the feed-entry signatures that currently match. */
     fun matchingFeedEntries(screen: ScreenView): List<String> =

@@ -43,16 +43,35 @@ object RuleParser {
             )
         }
 
+        val urlPatterns = (root["urlPatterns"] as? JsonArray).orEmpty().mapIndexed { i, e ->
+            val path = "urlPatterns[$i]"
+            val obj = e as? JsonObject ?: throw RuleParseException("$path must be an object")
+            val regex = obj.string("regex", "$path.regex")
+            UrlPattern(
+                obj.string("name", "$path.name"),
+                try {
+                    Regex(regex)
+                } catch (ex: java.util.regex.PatternSyntaxException) {
+                    throw RuleParseException("$path.regex is not a valid regular expression")
+                },
+            )
+        }
+        val urlBarIds = (root["urlBarIds"] as? JsonArray).orEmpty().mapIndexed { i, e -> e.string("urlBarIds[$i]") }
+        if (urlPatterns.isNotEmpty() && urlBarIds.isEmpty()) {
+            throw RuleParseException("urlPatterns needs urlBarIds to read the URL from")
+        }
+        val player = root["playerSignature"]?.let { signature(it, "playerSignature") }
+        if (player == null && urlPatterns.isEmpty()) throw RuleParseException("playerSignature missing")
+
         return AppRule(
             app = root.string("app", "app"),
             packages = packages,
-            playerSignature = signature(
-                root["playerSignature"] ?: throw RuleParseException("playerSignature missing"),
-                "playerSignature",
-            ),
+            playerSignature = player,
             feedEntrySignatures = entries,
             allowSources = sources,
             fingerprintNodes = fingerprint,
+            urlBarIds = urlBarIds,
+            urlPatterns = urlPatterns,
             scrollSignal = root["scrollSignal"]?.let {
                 leaf(it as? JsonObject ?: throw RuleParseException("scrollSignal must be an object"), "scrollSignal")
             },

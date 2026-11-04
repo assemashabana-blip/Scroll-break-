@@ -22,6 +22,7 @@ import com.assem.scrollbreak.core.Throttle
 import com.assem.scrollbreak.core.rules.AppRule
 import com.assem.scrollbreak.core.rules.Fingerprint
 import com.assem.scrollbreak.core.rules.RuleSet
+import com.assem.scrollbreak.core.rules.UrlTracker
 import java.util.concurrent.Executors
 
 /**
@@ -46,6 +47,7 @@ class ScrollBreakService : AccessibilityService() {
     private var rules = RuleSet(emptyList())
     private var foregroundPkg: String? = null
     private val pollingPackages = HashSet<String>()
+    private val urls = UrlTracker()
     // Lazy: system services are unavailable until the service is attached to its context.
     private val overlay by lazy { BlockOverlay(this) { performGlobalAction(GLOBAL_ACTION_BACK) } }
 
@@ -144,8 +146,9 @@ class ScrollBreakService : AccessibilityService() {
         if (previous == pkg) return
         machine.onForeground(pkg)
         foregroundPkg = pkg
-        if (previous != null && machine.state(previous) != State.IDLE && !hasWindow(previous)) {
+        if (previous != null && !hasWindow(previous)) {
             machine.onLeft(previous)
+            urls.forget(previous)
         }
     }
 
@@ -154,6 +157,28 @@ class ScrollBreakService : AccessibilityService() {
         val has = !screen.isEmpty
         screen.close()
         return has
+    }
+
+    /** What a screen says right now: is it a short-video player, and (browsers) which page. */
+    private class Reading(val inPlayer: Boolean, val urlKey: String?)
+
+    /**
+     * Player detection combines the app's player signature with, for browsers, the URL bar: the
+     * URL is read through [UrlTracker] so a hidden bar keeps the last page, and a pattern match
+     * means a short-video page. The normalised URL doubles as that page's identity.
+     */
+    private fun read(pkg: String, rule: AppRule, screen: AndroidScreen): Reading {
+        // No window means the user left; a remembered URL must not outlive the page it came from.
+        if (screen.isEmpty) {
+            urls.forget(pkg)
+            return Reading(false, null)
+        }
+        var urlKey: String? = null
+        if (rule.isBrowser) {
+            val url = urls.observe(pkg, rule.urlText(screen))
+            if (url != null && rule.matchUrl(url) != null) urlKey = url
+        }
+        return Reading(rule.isPlayer(screen) || urlKey != null, urlKey)
     }
 
     /**
@@ -168,7 +193,8 @@ class ScrollBreakService : AccessibilityService() {
         var source: String? = null
         val result: EntryStateMachine.Result
         try {
-            inPlayer = rule.isPlayer(screen)
+            val reading = read(pkg, rule, screen)
+            inPlayer = reading.inPlayer
             val t2 = SystemClock.uptimeMillis()
             source = if (!inPlayer) rule.matchingSource(screen) else null
             // The fingerprint costs a tree walk, so only read it while one video is allowed.
@@ -176,7 +202,7 @@ class ScrollBreakService : AccessibilityService() {
             val fingerprint = if (inPlayer && machine.state(pkg) == State.ALLOW_ONE &&
                 fingerprintThrottle.shouldPass(pkg)
             ) {
-                rule.fingerprint(screen)
+                reading.urlKey?.let { Fingerprint(listOf(it)) } ?: rule.fingerprint(screen)
             } else Fingerprint.EMPTY
             val t3 = SystemClock.uptimeMillis()
             result = machine.onObservation(Observation(pkg, inPlayer, source, fingerprint, scrollIndex))
@@ -247,7 +273,7 @@ class ScrollBreakService : AccessibilityService() {
     private fun isInPlayer(pkg: String, rule: AppRule): Boolean {
         val screen = AndroidScreen.forPackage(this, pkg)
         return try {
-            rule.isPlayer(screen)
+            read(pkg, rule, screen).inPlayer
         } finally {
             screen.close()
         }

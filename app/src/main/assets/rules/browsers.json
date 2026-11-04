@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "app": "browsers",
+  "packages": ["com.android.chrome"],
+
+  "urlBarIds": ["com.android.chrome:id/url_bar"],
+
+  "urlPatterns": [
+    { "name": "youtube_shorts",     "regex": "^([a-z0-9-]+\\.)*youtube\\.com/shorts(/|$)" },
+    { "name": "instagram_reels",    "regex": "^([a-z0-9-]+\\.)*instagram\\.com/reels?(/|$)" },
+    { "name": "tiktok",             "regex": "^([a-z0-9-]+\\.)*tiktok\\.com($|/)" },
+    { "name": "facebook_reels",     "regex": "^([a-z0-9-]+\\.)*facebook\\.com/reels?(/|$)" },
+    { "name": "snapchat_spotlight", "regex": "^([a-z0-9-]+\\.)*snapchat\\.com/.*spotlight" }
+  ]
+}

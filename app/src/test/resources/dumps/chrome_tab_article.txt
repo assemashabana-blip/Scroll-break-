@@ -1,0 +1,694 @@
+=== WINDOW id=714 type=APPLICATION layer=0 pkg=com.android.chrome title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+    [2] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=com.android.chrome:id/action_bar_root cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+        [4] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+          [5] id=com.android.chrome:id/edge_to_edge_base_layout cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=3
+              [7] id=com.android.chrome:id/coordinator cls=android.view.ViewGroup bounds=[0,108][1080,2340] children=6
+                [8] id=com.android.chrome:id/compositor_view_holder cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=2
+                  [9] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=1
+                    [10] id=- cls=android.view.SurfaceView bounds=[0,108][1080,2340] children=0
+                  [9] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=1
+                    [10] id=- cls=android.webkit.WebView text="h_da39a3" bounds=[0,255][1080,2277] children=1 flags=scrollable,focused
+                      [11] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2276] children=3 flags=clickable
+                        [12] id=mw-aria-live-region cls=android.widget.TextView text="h_da39a3" bounds=[0,255][1080,255] children=0 flags=invisible
+                        [12] id=mw-mf-viewport cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2276] children=1
+                          [13] id=mw-mf-page-center cls=android.view.View text="h_da39a3" bounds=[0,255][1080,2277] children=3 flags=clickable
+                            [14] id=- cls=android.view.View text="h_da39a3" bounds=[0,255][1080,399] children=4
+                              [15] id=- cls=com.google.android.material.navigation.NavigationView text="h_da39a3" bounds=[42,265][126,383] children=1
+                                [16] id=main-menu-input cls=android.widget.Button text="h_da39a3" bounds=[7,265][97,383] children=0 flags=clickable
+                              [15] id=- cls=android.view.View text="h_da39a3" bounds=[126,294][509,357] children=1
+                                [16] id=- cls=android.view.View desc="h_664add" bounds=[136,294][509,357] children=1 flags=clickable
+                                  [17] id=- cls=android.widget.Image text="h_da39a3" desc="h_664add" bounds=[136,294][509,357] children=0
+                              [15] id=- cls=android.widget.SearchView text="h_da39a3" bounds=[504,265][955,383] children=1
+                                [16] id=searchIcon cls=android.widget.Button text="Search" bounds=[837,265][955,383] children=0 flags=clickable
+                              [15] id=- cls=com.google.android.material.navigation.NavigationView text="h_da39a3" bounds=[952,255][1039,399] children=1
+                                [16] id=- cls=android.view.View text="h_da39a3" bounds=[952,265][1071,383] children=1 flags=clickable
+                                  [17] id=minerva-user-menu-checkbox cls=android.widget.Button text="h_da39a3" bounds=[952,265][1071,383] children=0 flags=clickable
+                            [14] id=content cls=android.view.View text="h_da39a3" bounds=[0,394][1080,2277] children=4
+                              [15] id=siteNotice cls=android.view.View text="h_da39a3" bounds=[0,394][1080,394] children=1 flags=invisible
+                                [16] id=centralNotice cls=android.widget.TextView text="h_da39a3" bounds=[0,396][1080,396] children=0 flags=invisible
+                              [15] id=- cls=android.view.View text="h_da39a3" bounds=[42,396][1039,790] children=4
+                                [16] id=firstHeading cls=android.widget.TextView text="h_af4ba3" bounds=[42,449][1039,549] children=0
+                                [16] id=p-associated-pages cls=android.widget.ListView text="h_da39a3" bounds=[42,577][1039,661] children=2
+                                  [17] id=- cls=android.view.View text="h_da39a3" bounds=[42,577][149,661] children=1
+                                    [18] id=- cls=android.view.View desc="h_4360c2" bounds=[42,588][149,633] children=1 flags=clickable
+                                      [19] id=- cls=android.widget.TextView text="h_4360c2" bounds=[42,588][149,633] children=0
+                                  [17] id=- cls=android.view.View text="h_da39a3" bounds=[183,577][254,656] children=1
+                                    [18] id=- cls=android.view.View desc="h_4e6a71" bounds=[183,588][254,633] children=1 flags=clickable
+                                      [19] id=- cls=android.widget.TextView text="h_4e6a71" bounds=[183,588][254,633] children=0
+                                [16] id=- cls=com.google.android.material.navigation.NavigationView text="h_da39a3" bounds=[42,656][1039,790] children=1
+                                  [17] id=p-views cls=android.widget.ListView text="h_da39a3" bounds=[42,656][1039,787] children=4
+                                    [18] id=language-selector cls=android.view.View text="h_da39a3" bounds=[7,656][724,787] children=1
+                                      [19] id=- cls=android.widget.Button text="h_89b86a" bounds=[7,661][126,780] children=0 flags=clickable
+                                    [18] id=page-actions-bookmark cls=android.view.View text="h_da39a3" bounds=[721,656][840,787] children=1
+                                      [19] id=ca-bookmark cls=android.widget.Button text="Save" bounds=[721,661][840,780] children=0 flags=clickable
+                                    [18] id=page-actions-viewsource cls=android.view.View text="h_da39a3" bounds=[837,656][955,787] children=1
+                                      [19] id=ca-edit cls=android.widget.Button text="h_31a760" bounds=[837,661][955,780] children=0 flags=clickable
+                                    [18] id=minerva-download cls=android.view.View text="h_da39a3" bounds=[952,656][1071,787] children=1 flags=clickable
+                                      [19] id=- cls=android.view.View desc="h_98e5ef" bounds=[952,661][1071,780] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_98e5ef" bounds=[1008,722][1080,774] children=0
+                                [16] id=mw-content-subtitle cls=android.widget.TextView text="h_da39a3" bounds=[42,785][1039,785] children=0 flags=invisible
+                              [15] id=bodyContent cls=android.view.View text="h_da39a3" bounds=[42,806][1039,2277] children=1
+                                [16] id=mw-content-text cls=android.view.View text="h_da39a3" bounds=[42,806][1039,2277] children=16
+                                  [17] id=mwAQ cls=android.view.View text="h_da39a3" bounds=[42,806][1039,2277] children=4
+                                    [18] id=mwGQ cls=android.view.View text="h_da39a3" bounds=[42,806][1039,1504] children=23
+                                      [19] id=mwGg cls=android.widget.TextView text="h_1928f9" bounds=[42,816][191,869] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_ddc4ee" bounds=[189,816][301,869] children=0
+                                      [19] id=mwGw cls=android.view.View desc="h_2caa62" bounds=[296,816][624,869] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_2caa62" bounds=[296,816][624,869] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_91fba6" bounds=[619,816][889,869] children=0
+                                      [19] id=mwHA cls=android.view.View desc="h_2b681c" bounds=[887,816][1023,869] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_2b681c" bounds=[887,816][1023,869] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_85d593" bounds=[42,816][1031,937] children=0
+                                      [19] id=mwHQ cls=android.view.View desc="h_c2c34a" bounds=[456,885][708,937] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_c2c34a" bounds=[456,885][708,937] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_4f4133" bounds=[706,885][798,937] children=0
+                                      [19] id=mwHg cls=android.view.View desc="h_d67b0e" bounds=[795,885][926,937] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_d67b0e" bounds=[795,885][926,937] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_d21048" bounds=[42,955][57,1008] children=0
+                                      [19] id=mwHw cls=android.view.View desc="h_a7a69f" bounds=[55,955][288,1008] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_a7a69f" bounds=[55,955][288,1008] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_12581e" bounds=[42,955][1015,1147] children=0
+                                      [19] id=mwIA cls=android.view.View desc="h_7d00c0" bounds=[304,1095][532,1147] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_7d00c0" bounds=[304,1095][532,1147] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_fd9877" bounds=[527,1095][729,1147] children=0
+                                      [19] id=mwIQ cls=android.view.View desc="h_6679c7" bounds=[42,1095][960,1215] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_6679c7" bounds=[42,1095][960,1215] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_adc335" bounds=[204,1163][918,1215] children=0
+                                      [19] id=mwIg cls=android.view.View desc="h_9890f8" bounds=[42,1163][1013,1284] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_9890f8" bounds=[42,1163][1013,1284] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_5622c4" bounds=[42,1231][992,1354] children=0
+                                      [19] id=cite_ref-4 cls=android.view.View text="h_da39a3" bounds=[152,1294][189,1336] children=1
+                                        [20] id=mwIw cls=android.view.View desc="h_8f4e34" bounds=[152,1294][189,1336] children=1 flags=clickable
+                                          [21] id=mwJA cls=android.view.View text="h_da39a3" bounds=[152,1294][189,1336] children=3
+                                            [22] id=mwJQ cls=android.widget.TextView text="h_1e5c2f" bounds=[152,1294][162,1336] children=0
+                                            [22] id=- cls=android.widget.TextView text="h_1b6453" bounds=[160,1294][181,1336] children=0
+                                            [22] id=mwJg cls=android.widget.TextView text="h_4ff447" bounds=[178,1294][189,1336] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_5a51cd" bounds=[42,1302][945,1423] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_47c9d8" bounds=[42,1370][981,1491] children=0
+                                      [19] id=mwJw cls=android.view.View desc="h_e2e963" bounds=[262,1438][467,1491] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.TextView text="h_e2e963" bounds=[262,1438][467,1491] children=0
+                                      [19] id=- cls=android.widget.TextView text="h_3a52ce" bounds=[464,1438][480,1491] children=0
+                                    [18] id=mwDA cls=android.widget.GridView text="h_da39a3" bounds=[42,1522][1039,2277] children=24
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,1530][1029,1630] children=1
+                                        [20] id=- cls=android.view.View text="h_1928f9" bounds=[49,1530][1029,1630] children=0
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,1627][1029,1782] children=1
+                                        [20] id=- cls=android.view.View text="h_c8ea7d" bounds=[49,1627][1029,1782] children=1
+                                          [21] id=- cls=android.view.View desc="h_c8ea7d" bounds=[183,1646][895,1761] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.Image text="h_da39a3" desc="h_c8ea7d" bounds=[183,1646][895,1761] children=0
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,1777][1029,1877] children=2
+                                        [20] id=- cls=android.view.View text="h_7e08eb" bounds=[49,1777][540,1877] children=1
+                                          [21] id=- cls=android.view.View desc="h_7e08eb" bounds=[76,1803][249,1851] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_7e08eb" bounds=[76,1803][249,1851] children=0
+                                        [20] id=- cls=android.view.View text="h_2b681c" bounds=[538,1777][1029,1877] children=1
+                                          [21] id=- cls=android.view.View desc="h_2b681c" bounds=[564,1803][687,1851] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_2b681c" bounds=[564,1803][687,1851] children=0
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,1874][1029,2029] children=2
+                                        [20] id=- cls=android.view.View text="h_1d73e9" bounds=[49,1874][540,2029] children=1
+                                          [21] id=- cls=android.view.View desc="h_1d73e9" bounds=[76,1898][244,1945] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_1d73e9" bounds=[76,1898][244,1945] children=0
+                                        [20] id=- cls=android.view.View text="h_33233d" bounds=[538,1874][1029,2029] children=12
+                                          [21] id=- cls=android.view.View desc="h_e027e5" bounds=[564,1898][648,1945] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_e027e5" bounds=[564,1898][648,1945] children=0
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[643,1898][664,1945] children=0
+                                          [21] id=- cls=android.view.View desc="h_4b97a1" bounds=[661,1898][761,1945] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_4b97a1" bounds=[661,1898][761,1945] children=0
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[758,1898][777,1945] children=0
+                                          [21] id=- cls=android.view.View desc="h_32096c" bounds=[774,1898][803,1945] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_32096c" bounds=[774,1898][803,1945] children=0
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[798,1898][819,1945] children=0
+                                          [21] id=- cls=android.view.View desc="h_fc2b42" bounds=[816,1898][887,1945] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_fc2b42" bounds=[816,1898][887,1945] children=0
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[882,1898][895,1945] children=0
+                                          [21] id=- cls=android.view.View desc="h_e2ae20" bounds=[564,1956][643,2003] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_e2ae20" bounds=[564,1956][643,2003] children=0
+                                          [21] id=cite_ref-1 cls=android.view.View text="h_da39a3" bounds=[640,1950][674,1987] children=1
+                                            [22] id=mwDQ cls=android.view.View desc="h_f629ae" bounds=[640,1950][674,1987] children=1 flags=clickable
+                                              [23] id=mwDg cls=android.view.View text="h_da39a3" bounds=[640,1950][674,1987] children=3
+                                                [24] id=mwDw cls=android.widget.TextView text="h_1e5c2f" bounds=[640,1950][651,1987] children=0
+                                                [24] id=- cls=android.widget.TextView text="h_356a19" bounds=[648,1950][666,1987] children=0
+                                                [24] id=mwEA cls=android.widget.TextView text="h_4ff447" bounds=[664,1950][674,1987] children=0
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[672,1956][693,2003] children=0
+                                          [21] id=- cls=android.view.View desc="h_2d1979" bounds=[687,1956][858,2003] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_2d1979" bounds=[687,1956][858,2003] children=0
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2026][1029,2124] children=2
+                                        [20] id=- cls=android.view.View text="h_406781" bounds=[49,2026][540,2124] children=0
+                                        [20] id=- cls=android.view.View text="h_83ad85" bounds=[538,2026][1029,2124] children=1
+                                          [21] id=- cls=android.view.View desc="h_83ad85" bounds=[564,2050][658,2097] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_83ad85" bounds=[564,2050][658,2097] children=0
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2121][1029,2221] children=2
+                                        [20] id=- cls=android.view.View text="h_36eab0" bounds=[49,2121][540,2221] children=0
+                                        [20] id=- cls=android.view.View text="h_a733b8" bounds=[538,2121][1029,2221] children=0
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2215][1029,2277] children=2
+                                        [20] id=- cls=android.view.View text="h_4d54fb" bounds=[49,2215][540,2277] children=0
+                                        [20] id=- cls=android.view.View text="h_a0b527" bounds=[538,2215][1029,2277] children=2
+                                          [21] id=- cls=android.view.View desc="h_359dbe" bounds=[564,2242][782,2277] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.TextView text="h_359dbe" bounds=[564,2242][782,2277] children=0
+                                          [21] id=cite_ref-2 cls=android.view.View text="h_da39a3" bounds=[777,2236][811,2271] children=1
+                                            [22] id=mwEQ cls=android.view.View desc="h_249983" bounds=[777,2236][811,2271] children=1 flags=clickable
+                                              [23] id=mwEg cls=android.view.View text="h_da39a3" bounds=[777,2236][811,2271] children=3
+                                                [24] id=mwEw cls=android.widget.TextView text="h_1e5c2f" bounds=[777,2236][787,2271] children=0
+                                                [24] id=- cls=android.widget.TextView text="h_da4b92" bounds=[784,2236][803,2271] children=0
+                                                [24] id=mwFA cls=android.widget.TextView text="h_4ff447" bounds=[800,2236][811,2271] children=0
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_31bf69" bounds=[49,2277][540,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_74c117" bounds=[538,2277][1029,2277] children=7 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_5d7670" bounds=[564,2277][761,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_5d7670" bounds=[564,2277][761,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_760c19" bounds=[564,2277][787,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_ab90d2" bounds=[748,2277][761,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_b8e676" bounds=[756,2277][905,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_2d14ab" bounds=[903,2277][913,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_b858cb" bounds=[910,2277][921,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_47a136" bounds=[564,2277][966,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_2c3457" bounds=[49,2277][540,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_2c3457" bounds=[76,2277][320,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_2c3457" bounds=[76,2277][320,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_5802e5" bounds=[538,2277][1029,2277] children=7 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_e2e963" bounds=[564,2277][750,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_e2e963" bounds=[564,2277][750,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_6594c6" bounds=[748,2277][868,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_ab90d2" bounds=[863,2277][876,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_dd331a" bounds=[564,2277][926,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_2d14ab" bounds=[651,2277][661,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_b858cb" bounds=[658,2277][669,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_6db384" bounds=[666,2277][903,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_312386" bounds=[49,2277][540,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_312386" bounds=[76,2277][262,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_312386" bounds=[76,2277][262,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_5846b9" bounds=[538,2277][1029,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.widget.ListView text="h_da39a3" bounds=[564,2277][1005,2277] children=1 flags=invisible
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[564,2277][1005,2277] children=3 flags=invisible
+                                              [23] id=- cls=android.view.View desc="h_e09c99" bounds=[564,2277][934,2277] children=3 flags=clickable,invisible
+                                                [24] id=- cls=android.widget.TextView text="h_e4bbe5" bounds=[564,2277][695,2277] children=0 flags=invisible
+                                                [24] id=- cls=android.widget.TextView text="h_d39616" bounds=[693,2277][934,2277] children=0 flags=invisible
+                                                [24] id=- cls=android.widget.TextView text="h_27dad8" bounds=[564,2277][651,2277] children=0 flags=invisible
+                                              [23] id=- cls=android.widget.TextView text="h_b858cb" bounds=[682,2277][695,2277] children=0 flags=invisible
+                                              [23] id=- cls=android.view.View desc="h_52bc14" bounds=[693,2277][721,2277] children=1 flags=clickable,invisible
+                                                [24] id=- cls=android.widget.Image text="h_da39a3" desc="h_52bc14" bounds=[693,2277][721,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_4f9e64" bounds=[49,2277][540,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_65558b" bounds=[538,2277][1029,2277] children=22 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_42be68" bounds=[564,2277][795,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_42be68" bounds=[564,2277][795,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[790,2277][811,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_d67b0e" bounds=[808,2277][926,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_d67b0e" bounds=[808,2277][926,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[924,2277][934,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_3de877" bounds=[564,2277][693,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_3de877" bounds=[564,2277][693,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[690,2277][711,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_b28b50" bounds=[706,2277][863,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_b28b50" bounds=[706,2277][863,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[861,2277][882,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_b2b47d" bounds=[564,2277][979,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_b2b47d" bounds=[564,2277][979,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d21048" bounds=[630,2277][656,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_d88b9f" bounds=[653,2277][845,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_d88b9f" bounds=[653,2277][845,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_aa03eb" bounds=[564,2277][945,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_8d4198" bounds=[577,2277][916,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_8d4198" bounds=[577,2277][916,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_482448" bounds=[910,2277][934,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_17dc48" bounds=[564,2277][808,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_17dc48" bounds=[564,2277][808,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d21048" bounds=[805,2277][832,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_5f0aef" bounds=[826,2277][976,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_5f0aef" bounds=[826,2277][976,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_991b9d" bounds=[564,2277][997,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_a548b6" bounds=[637,2277][850,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_a548b6" bounds=[637,2277][850,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d21048" bounds=[564,2277][580,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_ed8c04" bounds=[577,2277][769,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_ed8c04" bounds=[577,2277][769,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_e7064f" bounds=[763,2277][782,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_32051b" bounds=[49,2277][540,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_c09580" bounds=[538,2277][1029,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_6ed86b" bounds=[49,2277][540,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_c4ddff" bounds=[538,2277][1029,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_c4ddff" bounds=[564,2277][761,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_c4ddff" bounds=[564,2277][761,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_a069a0" bounds=[49,2277][540,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_a069a0" bounds=[76,2277][385,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_a069a0" bounds=[76,2277][385,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_a583c4" bounds=[538,2277][1029,2277] children=2 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_b33723" bounds=[564,2277][640,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_b33723" bounds=[564,2277][640,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_2d8a50" bounds=[635,2277][753,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_34c6c2" bounds=[49,2277][540,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_7637b1" bounds=[538,2277][1029,2277] children=12 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_6cb904" bounds=[564,2277][648,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_6cb904" bounds=[564,2277][648,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_ceca32" bounds=[645,2277][664,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_bb16ce" bounds=[661,2277][787,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_bb16ce" bounds=[661,2277][787,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[784,2277][805,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_a32491" bounds=[800,2277][903,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_a32491" bounds=[800,2277][903,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View text="h_ef7e67" bounds=[897,2277][897,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_a1ecc3" bounds=[564,2277][648,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_a1ecc3" bounds=[564,2277][648,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_ceca32" bounds=[645,2277][669,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_2a92b8" bounds=[664,2277][787,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_2a92b8" bounds=[664,2277][787,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[784,2277][805,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_500d1a" bounds=[800,2277][858,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_500d1a" bounds=[800,2277][858,2277] children=0 flags=invisible
+                                          [21] id=cite_ref-3 cls=android.view.View text="h_da39a3" bounds=[853,2277][887,2277] children=1 flags=invisible
+                                            [22] id=mwFQ cls=android.view.View desc="h_f1e31d" bounds=[853,2277][887,2277] children=1 flags=clickable,invisible
+                                              [23] id=mwFg cls=android.view.View text="h_da39a3" bounds=[853,2277][887,2277] children=3 flags=invisible
+                                                [24] id=mwFw cls=android.widget.TextView text="h_1e5c2f" bounds=[853,2277][866,2277] children=0 flags=invisible
+                                                [24] id=- cls=android.widget.TextView text="h_77de68" bounds=[861,2277][879,2277] children=0 flags=invisible
+                                                [24] id=mwGA cls=android.widget.TextView text="h_4ff447" bounds=[876,2277][887,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_6156ca" bounds=[49,2277][540,2277] children=2 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_74808d" bounds=[76,2277][189,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_74808d" bounds=[76,2277][189,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_ff9b55" bounds=[186,2277][273,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_58a954" bounds=[538,2277][1029,2277] children=4 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_0c8bc2" bounds=[564,2277][745,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_0c8bc2" bounds=[564,2277][745,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d21048" bounds=[742,2277][769,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_7d00c0" bounds=[763,2277][968,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_7d00c0" bounds=[763,2277][968,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_e7064f" bounds=[966,2277][981,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_d61a18" bounds=[49,2277][540,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_d61a18" bounds=[76,2277][231,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_d61a18" bounds=[76,2277][231,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_198c2f" bounds=[538,2277][1029,2277] children=6 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_53b48a" bounds=[564,2277][740,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_53b48a" bounds=[564,2277][740,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[737,2277][756,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_3c738e" bounds=[756,2277][850,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_3c738e" bounds=[756,2277][850,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_cdf567" bounds=[847,2277][945,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_1e0853" bounds=[564,2277][690,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_1e0853" bounds=[564,2277][690,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_0af689" bounds=[685,2277][952,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_ea8959" bounds=[49,2277][540,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_ea8959" bounds=[76,2277][315,2277] children=3 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_808d7d" bounds=[76,2277][202,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.view.View text="h_ef7e67" bounds=[199,2277][199,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_a534ae" bounds=[76,2277][315,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_c5e98d" bounds=[538,2277][1029,2277] children=4 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_f6ec1d" bounds=[564,2277][727,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_f6ec1d" bounds=[564,2277][727,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_d21048" bounds=[724,2277][748,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_6f4589" bounds=[745,2277][939,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_6f4589" bounds=[745,2277][939,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_e7064f" bounds=[934,2277][952,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_322960" bounds=[49,2277][540,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_322960" bounds=[76,2277][210,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_322960" bounds=[76,2277][210,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_a4351e" bounds=[538,2277][1029,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.widget.ListView text="h_da39a3" bounds=[564,2277][1005,2277] children=2 flags=invisible
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[564,2277][1005,2277] children=2 flags=invisible
+                                              [23] id=- cls=android.view.View desc="h_9e50bc" bounds=[564,2277][758,2277] children=1 flags=clickable,invisible
+                                                [24] id=- cls=android.widget.TextView text="h_9e50bc" bounds=[564,2277][758,2277] children=0 flags=invisible
+                                              [23] id=- cls=android.widget.TextView text="h_0c9d29" bounds=[564,2277][997,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.view.View text="h_da39a3" bounds=[564,2277][1005,2277] children=3 flags=invisible
+                                              [23] id=- cls=android.view.View desc="h_f9b408" bounds=[564,2277][782,2277] children=1 flags=clickable,invisible
+                                                [24] id=- cls=android.widget.TextView text="h_f9b408" bounds=[564,2277][782,2277] children=0 flags=invisible
+                                              [23] id=- cls=android.widget.TextView text="h_2618b4" bounds=[777,2277][908,2277] children=0 flags=invisible
+                                              [23] id=- cls=android.view.View desc="h_7d00c0" bounds=[564,2277][1000,2277] children=1 flags=clickable,invisible
+                                                [24] id=- cls=android.widget.TextView text="h_7d00c0" bounds=[564,2277][1000,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_6fb4f6" bounds=[49,2277][540,2277] children=0 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_febdbb" bounds=[538,2277][1029,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_febdbb" bounds=[564,2277][813,2277] children=2 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_e4bbe5" bounds=[564,2277][695,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_27dad8" bounds=[693,2277][779,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=1 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_2b1707" bounds=[49,2277][1029,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=1 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_e09f05" bounds=[49,2277][1029,2277] children=2 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_47ea2c" bounds=[278,2277][464,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_47ea2c" bounds=[278,2277][464,2277] children=0 flags=invisible
+                                          [21] id=- cls=android.widget.TextView text="h_edfda6" bounds=[462,2277][803,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=1 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_d42117" bounds=[49,2277][1029,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.view.View text="h_da39a3" bounds=[49,2277][1029,2277] children=1 flags=invisible
+                                        [20] id=- cls=android.view.View text="h_1587d7" bounds=[49,2277][1029,2277] children=1 flags=invisible
+                                          [21] id=- cls=android.view.View desc="h_1587d7" bounds=[343,2277][735,2277] children=1 flags=clickable,invisible
+                                            [22] id=- cls=android.widget.TextView text="h_1587d7" bounds=[343,2277][735,2277] children=0 flags=invisible
+                                    [18] id=mwKA cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=66 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_e85ae4" bounds=[42,2277][945,2277] children=0 flags=invisible
+                                      [19] id=mwKQ cls=android.widget.TextView text="h_f21d8d" bounds=[42,2277][588,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d21048" bounds=[585,2277][614,2277] children=0 flags=invisible
+                                      [19] id=mwKg cls=android.widget.TextView text="h_33e68d" bounds=[611,2277][724,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_3d3552" bounds=[721,2277][748,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-5 cls=android.view.View text="h_da39a3" bounds=[742,2277][782,2277] children=1 flags=invisible
+                                        [20] id=mwKw cls=android.view.View desc="h_10ae24" bounds=[742,2277][782,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwLA cls=android.view.View text="h_da39a3" bounds=[742,2277][782,2277] children=3 flags=invisible
+                                            [22] id=mwLQ cls=android.widget.TextView text="h_1e5c2f" bounds=[742,2277][756,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_ac3478" bounds=[750,2277][774,2277] children=0 flags=invisible
+                                            [22] id=mwLg cls=android.widget.TextView text="h_4ff447" bounds=[769,2277][782,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_8868e7" bounds=[42,2277][952,2277] children=0 flags=invisible
+                                      [19] id=mwLw cls=android.view.View desc="h_29bf76" bounds=[42,2277][963,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_29bf76" bounds=[42,2277][963,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_62d8be" bounds=[42,2277][1010,2277] children=0 flags=invisible
+                                      [19] id=mwMA cls=android.view.View desc="h_38082f" bounds=[225,2277][525,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_38082f" bounds=[225,2277][525,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_eaf307" bounds=[42,2277][976,2277] children=0 flags=invisible
+                                      [19] id=mwMQ cls=android.view.View desc="h_2a2415" bounds=[181,2277][388,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_2a2415" bounds=[181,2277][388,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_387a6c" bounds=[383,2277][553,2277] children=0 flags=invisible
+                                      [19] id=mwMg cls=android.view.View desc="h_8dc91b" bounds=[551,2277][740,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_8dc91b" bounds=[551,2277][740,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d8d679" bounds=[42,2277][955,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-6 cls=android.view.View text="h_da39a3" bounds=[939,2277][976,2277] children=1 flags=invisible
+                                        [20] id=mwMw cls=android.view.View desc="h_4a0a63" bounds=[939,2277][976,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwNA cls=android.view.View text="h_da39a3" bounds=[939,2277][976,2277] children=3 flags=invisible
+                                            [22] id=mwNQ cls=android.widget.TextView text="h_1e5c2f" bounds=[939,2277][950,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_c1dfd9" bounds=[947,2277][968,2277] children=0 flags=invisible
+                                            [22] id=mwNg cls=android.widget.TextView text="h_4ff447" bounds=[966,2277][976,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_cafdb2" bounds=[42,2277][299,2277] children=0 flags=invisible
+                                      [19] id=mwNw cls=android.view.View desc="h_a7df93" bounds=[294,2277][737,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_a7df93" bounds=[294,2277][737,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_8fe21c" bounds=[735,2277][874,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-7 cls=android.view.View text="h_da39a3" bounds=[871,2277][908,2277] children=1 flags=invisible
+                                        [20] id=mwOA cls=android.view.View desc="h_bd703d" bounds=[871,2277][908,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwOQ cls=android.view.View text="h_da39a3" bounds=[871,2277][908,2277] children=3 flags=invisible
+                                            [22] id=mwOg cls=android.widget.TextView text="h_1e5c2f" bounds=[871,2277][882,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_902ba3" bounds=[879,2277][900,2277] children=0 flags=invisible
+                                            [22] id=mwOw cls=android.widget.TextView text="h_4ff447" bounds=[897,2277][908,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_c3c2e8" bounds=[42,2277][1029,2277] children=0 flags=invisible
+                                      [19] id=mwPA cls=android.view.View desc="h_f6bf9c" bounds=[556,2277][850,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_f6bf9c" bounds=[556,2277][850,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_1c5677" bounds=[847,2277][929,2277] children=0 flags=invisible
+                                      [19] id=mwPQ cls=android.view.View desc="h_3513a5" bounds=[42,2277][380,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_3513a5" bounds=[42,2277][380,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_3166f8" bounds=[378,2277][561,2277] children=0 flags=invisible
+                                      [19] id=mwPg cls=android.view.View desc="h_da68b6" bounds=[556,2277][782,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_da68b6" bounds=[556,2277][782,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_4ae9c5" bounds=[42,2277][939,2277] children=0 flags=invisible
+                                      [19] id=mwPw cls=android.view.View desc="h_3d3044" bounds=[254,2277][651,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_3d3044" bounds=[254,2277][651,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_4ae670" bounds=[42,2277][903,2277] children=0 flags=invisible
+                                      [19] id=mwQA cls=android.view.View desc="h_0ccdef" bounds=[42,2277][987,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_0ccdef" bounds=[42,2277][987,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_6c982a" bounds=[42,2277][992,2277] children=0 flags=invisible
+                                      [19] id=mwQQ cls=android.view.View desc="h_22cf85" bounds=[648,2277][863,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_22cf85" bounds=[648,2277][863,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_ee504d" bounds=[42,2277][1000,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-8 cls=android.view.View text="h_da39a3" bounds=[454,2277][490,2277] children=1 flags=invisible
+                                        [20] id=mwQg cls=android.view.View desc="h_1fb085" bounds=[454,2277][490,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwQw cls=android.view.View text="h_da39a3" bounds=[454,2277][490,2277] children=3 flags=invisible
+                                            [22] id=mwRA cls=android.widget.TextView text="h_1e5c2f" bounds=[454,2277][464,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_fe5dbb" bounds=[462,2277][483,2277] children=0 flags=invisible
+                                            [22] id=mwRQ cls=android.widget.TextView text="h_4ff447" bounds=[480,2277][490,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-9 cls=android.view.View text="h_da39a3" bounds=[488,2277][525,2277] children=1 flags=invisible
+                                        [20] id=mwRg cls=android.view.View desc="h_7a6055" bounds=[488,2277][525,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwRw cls=android.view.View text="h_da39a3" bounds=[488,2277][525,2277] children=3 flags=invisible
+                                            [22] id=mwSA cls=android.widget.TextView text="h_1e5c2f" bounds=[488,2277][498,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_0ade7c" bounds=[496,2277][517,2277] children=0 flags=invisible
+                                            [22] id=mwSQ cls=android.widget.TextView text="h_4ff447" bounds=[514,2277][525,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_eb794c" bounds=[42,2277][1002,2277] children=0 flags=invisible
+                                      [19] id=mwSg cls=android.view.View desc="h_9fdcb2" bounds=[422,2277][553,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_9fdcb2" bounds=[422,2277][553,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_14e8a8" bounds=[42,2277][874,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-10 cls=android.view.View text="h_da39a3" bounds=[614,2277][669,2277] children=1 flags=invisible
+                                        [20] id=mwSw cls=android.view.View desc="h_e9310b" bounds=[614,2277][669,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwTA cls=android.view.View text="h_da39a3" bounds=[614,2277][669,2277] children=3 flags=invisible
+                                            [22] id=mwTQ cls=android.widget.TextView text="h_1e5c2f" bounds=[614,2277][627,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_b1d578" bounds=[622,2277][661,2277] children=0 flags=invisible
+                                            [22] id=mwTg cls=android.widget.TextView text="h_4ff447" bounds=[658,2277][669,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_5d22f3" bounds=[666,2277][913,2277] children=0 flags=invisible
+                                      [19] id=mwTw cls=android.view.View desc="h_fa0419" bounds=[42,2277][987,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_fa0419" bounds=[42,2277][987,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_9d2963" bounds=[78,2277][309,2277] children=0 flags=invisible
+                                      [19] id=mwUA cls=android.view.View desc="h_1a5e37" bounds=[304,2277][716,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_1a5e37" bounds=[304,2277][716,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_c0970b" bounds=[42,2277][945,2277] children=0 flags=invisible
+                                      [19] id=mwUQ cls=android.view.View desc="h_460790" bounds=[393,2277][698,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_460790" bounds=[393,2277][698,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_fa56ba" bounds=[42,2277][937,2277] children=0 flags=invisible
+                                      [19] id=mwUg cls=android.view.View desc="h_f13121" bounds=[241,2277][446,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_f13121" bounds=[241,2277][446,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_673912" bounds=[42,2277][1034,2277] children=0 flags=invisible
+                                      [19] id=mwUw cls=android.view.View desc="h_d88b9f" bounds=[661,2277][874,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_d88b9f" bounds=[661,2277][874,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_552fbe" bounds=[42,2277][937,2277] children=0 flags=invisible
+                                      [19] id=mwVA cls=android.view.View desc="h_5f0aef" bounds=[259,2277][422,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_5f0aef" bounds=[259,2277][422,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_b5f7b7" bounds=[420,2277][496,2277] children=0 flags=invisible
+                                      [19] id=mwVQ cls=android.view.View desc="h_0970c8" bounds=[493,2277][685,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_0970c8" bounds=[493,2277][685,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[682,2277][706,2277] children=0 flags=invisible
+                                      [19] id=mwVg cls=android.view.View desc="h_8d4198" bounds=[42,2277][850,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_8d4198" bounds=[42,2277][850,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_38fd12" bounds=[254,2277][622,2277] children=0 flags=invisible
+                                      [19] id=mwVw cls=android.view.View desc="h_ed8c04" bounds=[619,2277][832,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_ed8c04" bounds=[619,2277][832,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_b5f7b7" bounds=[826,2277][905,2277] children=0 flags=invisible
+                                      [19] id=mwWA cls=android.view.View desc="h_66ede9" bounds=[42,2277][1021,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_66ede9" bounds=[42,2277][1021,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_fc623a" bounds=[336,2277][824,2277] children=0 flags=invisible
+                                      [19] id=mwWQ cls=android.view.View desc="h_6ccce1" bounds=[42,2277][333,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_6ccce1" bounds=[42,2277][333,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_8854ac" bounds=[330,2277][850,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-11 cls=android.view.View text="h_da39a3" bounds=[845,2277][900,2277] children=1 flags=invisible
+                                        [20] id=mwWg cls=android.view.View desc="h_3ad009" bounds=[845,2277][900,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwWw cls=android.view.View text="h_da39a3" bounds=[845,2277][900,2277] children=3 flags=invisible
+                                            [22] id=mwXA cls=android.widget.TextView text="h_1e5c2f" bounds=[845,2277][858,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_17ba07" bounds=[853,2277][892,2277] children=0 flags=invisible
+                                            [22] id=mwXQ cls=android.widget.TextView text="h_4ff447" bounds=[889,2277][900,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_4bca84" bounds=[42,2277][530,2277] children=0 flags=invisible
+                                      [19] id=mwXg cls=android.view.View desc="h_bde8b7" bounds=[527,2277][816,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_bde8b7" bounds=[527,2277][816,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_7b4cf7" bounds=[42,2277][1005,2277] children=0 flags=invisible
+                                    [18] id=mwXw cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=30 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_6be79c" bounds=[42,2277][903,2277] children=0 flags=invisible
+                                      [19] id=mwYA cls=android.view.View desc="h_b33723" bounds=[897,2277][981,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_b33723" bounds=[897,2277][981,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_b954ab" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=mwYQ cls=android.view.View desc="h_6b5625" bounds=[42,2277][354,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_6b5625" bounds=[42,2277][354,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_01d3fe" bounds=[42,2277][926,2277] children=0 flags=invisible
+                                      [19] id=mwYg cls=android.view.View desc="h_30bee1" bounds=[336,2277][672,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_30bee1" bounds=[336,2277][672,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[669,2277][690,2277] children=0 flags=invisible
+                                      [19] id=mwYw cls=android.view.View desc="h_6a7566" bounds=[42,2277][1002,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_6a7566" bounds=[42,2277][1002,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[139,2277][160,2277] children=0 flags=invisible
+                                      [19] id=mwZA cls=android.view.View desc="h_a30d01" bounds=[157,2277][511,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_a30d01" bounds=[157,2277][511,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_8213e9" bounds=[509,2277][1018,2277] children=0 flags=invisible
+                                      [19] id=mwZQ cls=android.view.View desc="h_dd4b00" bounds=[42,2277][189,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_dd4b00" bounds=[42,2277][189,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[183,2277][207,2277] children=0 flags=invisible
+                                      [19] id=mwZg cls=android.view.View desc="h_042da6" bounds=[204,2277][430,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_042da6" bounds=[204,2277][430,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[427,2277][451,2277] children=0 flags=invisible
+                                      [19] id=mwZw cls=android.view.View desc="h_8069cd" bounds=[446,2277][632,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_8069cd" bounds=[446,2277][632,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_d3bc9a" bounds=[630,2277][651,2277] children=0 flags=invisible
+                                      [19] id=mwaA cls=android.view.View desc="h_f544c5" bounds=[648,2277][777,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_f544c5" bounds=[648,2277][777,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_9e86a8" bounds=[42,2277][929,2277] children=0 flags=invisible
+                                      [19] id=mwaQ cls=android.view.View desc="h_0c5d3e" bounds=[178,2277][315,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_0c5d3e" bounds=[178,2277][315,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_71bc1a" bounds=[42,2277][958,2277] children=0 flags=invisible
+                                      [19] id=mwag cls=android.view.View desc="h_d3fced" bounds=[632,2277][895,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_d3fced" bounds=[632,2277][895,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_5fc03d" bounds=[42,2277][1018,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-12 cls=android.view.View text="h_da39a3" bounds=[590,2277][645,2277] children=1 flags=invisible
+                                        [20] id=mwaw cls=android.view.View desc="h_707bff" bounds=[590,2277][645,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwbA cls=android.view.View text="h_da39a3" bounds=[590,2277][645,2277] children=3 flags=invisible
+                                            [22] id=mwbQ cls=android.widget.TextView text="h_1e5c2f" bounds=[590,2277][603,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_7b5200" bounds=[598,2277][637,2277] children=0 flags=invisible
+                                            [22] id=mwbg cls=android.widget.TextView text="h_4ff447" bounds=[635,2277][645,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_63a3d6" bounds=[42,2277][931,2277] children=0 flags=invisible
+                                      [19] id=mwbw cls=android.view.View desc="h_4d7523" bounds=[162,2277][551,2277] children=1 flags=clickable,invisible
+                                        [20] id=- cls=android.widget.TextView text="h_4d7523" bounds=[162,2277][551,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-13 cls=android.view.View text="h_da39a3" bounds=[548,2277][585,2277] children=1 flags=invisible
+                                        [20] id=mwcA cls=android.view.View desc="h_424ca8" bounds=[548,2277][585,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwcQ cls=android.view.View text="h_da39a3" bounds=[548,2277][585,2277] children=3 flags=invisible
+                                            [22] id=mwcg cls=android.widget.TextView text="h_1e5c2f" bounds=[548,2277][559,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_86f7e4" bounds=[556,2277][577,2277] children=0 flags=invisible
+                                            [22] id=mwcw cls=android.widget.TextView text="h_4ff447" bounds=[574,2277][585,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.TextView text="h_e726d4" bounds=[42,2277][1034,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-14 cls=android.view.View text="h_da39a3" bounds=[758,2277][798,2277] children=1 flags=invisible
+                                        [20] id=mwdA cls=android.view.View desc="h_c4f642" bounds=[758,2277][798,2277] children=1 flags=clickable,invisible
+                                          [21] id=mwdQ cls=android.view.View text="h_da39a3" bounds=[758,2277][798,2277] children=3 flags=invisible
+                                            [22] id=mwdg cls=android.widget.TextView text="h_1e5c2f" bounds=[758,2277][771,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_e9d71f" bounds=[766,2277][787,2277] children=0 flags=invisible
+                                            [22] id=mwdw cls=android.widget.TextView text="h_4ff447" bounds=[784,2277][798,2277] children=0 flags=invisible
+                                      [19] id=cite_ref-15 cls=android.view.View text="h_da39a3" bounds=[792,2277][850,2277] children=1 flags=invisible
+                                        [20] id=mweA cls=android.view.View desc="h_758a13" bounds=[792,2277][850,2277] children=1 flags=clickable,invisible
+                                          [21] id=mweQ cls=android.view.View text="h_da39a3" bounds=[792,2277][850,2277] children=3 flags=invisible
+                                            [22] id=mweg cls=android.widget.TextView text="h_1e5c2f" bounds=[792,2277][805,2277] children=0 flags=invisible
+                                            [22] id=- cls=android.widget.TextView text="h_bd307a" bounds=[800,2277][840,2277] children=0 flags=invisible
+                                            [22] id=mwew cls=android.widget.TextView text="h_4ff447" bounds=[837,2277][850,2277] children=0 flags=invisible
+                                  [17] id=mwfQ cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=History cls=android.widget.TextView text="h_90ccd6" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=History-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwAlw cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Features cls=android.widget.TextView text="h_fc338f" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Features-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwA_w cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Hardware cls=android.view.View text="h_b76ab6" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Hardware-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwBHs cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Devices cls=android.widget.TextView text="h_df485c" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Devices-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwBIk cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Development cls=android.view.View text="h_4c17aa" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Development-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwB1A cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Security_and_privacy cls=android.view.View text="h_1ee04b" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Security_and_privacy-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwCPQ cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Criticism_and_controversy cls=android.widget.TextView text="h_2ee7e1" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Criticism_and_controversy-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwCbY cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Licensing cls=android.widget.TextView text="h_aa636d" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Licensing-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwCnk cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Reception cls=android.widget.TextView text="h_d928bf" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Reception-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwDSs cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Legal_issues cls=android.widget.TextView text="h_ac1321" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Legal_issues-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwDfc cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Other_uses cls=android.widget.TextView text="h_3c597e" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Other_uses-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwDxw cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=Mascot cls=android.widget.TextView text="h_e04894" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=Mascot-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwDz0 cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=See_also cls=android.widget.TextView text="h_2d8243" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=See_also-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwD1M cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=References cls=android.widget.TextView text="h_5d20d0" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=References-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                                  [17] id=mwKGQ cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                    [18] id=- cls=android.view.View text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=clickable,invisible
+                                      [19] id=External_links cls=android.widget.TextView text="h_f92e60" bounds=[97,2277][1039,2277] children=0 flags=invisible
+                                      [19] id=- cls=android.widget.Button text="h_da39a3" bounds=[42,2277][84,2277] children=0 flags=clickable,invisible
+                                    [18] id=External_links-collapsible-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                              [15] id=page-secondary-actions cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                            [14] id=footer cls=android.view.View text="h_da39a3" bounds=[0,2277][1080,2277] children=6 flags=invisible
+                              [15] id=- cls=android.view.View desc="h_29facf" bounds=[0,2277][1080,2277] children=3 flags=clickable,invisible
+                                [16] id=- cls=android.view.View text="h_9ad324" bounds=[126,2277][498,2277] children=0 flags=invisible
+                                [16] id=- cls=android.widget.TextView text="h_876074" bounds=[493,2277][553,2277] children=0 flags=invisible
+                                [16] id=- cls=android.widget.TextView text="h_4eb0f8" bounds=[551,2277][690,2277] children=0 flags=invisible
+                              [15] id=mw-data-after-content cls=android.widget.TextView text="h_da39a3" bounds=[42,2277][1039,2277] children=0 flags=invisible
+                              [15] id=- cls=android.widget.Image text="h_da39a3" desc="h_664add" bounds=[42,2277][412,2277] children=0 flags=invisible
+                              [15] id=footer-icons cls=android.widget.ListView text="h_da39a3" bounds=[740,2277][1039,2277] children=2 flags=invisible
+                                [16] id=footer-copyrightico cls=android.view.View text="h_da39a3" bounds=[740,2277][871,2277] children=1 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_52f2ff" bounds=[740,2277][871,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.Image text="h_da39a3" desc="h_52f2ff" bounds=[771,2277][840,2277] children=0 flags=invisible
+                                [16] id=footer-poweredbyico cls=android.view.View text="h_da39a3" bounds=[908,2277][1039,2277] children=1 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_2eb61f" bounds=[908,2277][1039,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.Image text="h_da39a3" desc="h_2eb61f" bounds=[939,2277][1008,2277] children=0 flags=invisible
+                              [15] id=footer-info cls=android.widget.ListView text="h_da39a3" bounds=[42,2277][1039,2277] children=2 flags=invisible
+                                [16] id=footer-info-renderedwith cls=android.view.View text="h_da39a3" bounds=[42,2277][611,2277] children=4 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_8e6eeb" bounds=[42,2277][443,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_8023c7" bounds=[441,2277][567,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_8023c7" bounds=[441,2277][567,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_3a52ce" bounds=[564,2277][577,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[595,2277][611,2277] children=0 flags=invisible
+                                [16] id=footer-info-copyright cls=android.view.View text="h_da39a3" bounds=[42,2277][1018,2277] children=3 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_361955" bounds=[42,2277][475,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_99a2ee" bounds=[469,2277][724,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_99a2ee" bounds=[469,2277][690,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_d0a0c3" bounds=[42,2277][1010,2277] children=0 flags=invisible
+                              [15] id=footer-places cls=android.widget.ListView text="h_da39a3" bounds=[42,2277][1039,2277] children=9 flags=invisible
+                                [16] id=footer-places-privacy cls=android.view.View text="h_da39a3" bounds=[42,2277][301,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_7ceacd" bounds=[42,2277][267,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_7ceacd" bounds=[42,2277][267,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[283,2277][301,2277] children=0 flags=invisible
+                                [16] id=footer-places-contact cls=android.view.View text="h_da39a3" bounds=[328,2277][661,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_02125b" bounds=[328,2277][627,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_02125b" bounds=[328,2277][627,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[645,2277][661,2277] children=0 flags=invisible
+                                [16] id=footer-places-legal-safety-contacts cls=android.view.View text="h_da39a3" bounds=[42,2277][459,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_190465" bounds=[42,2277][425,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_190465" bounds=[42,2277][425,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[443,2277][459,2277] children=0 flags=invisible
+                                [16] id=footer-places-wm-codeofconduct cls=android.view.View text="h_da39a3" bounds=[485,2277][798,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_264398" bounds=[485,2277][763,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_264398" bounds=[485,2277][763,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[782,2277][798,2277] children=0 flags=invisible
+                                [16] id=footer-places-developers cls=android.view.View text="h_da39a3" bounds=[42,2277][259,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_71348b" bounds=[42,2277][225,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_71348b" bounds=[42,2277][225,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[241,2277][259,2277] children=0 flags=invisible
+                                [16] id=footer-places-statslink cls=android.view.View text="h_da39a3" bounds=[286,2277][475,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_2086b2" bounds=[286,2277][441,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_2086b2" bounds=[286,2277][441,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[459,2277][475,2277] children=0 flags=invisible
+                                [16] id=footer-places-cookiestatement cls=android.view.View text="h_da39a3" bounds=[501,2277][826,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_7b2c9a" bounds=[501,2277][795,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_7b2c9a" bounds=[501,2277][795,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[811,2277][826,2277] children=0 flags=invisible
+                                [16] id=footer-places-terms-use cls=android.view.View text="h_da39a3" bounds=[42,2277][294,2277] children=2 flags=invisible
+                                  [17] id=- cls=android.view.View desc="h_977384" bounds=[42,2277][262,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_977384" bounds=[42,2277][262,2277] children=0 flags=invisible
+                                  [17] id=- cls=android.widget.TextView text="h_ecf727" bounds=[278,2277][294,2277] children=0 flags=invisible
+                                [16] id=footer-places-desktop-toggle cls=android.view.View text="h_da39a3" bounds=[322,2277][543,2277] children=1 flags=invisible
+                                  [17] id=mw-mf-display-toggle cls=android.view.View desc="h_6f62cf" bounds=[322,2277][543,2277] children=1 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.TextView text="h_6f62cf" bounds=[322,2277][543,2277] children=0 flags=invisible
+                        [12] id=mw-teleport-target cls=android.widget.TextView text="h_da39a3" bounds=[42,2273][1080,2273] children=0 flags=invisible
+                [8] id=com.android.chrome:id/sheet_container cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=0
+                [8] id=com.android.chrome:id/control_container cls=android.widget.FrameLayout bounds=[0,108][1080,258] children=1
+                  [9] id=com.android.chrome:id/toolbar_container cls=android.view.ViewGroup bounds=[0,108][1080,258] children=2
+                    [10] id=com.android.chrome:id/toolbar cls=android.widget.FrameLayout bounds=[0,108][1080,255] children=3 flags=longClickable
+                      [11] id=com.android.chrome:id/home_button cls=android.widget.ImageButton desc="h_310a72" bounds=[0,108][126,255] children=0 flags=clickable,longClickable
+                      [11] id=com.android.chrome:id/location_bar cls=android.view.ViewGroup bounds=[126,108][691,255] children=2
+                        [12] id=com.android.chrome:id/url_bar cls=android.widget.EditText text="en.wikipedia.org/wiki/Android_%28operating_system%29" bounds=[147,108][691,255] children=0 flags=clickable,longClickable,selected,editable
+                        [12] id=com.android.chrome:id/focus_thief cls=android.view.View bounds=[147,108][148,109] children=0
+                      [11] id=com.android.chrome:id/toolbar_buttons cls=android.widget.LinearLayout bounds=[691,108][1080,255] children=3
+                        [12] id=com.android.chrome:id/optional_toolbar_button_container cls=android.widget.FrameLayout bounds=[691,108][828,255] children=1
+                          [13] id=com.android.chrome:id/optional_toolbar_button cls=android.widget.ImageButton desc="h_6f23a3" bounds=[691,108][828,255] children=0 flags=clickable,longClickable
+                        [12] id=com.android.chrome:id/tab_switcher_button cls=android.widget.ImageButton desc="h_d43b39" bounds=[828,108][954,255] children=0 flags=clickable,longClickable
+                        [12] id=com.android.chrome:id/menu_button_wrapper cls=android.widget.FrameLayout bounds=[954,108][1080,255] children=1
+                          [13] id=com.android.chrome:id/menu_button cls=android.widget.ImageButton desc="h_1a2a29" bounds=[954,108][1080,255] children=0 flags=clickable
+                    [10] id=com.android.chrome:id/toolbar_hairline cls=android.widget.ImageView bounds=[0,255][1080,258] children=0
+                [8] id=com.android.chrome:id/toolbar_progress_bar_container cls=android.widget.FrameLayout bounds=[0,256][1080,261] children=1
+                  [9] id=com.android.chrome:id/progress_bar_animating_view cls=android.widget.ImageView bounds=[0,256][1080,261] children=0 flags=invisible
+                [8] id=com.android.chrome:id/edge_to_edge_bottom_chin cls=android.view.View bounds=[0,2277][1080,2340] children=0
+                [8] id=com.android.chrome:id/bottom_container cls=android.widget.FrameLayout bounds=[0,2340][1080,2340] children=0 flags=invisible
+              [7] id=com.android.chrome:id/navigation_popup_anchor_stub cls=android.view.View bounds=[0,2340][1080,2340] children=0 flags=invisible
+              [7] id=com.android.chrome:id/menu_anchor_stub cls=android.view.View bounds=[0,2340][0,2340] children=0 flags=invisible
