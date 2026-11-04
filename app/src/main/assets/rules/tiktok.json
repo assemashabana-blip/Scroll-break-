@@ -7,14 +7,14 @@
     "allOf": [
       { "viewId": "com.zhiliaoapp.musically:id/long_press_layout" },
       { "viewId": "com.zhiliaoapp.musically:id/title" },
-      { "not": { "desc": "Friends", "selected": true } }
+      { "desc": "Home", "match": "equals", "selected": true }
     ]
   },
 
   "feedEntrySignatures": [
     {
       "name": "home_tab_selected",
-      "signature": { "desc": "Home", "selected": true }
+      "signature": { "desc": "Home", "match": "equals", "selected": true }
     }
   ],
 
@@ -27,5 +27,5 @@
     "className": "androidx.viewpager.widget.ViewPager"
   },
 
-  "redirectTo": { "desc": "Friends", "clickable": true }
+  "redirectTo": { "desc": "Friends", "match": "equals", "clickable": true }
 }

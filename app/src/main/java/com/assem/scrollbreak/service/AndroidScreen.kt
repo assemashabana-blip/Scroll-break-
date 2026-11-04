@@ -20,7 +20,22 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
 
     override fun has(leaf: Leaf): Boolean {
         if (leaf.isViewIdOnly) return roots.any { hasViewId(it, leaf) }
+        // One call into the app finds nodes whose text or description contains the needle, which is
+        // far cheaper than walking the whole tree. A hit is trusted; a miss is not, because some
+        // custom node providers answer that call with nothing, so a miss still falls back to the walk.
+        if (hasByText(leaf)) return true
         return index.any { leaf.matches(it) }
+    }
+
+    private fun hasByText(leaf: Leaf): Boolean {
+        val needle = (leaf.desc ?: leaf.text)?.takeIf { it.isNotEmpty() } ?: return false
+        for (root in roots) {
+            val found = root.findAccessibilityNodeInfosByText(needle) ?: continue
+            val hit = found.any { leaf.matches(AndroidNode(it).snapshot()) }
+            found.forEach(::release)
+            if (hit) return true
+        }
+        return false
     }
 
     override fun textOf(leaf: Leaf): String? {
@@ -62,6 +77,7 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
 
     /** Clicks the first clickable node matching [leaf]; false if none was found or the click failed. */
     fun click(leaf: Leaf): Boolean {
+        if (clickByText(leaf)) return true
         var budget = MAX_NODES
         fun walk(info: AccessibilityNodeInfo, depth: Int): Boolean {
             if (budget-- <= 0) return false
@@ -78,6 +94,21 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
             return false
         }
         return roots.any { walk(it, 0) }
+    }
+
+    /** Fast path for [click]: look the node up by its text or description instead of walking. */
+    private fun clickByText(leaf: Leaf): Boolean {
+        val needle = (leaf.desc ?: leaf.text)?.takeIf { it.isNotEmpty() } ?: return false
+        for (root in roots) {
+            val found = root.findAccessibilityNodeInfosByText(needle) ?: continue
+            val clicked = found.any {
+                it.isClickable && leaf.matches(AndroidNode(it).snapshot()) &&
+                    it.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            }
+            found.forEach(::release)
+            if (clicked) return true
+        }
+        return false
     }
 
     fun close() = roots.forEach(::release)
