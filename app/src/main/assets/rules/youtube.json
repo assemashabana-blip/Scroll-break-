@@ -28,5 +28,10 @@
         "selected": true
       }
     }
+  ],
+
+  "fingerprintNodes": [
+    { "name": "channel", "className": "android.widget.Button", "text": "@", "match": "startsWith" },
+    { "name": "title", "className": "android.view.ViewGroup", "text": "", "clickable": true }
   ]
 }

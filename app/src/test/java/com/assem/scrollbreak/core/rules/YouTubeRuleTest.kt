@@ -30,6 +30,29 @@ class YouTubeRuleTest {
     }
 
     @Test
+    fun fingerprintIdentifiesEachRealShort() {
+        val a = rule.fingerprint(screen("youtube_short.txt"))
+        val b = rule.fingerprint(screen("youtube_short2.txt"))
+        assertEquals(listOf("@athletor", "Bo Bassett Puts His Own Teammate on His Wrestling Mount Rushmore"), a.values)
+        assertEquals("@otgun2024", b.values[0])
+        assertTrue(b.values[1].startsWith("When Acting in the UFC Backfires"))
+        assertTrue(a.differsFrom(b))
+        assertFalse(a.differsFrom(rule.fingerprint(screen("youtube_short.txt"))))
+    }
+
+    @Test
+    fun sponsoredShortHasNoFingerprintButIsStillAPlayer() {
+        val ad = screen("youtube_short_ad.txt")
+        assertTrue(rule.isPlayer(ad))
+        assertTrue(rule.fingerprint(ad).isEmpty)
+    }
+
+    @Test
+    fun homeFeedHasNoFingerprint() {
+        assertTrue(rule.fingerprint(screen("youtube_home.txt")).isEmpty)
+    }
+
+    @Test
     fun homeFeedIsNotAPlayer() {
         val s = screen("youtube_home.txt")
         assertFalse(rule.isPlayer(s))

@@ -5,6 +5,9 @@ import com.assem.scrollbreak.core.NodeSnapshot
 /** Answers "does a node matching this leaf exist on screen?" for one app's windows. */
 fun interface ScreenView {
     fun has(leaf: Leaf): Boolean
+
+    /** Text (or content description) of the first visible node matching [leaf], if any. */
+    fun textOf(leaf: Leaf): String? = null
 }
 
 enum class MatchMode { EQUALS, CONTAINS, STARTS_WITH }
@@ -25,13 +28,15 @@ data class Leaf(
     val desc: String? = null,
     val match: MatchMode = MatchMode.CONTAINS,
     val selected: Boolean? = null,
+    val clickable: Boolean? = null,
     /** Ignore nodes flagged invisible (e.g. pager pages pre-rendered off screen). */
     val visible: Boolean = true,
 ) : Signature {
 
     /** True when only the view id is constrained, so a targeted lookup can answer it. */
     val isViewIdOnly: Boolean
-        get() = viewId != null && className == null && text == null && desc == null && selected == null
+        get() = viewId != null && className == null && text == null && desc == null &&
+            selected == null && clickable == null
 
     fun matches(n: NodeSnapshot): Boolean {
         if (visible && n.hasFlag("invisible")) return false
@@ -40,6 +45,7 @@ data class Leaf(
         if (text != null && !matchString(n.text, text)) return false
         if (desc != null && !matchString(n.contentDescription, desc)) return false
         if (selected != null && n.hasFlag("selected") != selected) return false
+        if (clickable != null && n.hasFlag("clickable") != clickable) return false
         return true
     }
 

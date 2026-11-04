@@ -47,6 +47,25 @@ class RuleParserTest {
     }
 
     @Test
+    fun parsesFingerprintNodes() {
+        val r = RuleParser.parse(
+            rule(
+                """{"viewId":"a:id/x"}""",
+                ""","fingerprintNodes":[{"name":"channel","className":"Button","text":"@","match":"startsWith"},{"name":"title","className":"VG","text":"","clickable":true}]""",
+            )
+        )
+        assertEquals(listOf("channel", "title"), r.fingerprintNodes.map { it.name })
+        assertEquals(Leaf(className = "Button", text = "@", match = MatchMode.STARTS_WITH), r.fingerprintNodes[0].leaf)
+        assertEquals(true, r.fingerprintNodes[1].leaf.clickable)
+    }
+
+    @Test
+    fun rejectsBadFingerprintNode() {
+        assertRejects(rule("""{"viewId":"a:id/x"}""", ""","fingerprintNodes":[{"className":"B"}]"""), "fingerprintNodes[0].name")
+        assertRejects(rule("""{"viewId":"a:id/x"}""", ""","fingerprintNodes":[{"name":"n"}]"""), "fingerprintNodes[0]")
+    }
+
+    @Test
     fun dmIsOptional() {
         assertNull(RuleParser.parse(rule("""{"viewId":"a:id/x"}""")).dmSignature)
     }

@@ -22,6 +22,11 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
         return index.any { leaf.matches(it) }
     }
 
+    override fun textOf(leaf: Leaf): String? {
+        val node = index.firstOrNull { leaf.matches(it) } ?: return null
+        return (node.text ?: node.contentDescription)?.takeIf { it.isNotEmpty() }
+    }
+
     private fun hasViewId(root: AccessibilityNodeInfo, leaf: Leaf): Boolean {
         val found = root.findAccessibilityNodeInfosByViewId(leaf.viewId!!) ?: return false
         val hit = found.any { !leaf.visible || it.isVisibleToUser }

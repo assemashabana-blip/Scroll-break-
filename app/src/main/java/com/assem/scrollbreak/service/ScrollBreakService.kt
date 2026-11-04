@@ -2,6 +2,7 @@ package com.assem.scrollbreak.service
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
+import android.content.pm.ApplicationInfo
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -10,29 +11,40 @@ import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
 import com.assem.scrollbreak.AppLog
-import com.assem.scrollbreak.RuleRepository
 import com.assem.scrollbreak.AppSettings
-import com.assem.scrollbreak.core.PlayerTracker
+import com.assem.scrollbreak.RuleRepository
+import com.assem.scrollbreak.core.EntryStateMachine
+import com.assem.scrollbreak.core.EntryStateMachine.Action
+import com.assem.scrollbreak.core.EntryStateMachine.Observation
+import com.assem.scrollbreak.core.EntryStateMachine.State
 import com.assem.scrollbreak.core.TargetPackages
 import com.assem.scrollbreak.core.Throttle
 import com.assem.scrollbreak.core.rules.AppRule
+import com.assem.scrollbreak.core.rules.Fingerprint
 import com.assem.scrollbreak.core.rules.RuleSet
 import java.util.concurrent.Executors
 
 /**
- * Observes target apps, detects short-video players with the rules engine and blocks them
- * (BACK, then a full-screen overlay if BACK did not leave the player).
+ * Observes target apps, detects short-video players with the rules engine and decides, per
+ * entry, whether to allow one video (friend-shared) or block. Blocking is BACK first, then a
+ * full-screen overlay if BACK did not leave the player.
  * Every entry point is wrapped in try/catch so the service can never crash
  * (Android disables services that crash repeatedly).
  */
 class ScrollBreakService : AccessibilityService() {
 
     private val contentThrottle = Throttle(CONTENT_THROTTLE_MS) { SystemClock.elapsedRealtime() }
-    private val tracker = PlayerTracker { SystemClock.elapsedRealtime() }
+    private val machine = EntryStateMachine(
+        isMessaging = { it in TargetPackages.messaging },
+        clock = { SystemClock.elapsedRealtime() },
+    )
     private val mainHandler = Handler(Looper.getMainLooper())
     private val dumpExecutor = Executors.newSingleThreadExecutor()
 
+    private val debuggable by lazy { applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0 }
     private var rules = RuleSet(emptyList())
+    private var foregroundPkg: String? = null
+    private val pollingPackages = HashSet<String>()
     // Lazy: system services are unavailable until the service is attached to its context.
     private val overlay by lazy { BlockOverlay(this) { performGlobalAction(GLOBAL_ACTION_BACK) } }
 
@@ -92,16 +104,21 @@ class ScrollBreakService : AccessibilityService() {
         try {
             if (event == null) return
             val pkg = event.packageName?.toString() ?: return
+            noteForeground(pkg)
             if (event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED &&
                 !contentThrottle.shouldPass(pkg)
             ) return
 
             val rule = rules.forPackage(pkg)
-            val state = if (rule != null) detect(event, pkg, rule) else "n/a"
+            val state = if (rule != null) observe(pkg, rule, event.eventTime) else "n/a"
 
             val detail = if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED) {
                 "from=${event.fromIndex} to=${event.toIndex} count=${event.itemCount}"
             } else ""
+            if (debuggable) {
+                Log.d("ScrollBreakEv", "${AccessibilityEvent.eventTypeToString(event.eventType)} $pkg " +
+                    "${event.className} $detail state=$state")
+            }
 
             AppLog.events.add(
                 timeMs = System.currentTimeMillis(),
@@ -117,18 +134,75 @@ class ScrollBreakService : AccessibilityService() {
         }
     }
 
-    /** Evaluates the player signature for [pkg] and fires the block action when due. */
-    private fun detect(event: AccessibilityEvent, pkg: String, rule: AppRule): String {
-        val inPlayer = isInPlayer(pkg, rule)
-        val decision = tracker.onObservation(pkg, inPlayer)
-        if (!inPlayer) overlay.dismiss()
-        if (decision == PlayerTracker.Decision.BLOCK) {
-            tracker.onBlocked(pkg)
-            if (AppSettings.blockingEnabled) block(event, pkg, rule) else {
-                action(pkg, "WOULD_BLOCK", rule.app, "blocking is off")
-            }
+    /**
+     * Keeps the foreground history the entry-source check relies on. When another package takes
+     * over and the previous one has no window left, its session is over.
+     */
+    private fun noteForeground(pkg: String) {
+        val previous = foregroundPkg
+        if (previous == pkg) return
+        machine.onForeground(pkg)
+        foregroundPkg = pkg
+        if (previous != null && machine.state(previous) != State.IDLE && !hasWindow(previous)) {
+            machine.onLeft(previous)
         }
-        return tracker.state(pkg)
+    }
+
+    private fun hasWindow(pkg: String): Boolean {
+        val screen = AndroidScreen.forPackage(this, pkg)
+        val has = !screen.isEmpty
+        screen.close()
+        return has
+    }
+
+    /**
+     * Observes [pkg], advances its state machine and fires the block action when due.
+     * [eventUptimeMs] is when the triggering event happened (for the latency figure).
+     */
+    private fun observe(pkg: String, rule: AppRule, eventUptimeMs: Long): String {
+        val screen = AndroidScreen.forPackage(this, pkg)
+        val inPlayer: Boolean
+        val result: EntryStateMachine.Result
+        try {
+            inPlayer = rule.isPlayer(screen)
+            val inDm = !inPlayer && rule.isDm(screen)
+            // The fingerprint costs a tree walk, so only read it while one video is allowed.
+            val fingerprint = if (inPlayer && machine.state(pkg) == State.ALLOW_ONE) {
+                rule.fingerprint(screen)
+            } else Fingerprint.EMPTY
+            result = machine.onObservation(Observation(pkg, inPlayer, inDm, fingerprint))
+            if (debuggable && inPlayer) Log.d("ScrollBreakEv", "observe $pkg fp=${fingerprint.hash()} -> ${result.action}")
+        } finally {
+            screen.close()
+        }
+
+        if (!inPlayer) overlay.dismiss()
+        val reason = result.reason
+        if (result.action == Action.BLOCK) {
+            if (AppSettings.blockingEnabled) block(eventUptimeMs, pkg, rule, reason.orEmpty()) else {
+                action(pkg, "WOULD_BLOCK", rule.app, reason.orEmpty())
+            }
+        } else if (reason != null && reason.startsWith("allow")) {
+            action(pkg, "ALLOW_ONE", rule.app, reason)
+        }
+        if (machine.state(pkg) == State.ALLOW_ONE) pollWhileAllowed(pkg, rule)
+        return machine.state(pkg).name
+    }
+
+    /**
+     * YouTube goes quiet once a swipe settles, so events alone would never see the next video's
+     * fingerprint. While one video is allowed, re-observe on a timer until the player is left.
+     */
+    private fun pollWhileAllowed(pkg: String, rule: AppRule) {
+        if (!pollingPackages.add(pkg)) return
+        mainHandler.postDelayed({
+            pollingPackages.remove(pkg)
+            try {
+                if (machine.state(pkg) == State.ALLOW_ONE) observe(pkg, rule, SystemClock.uptimeMillis())
+            } catch (t: Throwable) {
+                AppLog.error("allow poll failed", t)
+            }
+        }, ALLOW_POLL_MS)
     }
 
     /** Block decisions go to the event log and to logcat (tag ScrollBreak) for debugging. */
@@ -147,11 +221,11 @@ class ScrollBreakService : AccessibilityService() {
     }
 
     /** Stage 1: BACK. Stage 2 (after [ESCALATE_DELAY_MS]): overlay if still in the player. */
-    private fun block(event: AccessibilityEvent, pkg: String, rule: AppRule) {
-        val latencyMs = SystemClock.uptimeMillis() - event.eventTime
+    private fun block(eventUptimeMs: Long, pkg: String, rule: AppRule, reason: String) {
+        val latencyMs = SystemClock.uptimeMillis() - eventUptimeMs
         performGlobalAction(GLOBAL_ACTION_BACK)
-        AppLog.recordBlock(rule.app, "player_signature")
-        action(pkg, "BLOCK", "BACK", "app=${rule.app} latency=${latencyMs}ms")
+        AppLog.recordBlock(rule.app, reason)
+        action(pkg, "BLOCK", "BACK", "app=${rule.app} $reason latency=${latencyMs}ms")
         mainHandler.postDelayed({ escalateIfStillThere(pkg, rule) }, ESCALATE_DELAY_MS)
     }
 
@@ -173,7 +247,7 @@ class ScrollBreakService : AccessibilityService() {
                 if (!overlay.isShowing) return@postDelayed
                 if (isInPlayer(pkg, rule)) watchOverlay(pkg, rule) else {
                     overlay.dismiss()
-                    tracker.onObservation(pkg, false)
+                    machine.onLeft(pkg)
                 }
             } catch (t: Throwable) {
                 AppLog.error("overlay watch failed", t)
@@ -204,6 +278,7 @@ class ScrollBreakService : AccessibilityService() {
         private const val CONTENT_THROTTLE_MS = 200L
         private const val ESCALATE_DELAY_MS = 300L
         private const val OVERLAY_POLL_MS = 500L
+        private const val ALLOW_POLL_MS = 250L
 
         @Volatile var instance: ScrollBreakService? = null
             private set

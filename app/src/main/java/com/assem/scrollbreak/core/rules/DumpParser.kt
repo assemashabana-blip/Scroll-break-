@@ -45,6 +45,10 @@ object DumpParser {
     /** A [ScreenView] over all windows of [pkg] in a parsed dump. */
     fun screenFor(windows: List<DumpWindow>, pkg: String): ScreenView {
         val nodes = windows.filter { it.pkg == pkg }.flatMap { it.nodes }
-        return ScreenView { leaf -> nodes.any { leaf.matches(it) } }
+        return object : ScreenView {
+            override fun has(leaf: Leaf) = nodes.any { leaf.matches(it) }
+            override fun textOf(leaf: Leaf): String? =
+                nodes.firstOrNull { leaf.matches(it) }?.let { it.text ?: it.contentDescription }
+        }
     }
 }

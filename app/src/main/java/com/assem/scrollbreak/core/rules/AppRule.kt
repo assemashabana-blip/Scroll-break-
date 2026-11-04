@@ -12,6 +12,8 @@ data class AppRule(
     val feedEntrySignatures: List<NamedSignature> = emptyList(),
     /** In-app chat screens, used to recognise "a friend sent this". */
     val dmSignature: Signature? = null,
+    /** Nodes whose text identifies the video on screen (author handle, caption, ...). */
+    val fingerprintNodes: List<FingerprintNode> = emptyList(),
 ) {
     fun isPlayer(screen: ScreenView) = playerSignature.evaluate(screen)
 
@@ -20,6 +22,8 @@ data class AppRule(
         feedEntrySignatures.filter { it.signature.evaluate(screen) }.map { it.name }
 
     fun isDm(screen: ScreenView) = dmSignature?.evaluate(screen) ?: false
+
+    fun fingerprint(screen: ScreenView): Fingerprint = Fingerprint.compute(fingerprintNodes, screen)
 }
 
 class RuleSet(rules: List<AppRule>) {

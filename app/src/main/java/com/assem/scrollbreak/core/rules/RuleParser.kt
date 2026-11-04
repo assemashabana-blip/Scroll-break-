@@ -13,7 +13,7 @@ class RuleParseException(message: String) : Exception(message)
 
 object RuleParser {
     private const val SUPPORTED_SCHEMA = 1
-    private val leafKeys = setOf("viewId", "className", "text", "desc", "match", "selected", "visible")
+    private val leafKeys = setOf("viewId", "className", "text", "desc", "match", "selected", "clickable", "visible")
     private val composites = setOf("allOf", "anyOf", "not")
 
     fun parse(json: String): AppRule {
@@ -40,6 +40,15 @@ object RuleParser {
             )
         }
 
+        val fingerprint = (root["fingerprintNodes"] as? JsonArray).orEmpty().mapIndexed { i, e ->
+            val path = "fingerprintNodes[$i]"
+            val obj = e as? JsonObject ?: throw RuleParseException("$path must be an object")
+            FingerprintNode(
+                obj.string("name", "$path.name"),
+                leaf(JsonObject(obj - "name"), path),
+            )
+        }
+
         return AppRule(
             app = root.string("app", "app"),
             packages = packages,
@@ -49,6 +58,7 @@ object RuleParser {
             ),
             feedEntrySignatures = entries,
             dmSignature = root["dmSignature"]?.let { signature(it, "dmSignature") },
+            fingerprintNodes = fingerprint,
         )
     }
 
@@ -80,15 +90,20 @@ object RuleParser {
             text = obj.optString("text", path),
             desc = obj.optString("desc", path),
             match = obj.optString("match", path)?.let {
-                runCatching { MatchMode.valueOf(it.uppercase()) }.getOrNull()
-                    ?: throw RuleParseException("$path.match must be equals, contains or startsWith")
+                when (it) {
+                    "equals" -> MatchMode.EQUALS
+                    "contains" -> MatchMode.CONTAINS
+                    "startsWith" -> MatchMode.STARTS_WITH
+                    else -> throw RuleParseException("$path.match must be equals, contains or startsWith")
+                }
             } ?: MatchMode.CONTAINS,
             selected = obj.optBool("selected", path),
+            clickable = obj.optBool("clickable", path),
             visible = obj.optBool("visible", path) ?: true,
         )
         if (leaf.viewId == null && leaf.className == null && leaf.text == null &&
-            leaf.desc == null && leaf.selected == null
-        ) throw RuleParseException("$path: leaf needs at least one of viewId, className, text, desc, selected")
+            leaf.desc == null && leaf.selected == null && leaf.clickable == null
+        ) throw RuleParseException("$path: leaf needs at least one of viewId, className, text, desc, selected, clickable")
         return leaf
     }
 

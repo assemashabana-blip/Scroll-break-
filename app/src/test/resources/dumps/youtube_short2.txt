@@ -1,0 +1,128 @@
+=== WINDOW id=345 type=APPLICATION layer=0 pkg=com.google.android.youtube title="YouTube" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+    [2] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=com.google.android.youtube:id/action_bar_root cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+        [4] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=2
+          [5] id=com.google.android.youtube:id/more_drawer_container cls=androidx.drawerlayout.widget.DrawerLayout bounds=[0,0][1080,2340] children=1
+            [6] id=com.google.android.youtube:id/slim_status_bar_player_container cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=3
+              [7] id=com.google.android.youtube:id/navigation_bar_divider_frame cls=android.view.ViewGroup bounds=[0,0][1080,2277] children=2
+                [8] id=com.google.android.youtube:id/global_slim_status_bar_container cls=android.widget.FrameLayout bounds=[0,0][1080,2277] children=0
+                [8] id=com.google.android.youtube:id/accessibility_layer_container cls=android.widget.FrameLayout bounds=[0,0][1080,2277] children=3
+                  [9] id=com.google.android.youtube:id/fullscreen_mode_container cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=0 flags=invisible
+                  [9] id=com.google.android.youtube:id/next_gen_watch_container_layout cls=android.view.ViewGroup bounds=[0,0][1080,2277] children=1
+                    [10] id=com.google.android.youtube:id/watch_while_layout_coordinator_layout cls=android.view.ViewGroup bounds=[0,0][1080,2277] children=4
+                      [11] id=com.google.android.youtube:id/fab_container cls=android.widget.FrameLayout bounds=[0,0][1080,2277] children=0
+                      [11] id=com.google.android.youtube:id/pane_fragment_container cls=android.widget.FrameLayout bounds=[0,0][1080,2277] children=1
+                        [12] id=com.google.android.youtube:id/browse_fragment_layout_coordinator_layout cls=android.widget.ScrollView bounds=[0,0][1080,2151] children=2
+                          [13] id=com.google.android.youtube:id/pane_fragment_contents cls=android.widget.FrameLayout bounds=[0,0][1080,2151] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2151] children=1
+                              [15] id=com.google.android.youtube:id/fragment_container_view cls=android.widget.FrameLayout bounds=[0,0][1080,2151] children=1
+                                [16] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2151] children=1
+                                  [17] id=com.google.android.youtube:id/reel_watch_fragment_root cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=5
+                                    [18] id=com.google.android.youtube:id/reel_player_underlay cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=0
+                                    [18] id=com.google.android.youtube:id/nerd_stats_container cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=1
+                                      [19] id=- cls=android.widget.RelativeLayout bounds=[0,108][1080,2151] children=0
+                                    [18] id=com.google.android.youtube:id/reel_watch_refresher cls=android.view.ViewGroup bounds=[0,108][1080,2151] children=1
+                                      [19] id=com.google.android.youtube:id/reel_recycler cls=android.support.v7.widget.RecyclerView bounds=[0,108][1080,2151] children=1
+                                        [20] id=com.google.android.youtube:id/reel_player_page_container cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=1
+                                          [21] id=com.google.android.youtube:id/reel_player_page_content cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=1
+                                            [22] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=1
+                                              [23] id=com.google.android.youtube:id/reel_player_overlay_root cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=1
+                                                [24] id=com.google.android.youtube:id/reel_player_overlay_container cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=3
+                                                  [25] id=com.google.android.youtube:id/reel_video_interactions cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=0
+                                                  [25] id=com.google.android.youtube:id/reel_player_footer_container cls=android.widget.FrameLayout bounds=[0,1192][1080,2151] children=1
+                                                    [26] id=- cls=android.widget.FrameLayout bounds=[0,1192][1080,2151] children=1
+                                                      [27] id=com.google.android.youtube:id/player_overlay cls=android.widget.FrameLayout bounds=[0,1192][1080,2151] children=1
+                                                        [28] id=- cls=android.view.ViewGroup bounds=[0,1192][1080,2151] children=4
+                                                          [29] id=- cls=android.view.ViewGroup bounds=[0,1848][912,1954] children=2
+                                                            [30] id=- cls=android.view.ViewGroup bounds=[42,1859][381,1943] children=2 flags=clickable
+                                                              [31] id=- cls=android.widget.Button bounds=[42,1859][126,1943] children=1 flags=clickable
+                                                                [32] id=- cls=android.widget.ImageView desc="Go to channel @otgun2024" bounds=[42,1859][126,1943] children=0
+                                                              [31] id=- cls=android.view.ViewGroup bounds=[147,1859][381,1943] children=1
+                                                                [32] id=- cls=android.view.ViewGroup text="@otgun2024" desc="@otgun2024" bounds=[147,1859][360,1943] children=1
+                                                                  [33] id=- cls=android.widget.Button text="@otgun2024" bounds=[147,1859][360,1943] children=0 flags=clickable
+                                                            [30] id=- cls=android.widget.Button desc="Subscribe to @otgun2024." bounds=[381,1859][587,1943] children=1 flags=clickable
+                                                              [31] id=- cls=android.view.ViewGroup text="Subscribe" desc="Subscribe" bounds=[413,1882][555,1920] children=0
+                                                          [29] id=- cls=android.view.ViewGroup bounds=[0,1954][912,2024] children=1
+                                                            [30] id=- cls=android.view.ViewGroup bounds=[0,1954][912,2024] children=1 flags=clickable
+                                                              [31] id=- cls=android.view.ViewGroup bounds=[42,1965][912,2013] children=1
+                                                                [32] id=- cls=android.view.ViewGroup text="When Acting in the UFC Backfires #ufc​" desc="When Acting in the UFC Backfires #ufc​" bounds=[42,1965][912,2013] children=1 flags=clickable
+                                                                  [33] id=- cls=android.widget.Button text="#ufc" bounds=[596,1965][671,2013] children=0 flags=clickable
+                                                          [29] id=- cls=android.view.ViewGroup bounds=[0,2024][912,2119] children=1
+                                                            [30] id=- cls=android.widget.Button desc="Michael Morales' Controversial Loss #ufc" bounds=[42,2040][718,2103] children=2 flags=clickable
+                                                              [31] id=- cls=android.widget.ImageView bounds=[61,2050][103,2092] children=0
+                                                              [31] id=- cls=android.view.ViewGroup text="Michael Morales' Controversial Loss #ufc" desc="Michael Morales' Controversial Loss #ufc" bounds=[108,2050][694,2092] children=0
+                                                          [29] id=- cls=android.view.ViewGroup bounds=[912,1192][1080,2151] children=6
+                                                            [30] id=- cls=android.widget.RadioButton desc="like this video along with 3.5 thousand other people" bounds=[912,1192][1080,1350] children=2 flags=clickable
+                                                              [31] id=- cls=android.view.ViewGroup bounds=[965,1213][1028,1276] children=1
+                                                                [32] id=- cls=android.widget.ImageView bounds=[965,1213][1028,1276] children=0
+                                                              [31] id=- cls=android.view.ViewGroup text="3.5K" desc="3.5K" bounds=[912,1286][1080,1329] children=0
+                                                            [30] id=- cls=android.widget.Button desc="View 78 comments" bounds=[912,1350][1080,1508] children=2 flags=clickable
+                                                              [31] id=- cls=android.view.ViewGroup bounds=[965,1371][1028,1434] children=1
+                                                                [32] id=- cls=android.widget.ImageView bounds=[965,1371][1028,1434] children=0
+                                                              [31] id=- cls=android.view.ViewGroup text="78" desc="78" bounds=[912,1444][1080,1487] children=0
+                                                            [30] id=- cls=android.widget.RadioButton desc="Save" bounds=[912,1508][1080,1666] children=2 flags=clickable,longClickable
+                                                              [31] id=- cls=android.view.ViewGroup bounds=[965,1529][1028,1592] children=1
+                                                                [32] id=- cls=android.widget.ImageView bounds=[965,1529][1028,1592] children=0
+                                                              [31] id=- cls=android.view.ViewGroup text="Save" desc="Save" bounds=[912,1602][1080,1645] children=0
+                                                            [30] id=- cls=android.widget.Button desc="Share this video" bounds=[912,1666][1080,1824] children=2 flags=clickable
+                                                              [31] id=- cls=android.view.ViewGroup bounds=[965,1687][1028,1750] children=1
+                                                                [32] id=- cls=android.widget.ImageView bounds=[965,1687][1028,1750] children=0
+                                                              [31] id=- cls=android.view.ViewGroup text="Share" desc="Share" bounds=[912,1760][1080,1803] children=0
+                                                            [30] id=- cls=android.widget.Button desc="Remix" bounds=[912,1824][1080,1982] children=2 flags=clickable
+                                                              [31] id=- cls=android.view.ViewGroup bounds=[965,1845][1028,1908] children=1
+                                                                [32] id=- cls=android.widget.ImageView bounds=[965,1845][1028,1908] children=0
+                                                              [31] id=- cls=android.view.ViewGroup text="Remix" desc="Remix" bounds=[912,1918][1080,1961] children=0
+                                                            [30] id=- cls=android.widget.Button desc="See more videos using this sound" bounds=[912,1982][1080,2151] children=1 flags=clickable
+                                                              [31] id=- cls=android.widget.ImageView bounds=[959,2019][1033,2093] children=0
+                                                  [25] id=com.google.android.youtube:id/reel_scrim_shorts_while_bottom_gradient cls=android.view.View bounds=[0,1731][1080,2151] children=0
+                                    [18] id=com.google.android.youtube:id/reel_watch_player cls=android.view.ViewGroup bounds=[0,108][1080,2151] children=2
+                                      [19] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2151] children=1
+                                        [20] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2151] children=1
+                                          [21] id=- cls=android.view.SurfaceView bounds=[0,108][1080,2151] children=0
+                                      [19] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2151] children=1
+                                        [20] id=- cls=android.view.ViewGroup bounds=[39,313][912,1419] children=1
+                                          [21] id=- cls=android.view.ViewGroup bounds=[104,395][803,631] children=2
+                                            [22] id=com.google.android.youtube:id/subtitle_window_identifier cls=android.view.View text="MMA. Sometimes exaggerating how badly" desc="MMA. Sometimes exaggerating how badly" bounds=[112,403][741,513] children=0
+                                            [22] id=com.google.android.youtube:id/subtitle_window_identifier cls=android.view.View text="you've" desc="you've" bounds=[112,513][258,572] children=0
+                                    [18] id=com.google.android.youtube:id/reel_scrim_shorts_while_top cls=android.view.View bounds=[0,108][1080,360] children=0
+                          [13] id=com.google.android.youtube:id/appbar_layout cls=android.widget.LinearLayout bounds=[0,0][1080,234] children=1
+                            [14] id=com.google.android.youtube:id/toolbar_container cls=android.widget.FrameLayout bounds=[0,0][1080,234] children=2
+                              [15] id=com.google.android.youtube:id/collapsing_header_container cls=android.widget.FrameLayout bounds=[0,108][1080,108] children=0 flags=invisible
+                              [15] id=com.google.android.youtube:id/toolbar cls=android.view.ViewGroup bounds=[0,108][1080,234] children=2
+                                [16] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,234] children=2
+                                  [17] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,234] children=0
+                                  [17] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,234] children=1
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,108][1080,234] children=2
+                                      [19] id=- cls=android.widget.Button desc="Search" bounds=[858,140][921,203] children=0 flags=clickable
+                                      [19] id=- cls=android.widget.Button desc="More actions" bounds=[985,140][1048,203] children=0 flags=clickable
+                                [16] id=- cls=android.support.v7.widget.LinearLayoutCompat bounds=[1080,108][1080,234] children=0 flags=invisible
+                      [11] id=com.google.android.youtube:id/root_pill_container cls=android.widget.FrameLayout bounds=[0,2172][1080,2172] children=0 flags=invisible
+                      [11] id=com.google.android.youtube:id/pane_fragment_footer_container cls=android.widget.FrameLayout bounds=[0,2277][1080,2277] children=0 flags=invisible
+                  [9] id=com.google.android.youtube:id/bottom_bar_container cls=android.widget.LinearLayout bounds=[0,2151][1080,2277] children=1
+                    [10] id=com.google.android.youtube:id/pivot_bar cls=android.widget.HorizontalScrollView bounds=[0,2151][1080,2277] children=1
+                      [11] id=- cls=android.widget.LinearLayout bounds=[0,2151][1080,2277] children=5
+                        [12] id=- cls=android.widget.Button desc="Home" bounds=[0,2151][216,2277] children=2 flags=clickable
+                          [13] id=com.google.android.youtube:id/thumbnail_layout cls=android.widget.FrameLayout bounds=[77,2165][140,2228] children=1
+                            [14] id=com.google.android.youtube:id/image cls=android.widget.ImageView bounds=[77,2165][140,2228] children=0
+                          [13] id=com.google.android.youtube:id/text cls=android.widget.TextView text="Home" bounds=[70,2233][147,2263] children=0
+                        [12] id=- cls=android.widget.Button desc="Shorts" bounds=[216,2151][432,2277] children=2 flags=clickable,selected
+                          [13] id=com.google.android.youtube:id/thumbnail_layout cls=android.widget.FrameLayout bounds=[293,2165][356,2228] children=1 flags=selected
+                            [14] id=com.google.android.youtube:id/image cls=android.widget.ImageView bounds=[293,2165][356,2228] children=0 flags=selected
+                          [13] id=com.google.android.youtube:id/text cls=android.widget.TextView text="Shorts" bounds=[283,2233][365,2263] children=0 flags=selected
+                        [12] id=- cls=android.widget.Button desc="Create" bounds=[432,2151][648,2277] children=1 flags=clickable
+                          [13] id=com.google.android.youtube:id/image cls=android.widget.ImageView bounds=[493,2168][588,2263] children=0
+                        [12] id=- cls=android.widget.Button desc="Subscriptions" bounds=[648,2151][864,2277] children=2 flags=clickable
+                          [13] id=com.google.android.youtube:id/thumbnail_layout cls=android.widget.FrameLayout bounds=[725,2165][788,2228] children=1
+                            [14] id=com.google.android.youtube:id/image cls=android.widget.ImageView bounds=[725,2165][788,2228] children=0
+                          [13] id=com.google.android.youtube:id/text cls=android.widget.TextView text="Subscriptions" bounds=[674,2233][838,2263] children=0
+                        [12] id=- cls=android.widget.Button desc="You" bounds=[864,2151][1080,2277] children=2 flags=clickable
+                          [13] id=com.google.android.youtube:id/thumbnail_layout cls=android.widget.FrameLayout bounds=[941,2165][1004,2228] children=1
+                            [14] id=com.google.android.youtube:id/pivot_bar_thumbnail cls=android.widget.ImageView bounds=[941,2165][1004,2228] children=0
+                          [13] id=com.google.android.youtube:id/text cls=android.widget.TextView text="You" bounds=[947,2233][998,2263] children=0
+              [7] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,108] children=1 flags=invisible
+                [8] id=com.google.android.youtube:id/global_status_bar_view cls=android.view.View bounds=[0,0][1080,108] children=0 flags=invisible
+              [7] id=- cls=android.view.View bounds=[0,0][3,3] children=0 flags=invisible
+          [5] id=com.google.android.youtube:id/reel_time_bar cls=android.view.ViewGroup bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.SeekBar desc="0 minutes 4 seconds of 0 minutes 46 seconds" bounds=[0,2087][1080,2213] children=0 flags=clickable
