@@ -1,0 +1,35 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# IDE (machine-specific)
+.idea/
+*.iml
+
+# Build outputs
+build/
+*.apk
+*.aab
+*.ap_
+
+# Secrets / signing
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+
+# Logs, exported dumps and OS files
+*.log
+Thumbs.db
