@@ -19,6 +19,7 @@ fun HomeScreen(
     serviceEnabled: Boolean,
     onOpenAccessibilitySettings: () -> Unit,
     onOpenEventLog: () -> Unit,
+    onOpenDumps: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,6 +43,9 @@ fun HomeScreen(
         }
         OutlinedButton(onClick = onOpenEventLog, modifier = Modifier.fillMaxWidth()) {
             Text("Event log")
+        }
+        OutlinedButton(onClick = onOpenDumps, modifier = Modifier.fillMaxWidth()) {
+            Text("Screen dumps")
         }
     }
 }
