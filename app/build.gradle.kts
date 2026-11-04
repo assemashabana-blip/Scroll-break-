@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "com.example.anti_doom_scroling"
+    namespace = "com.assem.scrollbreak"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.anti_doom_scroling"
-        minSdk = 33
+        applicationId = "com.assem.scrollbreak"
+        minSdk = 26
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    implementation(libs.kotlinx.coroutines.android)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)

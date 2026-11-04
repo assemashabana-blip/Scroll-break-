@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Event types, flags and package filter are set in code (ScrollBreakService.onServiceConnected)
+     from TargetPackages, so there is a single source of truth. -->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/service_description"
+    android:settingsActivity="com.assem.scrollbreak.MainActivity" />

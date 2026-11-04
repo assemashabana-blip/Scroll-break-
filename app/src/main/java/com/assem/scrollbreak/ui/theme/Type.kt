@@ -1,4 +1,4 @@
-package com.example.anti_doom_scroling.ui.theme
+package com.assem.scrollbreak.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

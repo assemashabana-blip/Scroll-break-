@@ -1,4 +1,4 @@
-package com.example.anti_doom_scroling.ui.theme
+package com.assem.scrollbreak.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun ANTI_DOOM_SCROLINGTheme(
+fun ScrollBreakTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

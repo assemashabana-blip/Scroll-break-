@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ANTI_DOOM_SCROLING</string>
+    <string name="app_name">ScrollBreak</string>
+    <string name="service_label">ScrollBreak</string>
+    <string name="service_description">Detects short-video feeds (Shorts, Reels, TikTok and similar) so ScrollBreak can stop endless scrolling. All data stays on this device.</string>
 </resources>
