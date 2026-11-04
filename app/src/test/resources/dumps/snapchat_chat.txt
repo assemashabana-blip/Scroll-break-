@@ -1,0 +1,157 @@
+=== WINDOW id=817 type=APPLICATION layer=0 pkg=com.snapchat.android title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+    [2] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=3
+        [4] id=com.snapchat.android:id/base_open_view cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=3
+          [5] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+              [7] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=4
+                [8] id=com.snapchat.android:id/ptr_container cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=androidx.recyclerview.widget.RecyclerView bounds=[0,265][1080,2093] children=12 flags=scrollable
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,265][1080,391] children=1
+                      [11] id=- cls=android.view.View bounds=[0,265][1080,391] children=4
+                        [12] id=list-picker-pill-Unread cls=android.view.View desc="h_da39a3" bounds=[21,286][250,381] children=2
+                          [13] id= cls=android.widget.TextView text="h_07b032" desc="h_07b032" bounds=[47,308][171,358] children=0
+                          [13] id=list-picker-pill-Unread-badge cls=android.widget.TextView text="h_da4b92" desc="h_da4b92" bounds=[192,315][208,351] children=0
+                        [12] id=list-picker-pill-Near Me cls=android.view.View desc="h_da39a3" bounds=[250,286][447,381] children=1
+                          [13] id= cls=android.widget.TextView text="h_48c761" desc="h_48c761" bounds=[276,308][421,358] children=0
+                        [12] id=list-picker-pill-Stories cls=android.view.View desc="h_da39a3" bounds=[447,286][667,381] children=2
+                          [13] id= cls=android.widget.TextView text="Stories" desc="Stories" bounds=[473,308][588,358] children=0
+                          [13] id=list-picker-pill-Stories-badge cls=android.widget.TextView text="h_356a19" desc="h_356a19" bounds=[609,315][625,351] children=0
+                        [12] id=list-picker-edit-list cls=android.view.View desc="h_da39a3" bounds=[667,286][841,381] children=1
+                          [13] id= cls=android.widget.TextView text="h_6403f2" desc="h_6403f2" bounds=[699,308][777,358] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,394][1080,559] children=1
+                      [11] id=com.snapchat.android:id/ff_item cls=android.view.View desc="h_364e70" bounds=[0,394][1080,559] children=6
+                        [12] id=- cls=android.view.View text="h_709424" desc="h_da39a3" bounds=[18,405][160,547] children=0
+                        [12] id=- cls=android.view.View desc="h_179ca6" bounds=[909,445][1062,508] children=0
+                        [12] id=- cls=javaClass text="h_32e21c" desc="h_da39a3" bounds=[832,437][891,516] children=0
+                        [12] id=- cls=javaClass text="h_1959f1" desc="h_da39a3" bounds=[0,394][117,454] children=0
+                        [12] id=- cls=android.view.View text="h_90e58a" desc="h_da39a3" bounds=[165,486][218,539] children=0
+                        [12] id=- cls=javaClass text="h_95444b" desc="h_da39a3" bounds=[218,491][466,533] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,562][1080,727] children=1
+                      [11] id=com.snapchat.android:id/ff_item cls=android.view.View desc="h_342da1" bounds=[0,562][1080,727] children=5
+                        [12] id=- cls=android.view.View text="h_709424" desc="h_da39a3" bounds=[18,573][160,715] children=0
+                        [12] id=- cls=android.view.View text="h_2b5d03" desc="h_da39a3" bounds=[909,613][1062,676] children=0
+                        [12] id=- cls=javaClass text="h_312317" desc="h_da39a3" bounds=[0,562][309,622] children=0
+                        [12] id=- cls=android.view.View text="h_20c6ce" desc="h_da39a3" bounds=[165,654][218,707] children=0
+                        [12] id=- cls=javaClass text="h_6dec8b" desc="h_da39a3" bounds=[218,659][590,701] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,764][1080,821] children=1
+                      [11] id=- cls=android.view.View bounds=[21,764][1080,821] children=1
+                        [12] id=- cls=javaClass text="h_ae5c17" desc="h_da39a3" bounds=[21,764][230,821] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,837][1080,1011] children=1
+                      [11] id=- cls=android.view.View bounds=[0,837][1080,1011] children=6
+                        [12] id=- cls=android.view.View text="h_9c3bb4" desc="h_da39a3" bounds=[24,861][150,987] children=0
+                        [12] id=- cls=android.view.View text="h_76cece" desc="h_da39a3" bounds=[986,872][1080,976] children=0
+                        [12] id=- cls=android.view.View text="h_31a3a4" desc="h_da39a3" bounds=[0,837][287,921] children=0
+                        [12] id=- cls=javaClass text="h_c496c4" desc="h_da39a3" bounds=[0,837][280,894] children=0
+                        [12] id=- cls=javaClass text="h_4f4b89" desc="h_da39a3" bounds=[0,894][194,937] children=0
+                        [12] id=- cls=javaClass text="h_0a9b2f" desc="h_da39a3" bounds=[0,937][204,980] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,1014][1080,1188] children=1
+                      [11] id=- cls=android.view.View bounds=[0,1014][1080,1188] children=5
+                        [12] id=- cls=android.view.View text="h_9c3bb4" desc="h_da39a3" bounds=[24,1038][150,1164] children=0
+                        [12] id=- cls=android.view.View text="h_76cece" desc="h_da39a3" bounds=[986,1049][1080,1153] children=0
+                        [12] id=- cls=android.view.View text="h_31a3a4" desc="h_da39a3" bounds=[0,1014][287,1098] children=0
+                        [12] id=- cls=javaClass text="h_a14d3b" desc="h_da39a3" bounds=[0,1014][294,1071] children=0
+                        [12] id=- cls=javaClass text="h_58cf9a" desc="h_da39a3" bounds=[0,1071][191,1114] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,1191][1080,1365] children=1
+                      [11] id=- cls=android.view.View bounds=[0,1191][1080,1365] children=6
+                        [12] id=- cls=android.view.View text="h_9c3bb4" desc="h_da39a3" bounds=[24,1215][150,1341] children=0
+                        [12] id=- cls=android.view.View text="h_76cece" desc="h_da39a3" bounds=[986,1226][1080,1330] children=0
+                        [12] id=- cls=android.view.View text="h_31a3a4" desc="h_da39a3" bounds=[0,1191][287,1275] children=0
+                        [12] id=- cls=javaClass text="h_fe072f" desc="h_da39a3" bounds=[0,1191][212,1248] children=0
+                        [12] id=- cls=javaClass text="h_0d8d69" desc="h_da39a3" bounds=[0,1248][214,1291] children=0
+                        [12] id=- cls=javaClass text="h_0a9b2f" desc="h_da39a3" bounds=[0,1291][204,1334] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,1402][1080,1459] children=1
+                      [11] id=- cls=android.view.View bounds=[21,1402][1080,1459] children=1
+                        [12] id=- cls=javaClass text="h_7fe143" desc="h_da39a3" bounds=[21,1402][260,1459] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,1475][1080,1649] children=1
+                      [11] id=- cls=android.view.View bounds=[0,1475][1080,1649] children=5
+                        [12] id=- cls=android.view.View text="h_9c3bb4" desc="h_da39a3" bounds=[24,1499][150,1625] children=0
+                        [12] id=- cls=android.view.View text="h_76cece" desc="h_da39a3" bounds=[986,1510][1080,1614] children=0
+                        [12] id=- cls=android.view.View text="h_31a3a4" desc="h_da39a3" bounds=[0,1475][239,1559] children=0
+                        [12] id=- cls=javaClass text="h_ca981f" desc="h_da39a3" bounds=[0,1475][436,1532] children=0
+                        [12] id=- cls=javaClass text="h_867d49" desc="h_da39a3" bounds=[0,1532][251,1575] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,1652][1080,1826] children=1
+                      [11] id=- cls=android.view.View bounds=[0,1652][1080,1826] children=6
+                        [12] id=- cls=android.view.View text="h_9c3bb4" desc="h_da39a3" bounds=[24,1676][150,1802] children=0
+                        [12] id=- cls=android.view.View text="h_76cece" desc="h_da39a3" bounds=[986,1687][1080,1791] children=0
+                        [12] id=- cls=android.view.View text="h_31a3a4" desc="h_da39a3" bounds=[0,1652][239,1736] children=0
+                        [12] id=- cls=javaClass text="h_cb218f" desc="h_da39a3" bounds=[0,1652][268,1709] children=0
+                        [12] id=- cls=javaClass text="h_ce87cf" desc="h_da39a3" bounds=[0,1709][114,1752] children=0
+                        [12] id=- cls=javaClass text="h_945c9c" desc="h_da39a3" bounds=[0,1752][211,1795] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,1829][1080,2003] children=1
+                      [11] id=- cls=android.view.View bounds=[0,1829][1080,2003] children=5
+                        [12] id=- cls=android.view.View text="h_9c3bb4" desc="h_da39a3" bounds=[24,1853][150,1979] children=0
+                        [12] id=- cls=android.view.View text="h_76cece" desc="h_da39a3" bounds=[986,1864][1080,1968] children=0
+                        [12] id=- cls=android.view.View text="h_31a3a4" desc="h_da39a3" bounds=[0,1829][239,1913] children=0
+                        [12] id=- cls=javaClass text="h_60bc36" desc="h_da39a3" bounds=[0,1829][235,1886] children=0
+                        [12] id=- cls=javaClass text="h_00be54" desc="h_da39a3" bounds=[0,1886][183,1929] children=0
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,2006][1080,2093] children=1
+                      [11] id=- cls=android.view.View bounds=[0,2006][1080,2093] children=6
+                        [12] id=- cls=android.view.View text="h_9c3bb4" desc="h_da39a3" bounds=[24,2030][150,2093] children=0
+                        [12] id=- cls=android.view.View text="h_76cece" desc="h_da39a3" bounds=[986,2041][1080,2093] children=0
+                        [12] id=- cls=android.view.View text="h_31a3a4" desc="h_da39a3" bounds=[0,2006][239,2090] children=0
+                        [12] id=- cls=javaClass text="h_1ec286" desc="h_da39a3" bounds=[0,2006][268,2063] children=0
+                        [12] id=- cls=javaClass text="h_832d8f" desc="h_da39a3" bounds=[0,2063][246,2093] children=0
+                        [12] id=- cls=javaClass text="h_945c9c" desc="h_da39a3" bounds=[2147483647,2147483647][-2147483648,-2147483648] children=0 flags=invisible
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[0,0][1080,265] children=0
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[0,265][1080,270] children=0
+                [8] id=- cls=android.widget.RelativeLayout bounds=[909,1914][1056,2061] children=1 flags=clickable
+                  [9] id=- cls=android.widget.ImageView bounds=[949,1954][1020,2020] children=0
+          [5] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2340] children=1 flags=clickable
+              [7] id=- cls=android.widget.FrameLayout bounds=[0,2114][1080,2277] children=2
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[0,2114][1080,2277] children=5
+                  [9] id=com.snapchat.android:id/ngs_map_icon_container cls=android.view.ViewGroup desc="Map" bounds=[0,2114][241,2272] children=2 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Map" bounds=[100,2151][184,2235] children=0
+                    [10] id=- cls=android.widget.TextView text="Map" bounds=[109,2235][175,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_chat_icon_container cls=android.view.ViewGroup desc="Chat" bounds=[241,2114][440,2272] children=3 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Chat" bounds=[299,2151][383,2235] children=0
+                    [10] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[346,2156][388,2198] children=2
+                      [11] id=- cls=android.widget.ImageView bounds=[346,2156][388,2198] children=0
+                      [11] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[357,2157][376,2197] children=1
+                        [12] id=- cls=javaClass text="h_da4b92" desc="h_da39a3" bounds=[357,2157][376,2197] children=0
+                    [10] id=- cls=android.widget.TextView text="Chat" bounds=[307,2235][375,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_camera_icon_container cls=android.view.ViewGroup desc="Camera" bounds=[440,2114][639,2272] children=2 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Camera" bounds=[498,2151][582,2235] children=0
+                    [10] id=- cls=android.widget.TextView text="Camera" bounds=[483,2235][596,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_community_icon_container cls=android.view.ViewGroup desc="Stories" bounds=[639,2114][838,2272] children=3 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Stories" bounds=[697,2151][781,2235] children=0
+                    [10] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[744,2151][781,2188] children=1
+                      [11] id=- cls=android.widget.ImageView bounds=[744,2151][781,2188] children=0
+                    [10] id=- cls=android.widget.TextView text="Stories" bounds=[689,2235][788,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_spotlight_icon_container cls=android.view.ViewGroup desc="Spotlight" bounds=[838,2114][1079,2272] children=3 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Spotlight" bounds=[896,2151][980,2235] children=0
+                    [10] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[943,2151][980,2188] children=1
+                      [11] id=- cls=android.widget.ImageView bounds=[943,2151][980,2188] children=0
+                    [10] id=- cls=android.widget.TextView text="Spotlight" bounds=[871,2235][1004,2272] children=0
+                [8] id=- cls=android.view.View bounds=[42,2141][1038,2272] children=0
+          [5] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=1
+            [6] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=6
+              [7] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,108][139,250] children=3 flags=clickable
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[21,124][126,229] children=0
+                [8] id=com.snapchat.android:id/neon_header_avatar cls=android.widget.FrameLayout desc="Story sent" bounds=[26,129][121,224] children=1
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[26,131][121,224] children=0
+                [8] id=- cls=android.widget.FrameLayout bounds=[95,116][124,158] children=1
+                  [9] id=- cls=android.widget.ImageView bounds=[95,122][124,151] children=0
+              [7] id=com.snapchat.android:id/hova_header_search_icon cls=android.widget.FrameLayout desc="Search" bounds=[152,124][257,229] children=1 flags=clickable
+                [8] id=- cls=android.widget.ImageView bounds=[165,137][244,216] children=0
+              [7] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="Chat" bounds=[482,108][597,250] children=0 flags=clickable
+              [7] id=- cls=android.widget.FrameLayout bounds=[694,124][799,229] children=2 flags=clickable
+                [8] id=- cls=android.view.View bounds=[694,124][799,229] children=0
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[694,124][799,229] children=1
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView desc="h_c18f8f" bounds=[715,145][778,208] children=0
+              [7] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[951,124][1056,229] children=2 flags=clickable
+                [8] id=- cls=android.view.View bounds=[951,124][1056,229] children=0
+                [8] id=- cls=android.widget.ImageView bounds=[964,137][1043,216] children=0
+              [7] id=- cls=android.widget.FrameLayout bounds=[823,124][928,229] children=2 flags=clickable
+                [8] id=- cls=android.view.View bounds=[823,124][928,229] children=0
+                [8] id=com.snapchat.android:id/neon_add_friend_button_container cls=android.widget.FrameLayout bounds=[836,134][928,213] children=2
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView desc="Add Friends" bounds=[836,134][920,213] children=0
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[899,134][928,160] children=2
+                    [10] id=- cls=android.widget.ImageView bounds=[899,134][928,160] children=0
+                    [10] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[910,134][928,160] children=1
+                      [11] id=- cls=javaClass text="h_902ba3" desc="h_da39a3" bounds=[910,118][929,160] children=0
+        [4] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.SurfaceView bounds=[0,108][1080,2028] children=0
+        [4] id=- cls=android.view.View bounds=[0,2277][1080,2340] children=0

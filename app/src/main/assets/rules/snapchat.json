@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "app": "snapchat",
+  "packages": ["com.snapchat.android"],
+
+  "playerSignature": {
+    "allOf": [
+      { "viewId": "com.snapchat.android:id/spotlight_container" },
+      { "viewId": "com.snapchat.android:id/opera_viewer" }
+    ]
+  },
+
+  "feedEntrySignatures": [
+    {
+      "name": "spotlight_tab",
+      "signature": { "viewId": "com.snapchat.android:id/spotlight_container" }
+    }
+  ],
+
+  "fingerprintNodes": [
+    {
+      "name": "sound",
+      "className": "android.widget.TextView",
+      "text": " · ",
+      "match": "contains"
+    }
+  ],
+
+  "redirectTo": { "desc": "Chat", "clickable": true }
+}

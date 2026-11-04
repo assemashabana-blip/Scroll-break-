@@ -1,0 +1,264 @@
+=== WINDOW id=817 type=APPLICATION layer=0 pkg=com.snapchat.android title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=2
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+    [2] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=3
+        [4] id=com.snapchat.android:id/base_open_view cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=3
+          [5] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+            [6] id=com.snapchat.android:id/spotlight_container cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=2
+              [7] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=2
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+                  [9] id=com.snapchat.android:id/opera_viewer cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+                    [10] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+                      [11] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2277] children=6
+                        [12] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=10 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,0][1080,0] children=1 flags=invisible
+                                [16] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                                  [17] id=- cls=android.widget.ImageView bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,0][1080,0] children=1 flags=invisible
+                                [16] id=com.snapchat.android:id/base_image_layer_container cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                                  [17] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                                    [18] id=- cls=android.widget.ImageView bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.view.ViewGroup bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                              [15] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[0,0][1080,0] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,0][1080,0] children=1 flags=invisible
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,0][1080,0] children=1 flags=invisible
+                                  [17] id=- cls=javaClass bounds=[4662,0][1080,-1] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=2 flags=invisible
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,0][1080,0] children=6 flags=invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=0 flags=invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[21,0][460,-180] children=1 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_f30647" bounds=[21,0][460,-180] children=0 flags=clickable,invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_303b2a" bounds=[481,0][553,-180] children=0 flags=clickable,invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[21,0][327,-95] children=1 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_af9cb8" bounds=[21,0][327,-95] children=0 flags=clickable,invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[21,0][933,-21] children=2 flags=clickable,invisible
+                                  [17] id=- cls=android.widget.ImageView bounds=[21,0][53,-32] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_3dfda0" bounds=[64,0][532,-21] children=0 flags=invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[942,0][1069,0] children=7 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[942,0][1069,-896] children=2 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.FrameLayout bounds=[942,0][1069,-938] children=2 flags=invisible
+                                      [19] id=- cls=android.widget.ImageView bounds=[953,0][1058,-998] children=0 flags=invisible
+                                      [19] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[955,0][1055,-1001] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[942,0][1069,-896] children=0 flags=clickable,invisible
+                                  [17] id=com.snapchat.android:id/favorite cls=android.view.ViewGroup bounds=[948,0][1066,-737] children=3 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,0][948,-838] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,0][1066,-780] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_b858cb" bounds=[950,0][1066,-737] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,0][1066,-578] children=4 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,0][948,-679] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,0][1066,-621] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[1018,0][1050,-689] children=1 flags=invisible
+                                      [19] id=- cls=android.widget.ImageView bounds=[1019,0][1048,-691] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_356a19" bounds=[950,0][1066,-578] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,0][1066,-419] children=3 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,0][948,-520] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,0][1066,-462] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_8effee" bounds=[950,0][1066,-419] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,0][1066,-260] children=3 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,0][948,-361] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,0][1066,-303] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_35e995" bounds=[950,0][1066,-260] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,0][1066,-142] children=2 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,0][948,-202] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,0][1066,-144] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[964,0][1053,-21] children=3 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[964,0][1053,-21] children=0 flags=clickable,invisible
+                                    [18] id=- cls=android.view.View bounds=[964,0][1053,-21] children=0 flags=invisible
+                                    [18] id=- cls=android.widget.ImageView bounds=[990,0][1027,-47] children=0 flags=invisible
+                              [15] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,0] children=1 flags=invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[349,0][730,-249] children=0 flags=invisible
+                        [12] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=0
+                        [12] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=0
+                        [12] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout desc="opera_content_index:" bounds=[0,0][1080,2093] children=9
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2093] children=4
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,108][1080,2093] children=0
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[21,1918][195,1998] children=1
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_fc6b3f" bounds=[21,1918][195,1998] children=0 flags=clickable
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[21,2019][933,2072] children=2 flags=clickable
+                                  [17] id=- cls=android.widget.ImageView bounds=[21,2029][53,2061] children=0
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="Original Sound · user1" bounds=[64,2019][440,2072] children=0
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[942,964][1069,2093] children=7
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[942,964][1069,1197] children=2 flags=clickable
+                                    [18] id=- cls=android.widget.FrameLayout bounds=[942,964][1069,1155] children=2
+                                      [19] id=- cls=android.widget.ImageView bounds=[953,990][1058,1095] children=0
+                                      [19] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[955,992][1055,1092] children=0
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[942,1074][1069,1197] children=0 flags=clickable
+                                  [17] id=com.snapchat.android:id/favorite cls=android.view.ViewGroup bounds=[948,1197][1066,1356] children=3 flags=clickable
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,1255][948,1255] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,1197][1066,1313] children=0
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_f5eb43" bounds=[950,1302][1066,1356] children=0
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,1356][1066,1515] children=4 flags=clickable
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,1414][948,1414] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,1356][1066,1472] children=0
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[1018,1372][1050,1404] children=1
+                                      [19] id=- cls=android.widget.ImageView bounds=[1019,1373][1048,1402] children=0
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_1d4948" bounds=[950,1461][1066,1515] children=0
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,1515][1066,1674] children=3 flags=clickable
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,1573][948,1573] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,1515][1066,1631] children=0
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_f032e5" bounds=[950,1620][1066,1674] children=0
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,1674][1066,1833] children=3 flags=clickable
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,1732][948,1732] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,1674][1066,1790] children=0
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_758a4e" bounds=[950,1779][1066,1833] children=0
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,1833][1066,1951] children=2 flags=clickable
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,1891][948,1891] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,1833][1066,1949] children=0
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[964,1983][1053,2072] children=3
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[964,1983][1053,2072] children=0 flags=clickable
+                                    [18] id=- cls=android.view.View bounds=[964,1983][1053,2072] children=0
+                                    [18] id=- cls=android.widget.ImageView bounds=[990,2009][1027,2046] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2093] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                              [15] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[0,0][1080,2093] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2093] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2093] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2093] children=1
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,108][1080,2093] children=1
+                                  [17] id=- cls=javaClass bounds=[0,108][1080,2092] children=0
+                        [12] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=9
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,2201][1080,2277] children=4
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,2201][1080,2277] children=0
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[21,4027][219,2277] children=1 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_78cf1b" bounds=[21,4027][219,2277] children=0 flags=clickable,invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[21,4112][933,2277] children=2 flags=clickable,invisible
+                                  [17] id=- cls=android.widget.ImageView bounds=[21,4122][53,2277] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_e576dd" bounds=[64,4112][491,2277] children=0 flags=invisible
+                                [16] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[942,3057][1069,2277] children=7 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[942,3057][1069,2277] children=2 flags=clickable,invisible
+                                    [18] id=- cls=android.widget.FrameLayout bounds=[942,3057][1069,2277] children=2 flags=invisible
+                                      [19] id=- cls=android.widget.ImageView bounds=[953,3083][1058,2277] children=0 flags=invisible
+                                      [19] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[955,3085][1055,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[942,3167][1069,2277] children=0 flags=clickable,invisible
+                                  [17] id=com.snapchat.android:id/favorite cls=android.view.ViewGroup bounds=[948,3290][1066,2277] children=3 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,3348][948,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,3290][1066,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_b858cb" bounds=[950,3395][1066,2277] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,3449][1066,2277] children=3 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,3507][948,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,3449][1066,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_b858cb" bounds=[950,3554][1066,2277] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,3608][1066,2277] children=3 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,3666][948,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,3608][1066,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_404c73" bounds=[950,3713][1066,2277] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,3767][1066,2277] children=3 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,3825][948,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,3767][1066,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="h_1e50ee" bounds=[950,3872][1066,2277] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.ViewGroup bounds=[948,3926][1066,2277] children=2 flags=clickable,invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[948,3984][948,2277] children=0 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[950,3926][1066,2277] children=0 flags=invisible
+                                  [17] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[964,4076][1053,2277] children=3 flags=invisible
+                                    [18] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[964,4076][1053,2277] children=0 flags=clickable,invisible
+                                    [18] id=- cls=android.view.View bounds=[964,4076][1053,2277] children=0 flags=invisible
+                                    [18] id=- cls=android.widget.ImageView bounds=[990,4102][1027,2277] children=0 flags=invisible
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.view.ViewGroup bounds=[0,2093][1080,2277] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                              [15] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[0,2093][1080,2277] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,2093][1080,2277] children=1
+                                [16] id=- cls=android.widget.FrameLayout bounds=[0,2201][1080,2277] children=1
+                                  [17] id=- cls=android.widget.ImageView bounds=[0,2201][1080,2277] children=0
+                          [13] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2277] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,2093][1080,2277] children=1
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,2201][1080,2277] children=1
+                                  [17] id=- cls=javaClass bounds=[4662,2201][1080,2277] children=0 flags=invisible
+                        [12] id=- cls=android.view.View bounds=[0,2093][1080,2277] children=0
+                [8] id=- cls=android.widget.FrameLayout bounds=[0,142][1080,2340] children=0
+              [7] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[0,2340][1080,2340] children=0 flags=invisible
+          [5] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.widget.FrameLayout bounds=[0,2093][1080,2340] children=1 flags=clickable
+              [7] id=- cls=android.widget.FrameLayout bounds=[0,2114][1080,2277] children=2
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.LinearLayout bounds=[0,2114][1080,2277] children=5
+                  [9] id=com.snapchat.android:id/ngs_map_icon_container cls=android.view.ViewGroup desc="Map" bounds=[0,2114][241,2272] children=2 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Map" bounds=[100,2151][184,2235] children=0
+                    [10] id=- cls=android.widget.TextView text="Map" bounds=[109,2235][175,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_chat_icon_container cls=android.view.ViewGroup desc="Chat" bounds=[241,2114][440,2272] children=3 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Chat" bounds=[299,2151][383,2235] children=0
+                    [10] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[346,2156][388,2198] children=2
+                      [11] id=- cls=android.widget.ImageView bounds=[346,2156][388,2198] children=0
+                      [11] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[357,2157][376,2197] children=1
+                        [12] id=- cls=javaClass text="h_356a19" desc="h_da39a3" bounds=[357,2157][376,2197] children=0
+                    [10] id=- cls=android.widget.TextView text="Chat" bounds=[307,2235][375,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_camera_icon_container cls=android.view.ViewGroup desc="Camera" bounds=[440,2114][639,2272] children=2 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Camera" bounds=[498,2151][582,2235] children=0
+                    [10] id=- cls=android.widget.TextView text="Camera" bounds=[483,2235][596,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_community_icon_container cls=android.view.ViewGroup desc="Stories" bounds=[639,2114][838,2272] children=3 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Stories" bounds=[697,2151][781,2235] children=0
+                    [10] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[744,2151][781,2188] children=1
+                      [11] id=- cls=android.widget.ImageView bounds=[744,2151][781,2188] children=0
+                    [10] id=- cls=android.widget.TextView text="Stories" bounds=[689,2235][788,2272] children=0
+                  [9] id=com.snapchat.android:id/ngs_spotlight_icon_container cls=android.view.ViewGroup desc="Spotlight" bounds=[838,2114][1079,2272] children=2 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View desc="Spotlight" bounds=[896,2151][980,2235] children=0
+                    [10] id=- cls=android.widget.TextView text="Spotlight" bounds=[871,2235][1004,2272] children=0
+                [8] id=- cls=android.view.View bounds=[42,2141][1038,2272] children=0
+          [5] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=1
+            [6] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,108][1080,2340] children=5
+              [7] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[0,108][139,250] children=3 flags=clickable
+                [8] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[21,124][126,229] children=0
+                [8] id=com.snapchat.android:id/neon_header_avatar cls=android.widget.FrameLayout desc="Story sent" bounds=[26,129][121,224] children=1
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView bounds=[26,131][121,224] children=0
+                [8] id=- cls=android.widget.FrameLayout bounds=[95,116][124,158] children=1
+                  [9] id=- cls=android.widget.ImageView bounds=[95,122][124,151] children=0
+              [7] id=com.snapchat.android:id/hova_header_search_icon cls=android.widget.FrameLayout desc="Search" bounds=[152,124][257,229] children=1 flags=clickable
+                [8] id=- cls=android.widget.ImageView bounds=[165,137][244,216] children=0
+              [7] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.TextView text="Spotlight" bounds=[428,108][651,250] children=0 flags=clickable
+              [7] id=- cls=android.widget.ImageView bounds=[951,124][1056,229] children=0 flags=clickable
+              [7] id=- cls=android.widget.FrameLayout bounds=[823,124][928,229] children=2 flags=clickable
+                [8] id=- cls=android.view.View bounds=[823,124][928,229] children=0
+                [8] id=com.snapchat.android:id/neon_add_friend_button_container cls=android.widget.FrameLayout bounds=[836,134][928,213] children=2
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.ImageView desc="Add Friends" bounds=[836,134][920,213] children=0
+                  [9] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.widget.FrameLayout bounds=[899,134][928,160] children=2
+                    [10] id=- cls=android.widget.ImageView bounds=[899,134][928,160] children=0
+                    [10] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.View bounds=[910,134][928,160] children=1
+                      [11] id=- cls=javaClass text="h_902ba3" desc="h_da39a3" bounds=[910,118][929,160] children=0
+        [4] id=com.snapchat.android:id/0_resource_name_obfuscated cls=android.view.SurfaceView bounds=[0,108][1080,2028] children=0
+        [4] id=- cls=android.view.View bounds=[0,2277][1080,2340] children=0
+  [1] id=android:id/statusBarBackground cls=android.view.View bounds=[0,0][1080,108] children=0 flags=invisible
