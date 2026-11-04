@@ -31,10 +31,13 @@ import com.assem.scrollbreak.ui.theme.ScrollBreakTheme
 class MainActivity : ComponentActivity() {
 
     private var serviceEnabled by mutableStateOf(false)
+    private var blockingEnabled by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppLog.init(this)
+        AppSettings.init(this)
+        blockingEnabled = AppSettings.blockingEnabled
         requestNotificationPermission()
         enableEdgeToEdge()
         setContent {
@@ -53,6 +56,11 @@ class MainActivity : ComponentActivity() {
                             },
                             onOpenEventLog = { screen = "log" },
                             onOpenDumps = { screen = "dumps" },
+                            blockingEnabled = blockingEnabled,
+                            onBlockingChange = {
+                                AppSettings.blockingEnabled = it
+                                blockingEnabled = it
+                            },
                             modifier = m,
                         )
                     }

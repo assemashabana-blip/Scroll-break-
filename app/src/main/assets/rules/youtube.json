@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "app": "youtube",
+  "packages": ["com.google.android.youtube"],
+
+  "playerSignature": {
+    "anyOf": [
+      { "viewId": "com.google.android.youtube:id/reel_watch_fragment_root" },
+      { "viewId": "com.google.android.youtube:id/reel_player_page_container" },
+      { "viewId": "com.google.android.youtube:id/reel_player_overlay_root" },
+      {
+        "allOf": [
+          { "desc": "Share this video", "className": "android.widget.Button" },
+          { "desc": "Remix", "className": "android.widget.Button" },
+          { "desc": " comments", "className": "android.widget.Button" }
+        ]
+      }
+    ]
+  },
+
+  "feedEntrySignatures": [
+    {
+      "name": "shorts_tab_selected",
+      "signature": {
+        "desc": "Shorts",
+        "match": "equals",
+        "className": "android.widget.Button",
+        "selected": true
+      }
+    }
+  ]
+}

@@ -33,6 +33,16 @@ object AppLog {
         errorFile = File(dir, "errors.log")
     }
 
+    /** Appends one block to logs/blocks.csv (epoch ms, app, reason) for stats. Never throws. */
+    @Synchronized
+    fun recordBlock(app: String, reason: String) {
+        try {
+            val dir = errorFile?.parentFile ?: return
+            File(dir, "blocks.csv").appendText("${System.currentTimeMillis()},$app,$reason\n")
+        } catch (_: Throwable) {
+        }
+    }
+
     /** Never throws: the service must not crash because logging failed. */
     @Synchronized
     fun error(message: String, t: Throwable? = null) {

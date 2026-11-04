@@ -9,7 +9,9 @@ data class NodeSnapshot(
     val bounds: String,
     val childCount: Int,
     val flags: String,
-)
+) {
+    fun hasFlag(flag: String): Boolean = flags.split(',').contains(flag)
+}
 
 /** Abstraction over a node tree so the walker can be unit-tested without Android. */
 interface NodeSource {

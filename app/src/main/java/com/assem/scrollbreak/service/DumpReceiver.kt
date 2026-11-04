@@ -5,13 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.assem.scrollbreak.AppLog
+import com.assem.scrollbreak.AppSettings
 
+/** Handles the notification actions; debug builds also export it for `adb shell am broadcast`. */
 class DumpReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         try {
+            if (intent.action == ACTION_SET_BLOCKING) {
+                AppSettings.init(context)
+                AppSettings.blockingEnabled = intent.getBooleanExtra("enabled", false)
+                return
+            }
             val service = ScrollBreakService.instance
             if (service == null) {
                 Toast.makeText(context, "ScrollBreak service is not running", Toast.LENGTH_LONG).show()
+                return
+            }
+            if (intent.action == ACTION_SHOW_OVERLAY) {
+                service.showTestOverlay()
                 return
             }
             // "Now" still waits briefly so the notification shade can close first.
@@ -20,5 +31,10 @@ class DumpReceiver : BroadcastReceiver() {
         } catch (t: Throwable) {
             AppLog.error("DumpReceiver failed", t)
         }
+    }
+
+    companion object {
+        const val ACTION_SET_BLOCKING = "com.assem.scrollbreak.SET_BLOCKING"
+        const val ACTION_SHOW_OVERLAY = "com.assem.scrollbreak.SHOW_OVERLAY"
     }
 }
