@@ -26,6 +26,11 @@ class EntryStateMachine(
         val fingerprint: Fingerprint = Fingerprint.EMPTY,
         /** Current video index from a scroll event, for apps that report one. */
         val scrollIndex: Int? = null,
+        /**
+         * True when the app we came from still has a visible window (split-screen, floating window).
+         * Such a source does not count: the user never really left it, so this is not a link tap.
+         */
+        val sourceVisible: Boolean = false,
     )
 
     /** [reason] is set whenever something worth logging happened. */
@@ -82,7 +87,7 @@ class EntryStateMachine(
 
         return when (s.state) {
             State.IDLE -> {
-                val why = allowReason(o.pkg, s, now)
+                val why = allowReason(o, s, now)
                 if (why != null) {
                     s.state = State.ALLOW_ONE
                     s.fingerprint = o.fingerprint
@@ -121,12 +126,19 @@ class EntryStateMachine(
         }
     }
 
-    private fun allowReason(pkg: String, s: Session, now: Long): String? {
+    /** The app the user arrived from, if the history says [pkg] was just opened over another app. */
+    @Synchronized
+    fun candidateSource(pkg: String): String? =
+        if (history.size >= 2 && history.last().pkg == pkg) history[history.size - 2].pkg else null
+
+    private fun allowReason(o: Observation, s: Session, now: Long): String? {
         // History ends [..., source, pkg]: the source's exit is when pkg first appeared.
-        if (history.size >= 2 && history.last().pkg == pkg) {
-            val source = history[history.size - 2]
+        val source = candidateSource(o.pkg)
+        if (source != null) {
             val exitedAt = history.last().enteredAt
-            if (isMessaging(source.pkg) && now - exitedAt <= allowWindowMs) return "messaging:${source.pkg}"
+            if (isMessaging(source) && !o.sourceVisible && now - exitedAt <= allowWindowMs) {
+                return "messaging:$source"
+            }
         }
         val seen = s.sourceSeenAt
         if (seen != null && now - seen <= allowWindowMs) return "source:${s.sourceName}"

@@ -19,7 +19,7 @@ class BlockOverlay(
     private val onGoBack: () -> Unit,
 ) {
     private val windowManager = service.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    private var view: View? = null
+    @Volatile private var view: View? = null
 
     val isShowing: Boolean get() = view != null
 

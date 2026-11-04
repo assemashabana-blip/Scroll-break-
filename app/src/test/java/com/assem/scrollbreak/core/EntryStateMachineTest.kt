@@ -259,4 +259,23 @@ class EntryStateMachineTest {
         m.onObservation(player())
         assertEquals(Action.NONE, m.onObservation(scroll(9)).action)   // new session, new baseline
     }
+
+    @Test
+    fun messagingSourceStillVisibleInSplitScreenIsBlocked() {
+        // WhatsApp and YouTube side by side: events alternate, but WhatsApp never went away.
+        openFromWhatsApp()
+        now += 500
+        val r = m.onObservation(Observation(yt, true, sourceVisible = true))
+        assertEquals(Action.BLOCK, r.action)
+        assertEquals("block:no_friend_source", r.reason)
+    }
+
+    @Test
+    fun candidateSourceIsThePackageBeforeTheCurrentOne() {
+        assertNull(m.candidateSource(yt))
+        m.onForeground(wa)
+        m.onForeground(yt)
+        assertEquals(wa, m.candidateSource(yt))
+        assertNull(m.candidateSource(wa))     // WhatsApp is not the foreground package
+    }
 }

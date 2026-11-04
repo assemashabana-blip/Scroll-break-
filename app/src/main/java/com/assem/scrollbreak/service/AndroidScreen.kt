@@ -3,6 +3,7 @@ package com.assem.scrollbreak.service
 import android.accessibilityservice.AccessibilityService
 import android.os.Build
 import android.view.accessibility.AccessibilityNodeInfo
+import android.view.accessibility.AccessibilityWindowInfo
 import com.assem.scrollbreak.core.NodeSnapshot
 import com.assem.scrollbreak.core.rules.Leaf
 import com.assem.scrollbreak.core.rules.ScreenView
@@ -65,14 +66,35 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
         private const val MAX_NODES = 3000
         private const val MAX_DEPTH = 60
 
-        /** Roots of all windows belonging to [pkg]; split-screen and PiP windows are included. */
-        fun forPackage(service: AccessibilityService, pkg: String): AndroidScreen {
+        /**
+         * Roots of all windows belonging to [pkg], on every display, so split-screen, floating and
+         * PiP windows are all seen. A window's package never changes, so it is learned once per
+         * window id in [cache]; afterwards only [pkg]'s own windows cost a call.
+         */
+        fun forPackage(service: AccessibilityService, pkg: String, cache: WindowPackageCache): AndroidScreen {
             val roots = ArrayList<AccessibilityNodeInfo>()
-            for (w in service.windows) {
+            val windows = allWindows(service)
+            cache.retainOnly(windows.map { it.id }.toSet())
+            for (w in windows) {
+                val known = cache.get(w.id)
+                if (known != null) {
+                    if (known == pkg) w.root?.let { roots += it }
+                    continue
+                }
                 val root = w.root ?: continue
-                if (root.packageName == pkg) roots += root else release(root)
+                val owner = root.packageName?.toString()
+                if (owner != null) cache.put(w.id, owner)
+                if (owner == pkg) roots += root else release(root)
             }
             return AndroidScreen(roots)
+        }
+
+        private fun allWindows(service: AccessibilityService): List<AccessibilityWindowInfo> {
+            if (Build.VERSION.SDK_INT >= 30) {
+                val byDisplay = service.windowsOnAllDisplays
+                return (0 until byDisplay.size()).flatMap { byDisplay.valueAt(it) }
+            }
+            return service.windows
         }
 
         @Suppress("DEPRECATION")
@@ -80,4 +102,13 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
             if (Build.VERSION.SDK_INT < 33) info.recycle()
         }
     }
+}
+
+/** Which package owns each accessibility window id; ids are never reused for another package. */
+class WindowPackageCache {
+    private val owners = HashMap<Int, String>()
+
+    @Synchronized fun get(id: Int): String? = owners[id]
+    @Synchronized fun put(id: Int, pkg: String) { owners[id] = pkg }
+    @Synchronized fun retainOnly(liveIds: Set<Int>) { owners.keys.retainAll(liveIds) }
 }

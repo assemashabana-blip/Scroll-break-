@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 object AppSettings {
     private const val PREFS = "scrollbreak"
     private const val KEY_BLOCKING = "blocking_enabled"
+    private const val KEY_OEM_AUTOSTART = "oem_autostart_done"
 
     @Volatile private var prefs: SharedPreferences? = null
 
@@ -21,5 +22,12 @@ object AppSettings {
         get() = prefs?.getBoolean(KEY_BLOCKING, false) ?: false
         set(value) {
             prefs?.edit()?.putBoolean(KEY_BLOCKING, value)?.apply()
+        }
+
+    /** The user confirmed they allowed autostart in their phone maker's own settings (cannot be read back). */
+    var oemAutostartDone: Boolean
+        get() = prefs?.getBoolean(KEY_OEM_AUTOSTART, false) ?: false
+        set(value) {
+            prefs?.edit()?.putBoolean(KEY_OEM_AUTOSTART, value)?.apply()
         }
 }

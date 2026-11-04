@@ -3,6 +3,7 @@ package com.assem.scrollbreak
 import android.content.Context
 import android.util.Log
 import com.assem.scrollbreak.core.EventLog
+import com.assem.scrollbreak.core.LatencyStats
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,15 +31,33 @@ object AppLog {
 
     fun init(context: Context) {
         val dir = File(context.applicationContext.filesDir, "logs").apply { mkdirs() }
-        errorFile = File(dir, "errors.log")
+        if (errorFile == null) {
+            errorFile = File(dir, "errors.log")
+            loadLatencyHistory(dir)
+        }
     }
 
-    /** Appends one block to logs/blocks.csv (epoch ms, app, reason) for stats. Never throws. */
+    /** Reaction time of recent blocks, shown in the app. Rebuilt from blocks.csv on start. */
+    val latency = LatencyStats()
+
+    /** Appends one block to logs/blocks.csv (epoch ms, app, reason, latency ms) for stats. Never throws. */
     @Synchronized
-    fun recordBlock(app: String, reason: String) {
+    fun recordBlock(app: String, reason: String, latencyMs: Long) {
+        latency.add(latencyMs)
         try {
             val dir = errorFile?.parentFile ?: return
-            File(dir, "blocks.csv").appendText("${System.currentTimeMillis()},$app,$reason\n")
+            File(dir, "blocks.csv").appendText("${System.currentTimeMillis()},$app,$reason,$latencyMs\n")
+        } catch (_: Throwable) {
+        }
+    }
+
+    private fun loadLatencyHistory(dir: File) {
+        try {
+            val csv = File(dir, "blocks.csv")
+            if (!csv.exists()) return
+            csv.readLines().takeLast(200).forEach { line ->
+                line.split(',').getOrNull(3)?.toLongOrNull()?.let { latency.add(it) }
+            }
         } catch (_: Throwable) {
         }
     }
