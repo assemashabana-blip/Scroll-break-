@@ -12,6 +12,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
@@ -88,6 +91,9 @@ fun ScrollBreakTheme(
             medium = RoundedCornerShape(20.dp),
             large = RoundedCornerShape(28.dp),
         ),
-        content = content
-    )
+    ) {
+        // The app's text is English, so keep it left-to-right even on an Arabic (RTL) phone;
+        // mirroring English text jumbles punctuation and numbers ("DAYS 7", ".friend still plays").
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr, content = content)
+    }
 }
