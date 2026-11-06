@@ -119,6 +119,7 @@ private fun StepCard(step: SetupStep, onChanged: () -> Unit) {
             if (expanded) {
                 Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(step.help, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    SetupWalkthrough(step.id, Modifier.fillMaxWidth())
                     if (!finished) {
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Button(onClick = { step.action(); onChanged() }) { Text(step.actionLabel) }
