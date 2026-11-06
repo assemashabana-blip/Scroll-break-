@@ -76,8 +76,8 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             }
         }
 
-        // Status: no words. A white circle with a plain play button means feeds play freely; the
-        // accent circle with a struck-through play button means they are blocked.
+        // Status: a white circle with a plain play button means feeds play freely; the accent
+        // circle with a struck-through play button means they are blocked. The text says the same.
         val active = state.serviceEnabled && state.blockingEnabled
         val orb by animateColorAsState(if (active) SbAccent else Color.White, label = "orb")
         Card(Modifier.fillMaxWidth()) {
@@ -97,7 +97,26 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                             )
                         }
                     }
-                    Spacer(Modifier.weight(1f))
+                    Column(Modifier.weight(1f).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(
+                            when {
+                                !state.serviceEnabled -> "Not running"
+                                state.blockingEnabled -> "Blocking is on"
+                                else -> "Blocking is off"
+                            },
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                        Text(
+                            when {
+                                !state.serviceEnabled -> "Turn ScrollBreak on in Accessibility settings."
+                                state.blockingEnabled -> "Shorts, Reels and TikTok are blocked. One video from a friend still plays."
+                                else -> "Nothing is blocked. Feeds play freely."
+                            },
+                            style = MaterialTheme.typography.bodySmall,
+                            color = muted,
+                        )
+                    }
                     Switch(checked = state.blockingEnabled, onCheckedChange = actions.setBlocking)
                 }
                 if (!state.serviceEnabled) {
