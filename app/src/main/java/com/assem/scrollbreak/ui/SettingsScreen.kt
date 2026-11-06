@@ -13,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,6 +49,8 @@ fun SettingsScreen(
     var throttle by remember { mutableFloatStateOf(AppSettings.throttleMs.toFloat()) }
     var friction by remember { mutableFloatStateOf(AppSettings.frictionSeconds.toFloat()) }
     var friends by remember { mutableStateOf(AppSettings.friendApps) }
+    var haptics by remember { mutableStateOf(AppSettings.hapticsEnabled) }
+    val buzz = rememberBuzz()
 
     Column(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -100,6 +103,7 @@ fun SettingsScreen(
                         Checkbox(
                             checked = pkg in friends,
                             onCheckedChange = { on ->
+                                buzz(Buzz.CLICK)
                                 friends = if (on) friends + pkg else friends - pkg
                                 AppSettings.friendApps = friends
                             },
@@ -107,6 +111,28 @@ fun SettingsScreen(
                         Text(label)
                     }
                 }
+            }
+        }
+
+        Card(Modifier.fillMaxWidth()) {
+            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text("Vibration", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        "A light buzz on switches, app tiles, dial steps and taps.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(
+                    checked = haptics,
+                    onCheckedChange = { on ->
+                        // Saved first so turning it on is felt straight away.
+                        AppSettings.hapticsEnabled = on
+                        haptics = on
+                        buzz(Buzz.CLICK)
+                    },
+                )
             }
         }
 

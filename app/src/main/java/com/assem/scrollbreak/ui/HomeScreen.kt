@@ -59,6 +59,7 @@ class HomeActions(
 
 @Composable
 fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modifier) {
+    val buzz = rememberBuzz()
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
     Column(
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp),
@@ -66,7 +67,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             BrandHeader(Modifier.weight(1f))
-            IconButton(onClick = { actions.navigate("settings") }) {
+            IconButton(onClick = { buzz(Buzz.TICK); actions.navigate("settings") }) {
                 Icon(
                     painterResource(R.drawable.ic_gear),
                     contentDescription = "Settings",
@@ -117,7 +118,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                             color = muted,
                         )
                     }
-                    Switch(checked = state.blockingEnabled, onCheckedChange = actions.setBlocking)
+                    Switch(checked = state.blockingEnabled, onCheckedChange = { buzz(Buzz.HEAVY); actions.setBlocking(it) })
                 }
                 if (!state.serviceEnabled) {
                     Button(onClick = actions.openAccessibilitySettings, modifier = Modifier.fillMaxWidth()) {
@@ -134,7 +135,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                         Text("${state.setupRemaining} setup step(s) left", style = MaterialTheme.typography.titleMedium)
                         Text("Keeps Android from stopping ScrollBreak.", style = MaterialTheme.typography.bodySmall, color = muted)
                     }
-                    Button(onClick = actions.openSetup) { Text("Finish") }
+                    Button(onClick = { buzz(Buzz.CLICK); actions.openSetup() }) { Text("Finish") }
                 }
             }
         }

@@ -57,7 +57,7 @@ fun LensDial(
     onChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val haptic = LocalHapticFeedback.current
+    val buzz = rememberBuzz()
     val spacing = with(LocalDensity.current) { 12.dp.toPx() }
     val maxIndex = ((range.endInclusive - range.start) / step).roundToInt()
     fun indexOf(v: Float) = ((v - range.start) / step).roundToInt().coerceIn(0, maxIndex)
@@ -79,7 +79,7 @@ fun LensDial(
         val snapped = pos.roundToInt()
         if (snapped != emitted) {
             emitted = snapped
-            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+            buzz(Buzz.TICK)
             onChange(range.start + snapped * step)
         }
     }

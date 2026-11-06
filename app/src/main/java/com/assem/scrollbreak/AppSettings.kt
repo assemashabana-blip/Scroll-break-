@@ -14,6 +14,7 @@ object AppSettings {
     private const val KEY_FRICTION = "friction_seconds"
     private const val KEY_FRIEND_APPS = "friend_apps"
     private const val KEY_APP_PREFIX = "app_enabled_"
+    private const val KEY_HAPTICS = "haptics_enabled"
 
     const val DEFAULT_ALLOW_SECONDS = 5
     const val DEFAULT_THROTTLE_MS = 200
@@ -68,6 +69,13 @@ object AppSettings {
         get() = prefs?.getStringSet(KEY_FRIEND_APPS, null)?.toSet() ?: TargetPackages.messaging
         set(value) {
             prefs?.edit()?.putStringSet(KEY_FRIEND_APPS, value.toSet())?.apply()
+        }
+
+    /** Vibrate on toggles, dial steps and taps inside the app. */
+    var hapticsEnabled: Boolean
+        get() = prefs?.getBoolean(KEY_HAPTICS, true) ?: true
+        set(value) {
+            prefs?.edit()?.putBoolean(KEY_HAPTICS, value)?.apply()
         }
 
     fun isAppEnabled(app: String): Boolean = prefs?.getBoolean(KEY_APP_PREFIX + app, true) ?: true

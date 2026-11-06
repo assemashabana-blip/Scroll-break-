@@ -64,7 +64,7 @@ fun AppTile(
     onToggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val haptic = LocalHapticFeedback.current
+    val buzz = rememberBuzz()
     val scheme = MaterialTheme.colorScheme
     val container by animateColorAsState(if (on) scheme.surfaceContainerHigh else scheme.surfaceContainer, label = "tile")
     val border by animateColorAsState(if (on) scheme.onSurface else scheme.surfaceContainer, label = "border")
@@ -87,7 +87,7 @@ fun AppTile(
                 indication = null,
                 role = Role.Switch,
             ) {
-                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                buzz(Buzz.CLICK)
                 onToggle(!on)
             }
             .padding(vertical = 16.dp),

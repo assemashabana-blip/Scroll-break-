@@ -94,7 +94,8 @@ private fun StepCard(step: SetupStep, onChanged: () -> Unit) {
     val finished = step.state == StepState.DONE
     // Open steps start expanded so the action is in reach; finished ones fold away.
     var expanded by remember(step.id, finished) { mutableStateOf(!finished) }
-    Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }) {
+    val buzz = rememberBuzz()
+    Card(Modifier.fillMaxWidth().clickable { buzz(Buzz.TICK); expanded = !expanded }) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                 StatusBadge(step.state)
@@ -117,9 +118,9 @@ private fun StepCard(step: SetupStep, onChanged: () -> Unit) {
                     Text(step.help, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     if (!finished) {
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Button(onClick = { step.action(); onChanged() }) { Text(step.actionLabel) }
+                            Button(onClick = { buzz(Buzz.CLICK); step.action(); onChanged() }) { Text(step.actionLabel) }
                             step.markDone?.let { mark ->
-                                OutlinedButton(onClick = { mark(); onChanged() }) { Text("I've done this") }
+                                OutlinedButton(onClick = { buzz(Buzz.CLICK); mark(); onChanged() }) { Text("I've done this") }
                             }
                         }
                     }
