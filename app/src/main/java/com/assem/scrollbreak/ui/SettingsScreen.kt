@@ -14,6 +14,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -46,6 +48,11 @@ fun SettingsScreen(
     onOpenAdminSettings: () -> Unit,
     setupLeft: Int,
     onNavigate: (String) -> Unit,
+    /** The theme on screen now, and whether it follows the phone's own setting. */
+    dark: Boolean,
+    followsPhone: Boolean,
+    onDarkChange: (Boolean) -> Unit,
+    onFollowPhone: () -> Unit,
     /** Debug builds only: rules, detection health, event log and screen dumps. */
     showDeveloperTools: Boolean,
     modifier: Modifier = Modifier,
@@ -64,6 +71,23 @@ fun SettingsScreen(
 
         Card(Modifier.fillMaxWidth()) {
             NavRow("Setup checklist", if (setupLeft == 0) "All done" else "$setupLeft step(s) still to do") { onNavigate("setup") }
+        }
+
+        Card(Modifier.fillMaxWidth()) {
+            Row(Modifier.padding(start = 16.dp, top = 8.dp, end = 8.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text("Dark mode", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        if (followsPhone) "Follows the phone" else "Set here",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    if (!followsPhone) {
+                        TextButton(onClick = onFollowPhone, contentPadding = PaddingValues(0.dp)) { Text("Follow the phone") }
+                    }
+                }
+                DayNightToggle(dark = dark, onChange = onDarkChange)
+            }
         }
 
         SliderCard(

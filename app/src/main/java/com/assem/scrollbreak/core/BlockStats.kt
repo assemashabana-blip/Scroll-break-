@@ -49,7 +49,7 @@ object BlockStats {
         toList().sortedByDescending { it.second }.toMap(LinkedHashMap())
 
     /** Midnight [daysBack] calendar days before the day containing [ms]. */
-    private fun startOfDay(ms: Long, zone: TimeZone, daysBack: Int): Long = Calendar.getInstance(zone).run {
+    internal fun startOfDay(ms: Long, zone: TimeZone, daysBack: Int): Long = Calendar.getInstance(zone).run {
         timeInMillis = ms
         set(Calendar.HOUR_OF_DAY, 0)
         set(Calendar.MINUTE, 0)

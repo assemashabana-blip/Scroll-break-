@@ -12,6 +12,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.SystemBarStyle
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.produceState
+import com.assem.scrollbreak.core.UsageTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
@@ -92,9 +99,19 @@ class MainActivity : ComponentActivity() {
         AppSettings.init(this)
         blockingEnabled = AppSettings.blockingEnabled
         requestNotificationPermission()
-        enableEdgeToEdge()
         setContent {
-            ScrollBreakTheme {
+            // Null follows the phone; the Settings toggle stores an explicit choice.
+            var darkPref by remember { mutableStateOf(AppSettings.darkMode) }
+            val dark = darkPref ?: isSystemInDarkTheme()
+            // Status and navigation bar icons follow the app's theme, not only the phone's.
+            DisposableEffect(dark) {
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { dark },
+                    navigationBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { dark },
+                )
+                onDispose {}
+            }
+            ScrollBreakTheme(darkTheme = dark) {
                 // First run on a fresh install lands on the checklist, not on a dead-looking Home.
                 var screen by rememberSaveable {
                     mutableStateOf(if (Setup.remaining(this@MainActivity) > 0) "setup" else "home")
@@ -140,6 +157,10 @@ class MainActivity : ComponentActivity() {
                             onOpenAdminSettings = { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) },
                             setupLeft = Setup.remaining(this@MainActivity).also { tick.hashCode() },
                             onNavigate = navigate,
+                            dark = dark,
+                            followsPhone = darkPref == null,
+                            onDarkChange = { darkPref = it; AppSettings.darkMode = it },
+                            onFollowPhone = { darkPref = null; AppSettings.darkMode = null },
                             showDeveloperTools = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0,
                             modifier = m,
                         )
@@ -160,12 +181,21 @@ class MainActivity : ComponentActivity() {
                             val stats = remember(tick, latency.count) {
                                 BlockStats.summarize(AppLog.readBlockLines(), System.currentTimeMillis())
                             }
+                            val usageAccess = remember(tick) { AppUsage.hasAccess(this@MainActivity) }
+                            // Reading a week of usage events takes a moment; keep it off the main thread.
+                            val usage by produceState<UsageTime.Summary?>(null, tick, loaded, usageAccess) {
+                                val appOf = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
+                                    .flatMap { l -> l.rule.packages.map { it to l.rule.app } }.toMap()
+                                value = withContext(Dispatchers.IO) { AppUsage.summarize(this@MainActivity) { appOf[it] } }
+                            }
                             HomeScreen(
                                 state = HomeState(
                                     serviceEnabled = serviceEnabled,
                                     setupRemaining = Setup.remaining(this@MainActivity).also { tick.hashCode() },
                                     blockingEnabled = blockingEnabled,
                                     stats = stats,
+                                    usageAccess = usageAccess,
+                                    usage = usage,
                                     apps = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
                                         .map { it.rule.app to AppSettings.isAppEnabled(it.rule.app) },
                                 ),
@@ -174,6 +204,7 @@ class MainActivity : ComponentActivity() {
                                         startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
                                     },
                                     openSetup = { navigate("setup") },
+                                    openUsageAccess = { startActivity(AppUsage.accessIntent(this@MainActivity)) },
                                     setBlocking = {
                                         AppSettings.blockingEnabled = it
                                         blockingEnabled = it

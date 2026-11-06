@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.R
 import com.assem.scrollbreak.core.BlockStats
+import com.assem.scrollbreak.core.UsageTime
 import com.assem.scrollbreak.ui.theme.SbAccent
 
 /** Everything Home needs; grouped so adding a card does not mean another ten parameters. */
@@ -43,6 +44,10 @@ class HomeState(
     val setupRemaining: Int,
     val blockingEnabled: Boolean,
     val stats: BlockStats.Summary,
+    /** False until the user grants Usage access. */
+    val usageAccess: Boolean,
+    /** Time per app; null without access or while it loads. */
+    val usage: UsageTime.Summary?,
     /** Short-video rules by app name, with whether each is switched on. */
     val apps: List<Pair<String, Boolean>>,
 )
@@ -50,6 +55,7 @@ class HomeState(
 class HomeActions(
     val openAccessibilitySettings: () -> Unit,
     val openSetup: () -> Unit,
+    val openUsageAccess: () -> Unit,
     val setBlocking: (Boolean) -> Unit,
     val setAppEnabled: (String, Boolean) -> Unit,
     val navigate: (String) -> Unit,
@@ -78,7 +84,8 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
         // Status: a white circle with a plain play button means feeds play freely; the accent
         // circle with a struck-through play button means they are blocked. The text says the same.
         val active = state.serviceEnabled && state.blockingEnabled
-        val orb by animateColorAsState(if (active) SbAccent else Color.White, label = "orb")
+        val idle = MaterialTheme.colorScheme.onSurface
+        val orb by animateColorAsState(if (active) SbAccent else idle, label = "orb")
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -92,7 +99,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                                 painterResource(if (blocked) R.drawable.ic_status_blocked else R.drawable.ic_status_play),
                                 contentDescription = null,
                                 modifier = Modifier.size(34.dp),
-                                tint = Color.Black,
+                                tint = if (blocked) Color.Black else MaterialTheme.colorScheme.surface,
                             )
                         }
                     }
@@ -143,6 +150,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             StatTile("Today", state.stats.today.toString(), "blocked", Modifier.weight(1f))
             StatTile("7 days", state.stats.last7Days.toString(), "blocked", Modifier.weight(1f))
         }
+        if (!state.usageAccess || state.usage != null) UsageCard(state.usage, actions.openUsageAccess)
         WeekChart(state.stats.perDay)
         if (state.stats.weekByApp.isNotEmpty()) AppsChart(state.stats.weekByApp)
 

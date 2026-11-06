@@ -17,3 +17,14 @@ val SbMutedLight = Color(0xFF5C5C5C)
 
 // "On" state of a per-app tile.
 val SbOn = Color(0xFF2ECC71)
+
+// Day/night theme toggle. The day sky is a pale tint of the accent (dawn rather than blue, so the
+// one brand colour stays the only warm hue); the sun is the accent itself. Night is the brand black
+// with a pale-grey moon, white stars and white clouds.
+val SbSkyDay = Color(0xFFFFD6C7)
+val SbSkyNight = SbBlack
+val SbSun = SbAccent
+val SbMoon = SbSurfaceHighLight
+val SbMoonCrater = Color(0xFFBDBDBD)
+val SbStar = SbWhite
+val SbCloud = SbWhite

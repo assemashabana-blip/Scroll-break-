@@ -15,6 +15,7 @@ object AppSettings {
     private const val KEY_FRIEND_APPS = "friend_apps"
     private const val KEY_APP_PREFIX = "app_enabled_"
     private const val KEY_HAPTICS = "haptics_enabled"
+    private const val KEY_DARK = "dark_mode"
 
     const val DEFAULT_ALLOW_SECONDS = 5
     const val DEFAULT_THROTTLE_MS = 200
@@ -76,6 +77,13 @@ object AppSettings {
         get() = prefs?.getBoolean(KEY_HAPTICS, true) ?: true
         set(value) {
             prefs?.edit()?.putBoolean(KEY_HAPTICS, value)?.apply()
+        }
+
+    /** True dark, false light, null follow the phone (the default until the user picks one). */
+    var darkMode: Boolean?
+        get() = prefs?.takeIf { it.contains(KEY_DARK) }?.getBoolean(KEY_DARK, true)
+        set(value) {
+            prefs?.edit()?.apply { if (value == null) remove(KEY_DARK) else putBoolean(KEY_DARK, value) }?.apply()
         }
 
     fun isAppEnabled(app: String): Boolean = prefs?.getBoolean(KEY_APP_PREFIX + app, true) ?: true
