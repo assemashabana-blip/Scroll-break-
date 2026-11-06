@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.assem.scrollbreak.AppSettings
 
-/** How strong a buzz is: a dial step, a toggle or tap, or the main blocking switch. */
+/** How strong a buzz is: a dial step, a toggle, or the main blocking switch. Only dials and toggles buzz. */
 enum class Buzz { TICK, CLICK, HEAVY }
 
 /**

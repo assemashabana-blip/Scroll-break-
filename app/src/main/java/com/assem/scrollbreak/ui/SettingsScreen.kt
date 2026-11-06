@@ -119,7 +119,7 @@ fun SettingsScreen(
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text("Vibration", style = MaterialTheme.typography.titleMedium)
                     Text(
-                        "A light buzz on switches, app tiles, dial steps and taps.",
+                        "A light buzz on switches, app tiles, checkboxes and dial steps.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

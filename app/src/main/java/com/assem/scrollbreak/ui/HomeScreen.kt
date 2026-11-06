@@ -67,7 +67,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             BrandHeader(Modifier.weight(1f))
-            IconButton(onClick = { buzz(Buzz.TICK); actions.navigate("settings") }) {
+            IconButton(onClick = { actions.navigate("settings") }) {
                 Icon(
                     painterResource(R.drawable.ic_gear),
                     contentDescription = "Settings",
@@ -135,7 +135,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                         Text("${state.setupRemaining} setup step(s) left", style = MaterialTheme.typography.titleMedium)
                         Text("Keeps Android from stopping ScrollBreak.", style = MaterialTheme.typography.bodySmall, color = muted)
                     }
-                    Button(onClick = { buzz(Buzz.CLICK); actions.openSetup() }) { Text("Finish") }
+                    Button(onClick = actions.openSetup) { Text("Finish") }
                 }
             }
         }

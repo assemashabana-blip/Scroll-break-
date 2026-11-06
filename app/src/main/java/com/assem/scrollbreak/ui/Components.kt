@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubScreenBar(title: String, onBack: () -> Unit) {
-    val buzz = rememberBuzz()
     TopAppBar(
         title = {
             // Fades between titles when moving from one sub-screen to another.
@@ -39,7 +38,7 @@ fun SubScreenBar(title: String, onBack: () -> Unit) {
             }
         },
         navigationIcon = {
-            IconButton(onClick = { buzz(Buzz.TICK); onBack() }) {
+            IconButton(onClick = onBack) {
                 Text(
                     "←",
                     style = MaterialTheme.typography.headlineSmall,
@@ -67,9 +66,8 @@ fun SectionLabel(text: String, modifier: Modifier = Modifier) {
 /** A tappable row with a chevron, for navigating to another screen. */
 @Composable
 fun NavRow(label: String, hint: String, onClick: () -> Unit) {
-    val buzz = rememberBuzz()
     Row(
-        Modifier.fillMaxWidth().clickable { buzz(Buzz.TICK); onClick() }.padding(horizontal = 20.dp, vertical = 14.dp),
+        Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 20.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
