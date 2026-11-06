@@ -16,8 +16,10 @@ object UsageTime {
         val todayByApp: Map<String, Long>,
         /** Foreground time over today and the six days before it, per app name, largest first. */
         val weekByApp: Map<String, Long>,
-        /** All watched apps together per calendar day, oldest first; the last entry is today. */
+        /** All counted apps together per calendar day, oldest first; the last entry is today. */
         val perDay: List<Long>,
+        /** Time per app for each of the same days, largest first; the last entry is today. */
+        val perDayByApp: List<Map<String, Long>> = emptyList(),
     )
 
     /**
@@ -34,7 +36,7 @@ object UsageTime {
         val dayStarts = (DAYS - 1 downTo 0).map { BlockStats.startOfDay(nowMs, zone, it) }
         val weekStart = dayStarts.first()
         val perDay = LongArray(DAYS)
-        val today = LinkedHashMap<String, Long>()
+        val days = List(DAYS) { LinkedHashMap<String, Long>() }
         val week = LinkedHashMap<String, Long>()
 
         // Splits one session across the days it covers.
@@ -48,7 +50,7 @@ object UsageTime {
                 val overlap = minOf(end, dayEnd) - maxOf(start, dayStarts[d])
                 if (overlap > 0) {
                     perDay[d] += overlap
-                    if (d == DAYS - 1) today[app] = (today[app] ?: 0L) + overlap
+                    days[d][app] = (days[d][app] ?: 0L) + overlap
                 }
             }
         }
@@ -81,9 +83,10 @@ object UsageTime {
 
         return Summary(
             todayMs = perDay.last(),
-            todayByApp = today.sortedByTime(),
+            todayByApp = days.last().sortedByTime(),
             weekByApp = week.sortedByTime(),
             perDay = perDay.toList(),
+            perDayByApp = days.map { it.sortedByTime() },
         )
     }
 

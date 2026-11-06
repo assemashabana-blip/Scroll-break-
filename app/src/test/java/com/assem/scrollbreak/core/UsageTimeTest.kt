@@ -45,6 +45,8 @@ class UsageTimeTest {
         val s = run(fg("com.tiktok", 10 * day - 20 * min), bg("com.tiktok", 10 * day + 15 * min))
         assertEquals(15 * min, s.todayMs)
         assertEquals(20 * min, s.perDay[5])
+        assertEquals(20 * min, s.perDayByApp[5]["tiktok"])
+        assertEquals(15 * min, s.perDayByApp[6]["tiktok"])
         assertEquals(35 * min, s.weekByApp["tiktok"])
     }
 

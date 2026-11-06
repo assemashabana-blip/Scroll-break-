@@ -22,7 +22,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,10 +39,15 @@ import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.AppUsage
 import com.assem.scrollbreak.core.UsageTime
 import androidx.compose.ui.text.style.TextOverflow
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.max
 
+private const val WEEK = 7
+
 /**
- * Time spent in the ten most-used apps (any app on the home screen), today or over 7 days.
+ * Time spent in the five most-used apps (any app on the home screen), today, on each of the three days before, or over 7 days.
  * [result] is null until the user grants Usage access; the card then explains why and links to
  * the setting.
  */
@@ -61,18 +67,28 @@ fun UsageCard(result: AppUsage.Result?, onAllow: () -> Unit) {
                 return@Column
             }
 
-            var week by rememberSaveable { mutableStateOf(false) }
-            val byApp = if (week) usage.weekByApp else usage.todayByApp
-            val total = if (week) usage.perDay.sum() else usage.todayMs
+            // 0 = today, 1..3 = that many days back, WEEK = the 7 days together.
+            var pick by rememberSaveable { mutableIntStateOf(0) }
+            val days = usage.perDayByApp
+            val byApp = if (pick == WEEK) usage.weekByApp else days.getOrNull(days.size - 1 - pick).orEmpty()
+            // The total counts every app; the list shows the five biggest.
+            val total = if (pick == WEEK) usage.perDay.sum() else usage.perDay.getOrElse(usage.perDay.size - 1 - pick) { 0L }
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Time in apps", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                RangeChip("Today", !week) { week = false }
-                RangeChip("7 days", week) { week = true }
+            Text("Time in apps", style = MaterialTheme.typography.titleMedium)
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                val dayName = remember { SimpleDateFormat("EEE", Locale.ENGLISH) }
+                RangeChip("Today", pick == 0) { pick = 0 }
+                for (back in 1..3) {
+                    val label = remember(back) {
+                        dayName.format(Calendar.getInstance().apply { add(Calendar.DAY_OF_MONTH, -back) }.time)
+                    }
+                    RangeChip(label, pick == back) { pick = back }
+                }
+                RangeChip("7 days", pick == WEEK) { pick = WEEK }
             }
             Text(UsageTime.format(total), style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
 
-            val shown = byApp.entries.filter { it.value >= 60_000 }.take(10)
+            val shown = byApp.entries.filter { it.value >= 60_000 }.take(5)
             if (shown.isEmpty()) {
                 Text("Nothing over a minute yet.", style = MaterialTheme.typography.bodySmall, color = muted)
             } else {
@@ -119,7 +135,6 @@ private fun RangeChip(label: String, selected: Boolean, onClick: () -> Unit) {
         style = MaterialTheme.typography.labelLarge,
         color = if (selected) scheme.surface else scheme.onSurfaceVariant,
         modifier = Modifier
-            .padding(start = 6.dp)
             .clip(CircleShape)
             .background(if (selected) scheme.onSurface else scheme.surface.copy(alpha = 0f))
             .semantics { this.selected = selected }
