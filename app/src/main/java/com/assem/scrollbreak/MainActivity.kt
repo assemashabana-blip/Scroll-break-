@@ -39,8 +39,18 @@ import com.assem.scrollbreak.ui.HomeState
 import com.assem.scrollbreak.ui.RulesScreen
 import com.assem.scrollbreak.ui.SettingsScreen
 import com.assem.scrollbreak.ui.SetupScreen
+import com.assem.scrollbreak.ui.SubScreenBar
 import com.assem.scrollbreak.ui.theme.ScrollBreakTheme
 import java.io.File
+
+private val titles = mapOf(
+    "settings" to "Settings",
+    "rules" to "Rules",
+    "health" to "Detection health",
+    "log" to "Event log",
+    "dumps" to "Screen dumps",
+    "setup" to "Setup",
+)
 
 class MainActivity : ComponentActivity() {
 
@@ -77,7 +87,14 @@ class MainActivity : ComponentActivity() {
                 val latency by AppLog.latency.summary.collectAsState()
                 val loaded by RuleStore.loaded.collectAsState()
                 val errors by RuleStore.errors.collectAsState()
-                Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        if (screen != "home") {
+                            SubScreenBar(titles[screen] ?: "ScrollBreak", onBack = { screen = "home" })
+                        }
+                    },
+                ) { padding ->
                     val m = Modifier.padding(padding)
                     when (screen) {
                         "log" -> EventLogScreen(m)

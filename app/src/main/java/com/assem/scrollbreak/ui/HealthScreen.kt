@@ -41,7 +41,6 @@ fun HealthScreen(loaded: List<LoadedRule>, onExportLogs: () -> Unit, modifier: M
         modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Detection health", style = MaterialTheme.typography.headlineMedium)
         Text(
             "When each way of recognising a screen last matched since the app started. " +
                 "If an app updates and a signal that used to match stops, its rule needs a new dump.",

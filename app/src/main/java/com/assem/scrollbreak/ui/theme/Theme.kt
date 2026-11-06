@@ -3,7 +3,10 @@ package com.assem.scrollbreak.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -29,6 +32,10 @@ private val DarkColorScheme = darkColorScheme(
     surfaceContainerHighest = SbSurfaceHighDark,
     surfaceContainerLow = SbSurfaceDark,
     outline = SbMutedDark,
+    secondaryContainer = Color(0xFF3A3A3A),
+    onSecondaryContainer = SbWhite,
+    primaryContainer = Color(0xFF3A3A3A),
+    onPrimaryContainer = SbWhite,
     error = SbAccent
 )
 
@@ -49,6 +56,10 @@ private val LightColorScheme = lightColorScheme(
     surfaceContainerHighest = SbSurfaceHighLight,
     surfaceContainerLow = SbSurfaceLight,
     outline = SbMutedLight,
+    secondaryContainer = Color(0xFFD9D9D9),
+    onSecondaryContainer = SbInk,
+    primaryContainer = Color(0xFFD9D9D9),
+    onPrimaryContainer = SbInk,
     error = Color(0xFFC62F0A)
 )
 
@@ -72,6 +83,11 @@ fun ScrollBreakTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = Shapes(
+            small = RoundedCornerShape(12.dp),
+            medium = RoundedCornerShape(20.dp),
+            large = RoundedCornerShape(28.dp),
+        ),
         content = content
     )
 }

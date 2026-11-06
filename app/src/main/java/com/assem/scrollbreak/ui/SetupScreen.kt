@@ -26,7 +26,6 @@ fun SetupScreen(steps: List<SetupStep>, onChanged: () -> Unit, modifier: Modifie
         modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Setup", style = MaterialTheme.typography.headlineMedium)
         val left = Setup.remaining(steps)
         Text(
             if (left == 0) "All set. ScrollBreak is configured to keep running."

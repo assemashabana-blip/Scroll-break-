@@ -33,7 +33,6 @@ fun RulesScreen(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Rules", style = MaterialTheme.typography.headlineMedium)
         Text(
             "Rules say how each app's screens are recognised. An imported file replaces the built-in rule " +
                 "of the same app name; it is checked first and rejected if invalid.",

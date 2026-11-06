@@ -52,7 +52,6 @@ fun SettingsScreen(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Settings", style = MaterialTheme.typography.headlineMedium)
 
         SliderCard(
             title = "Friend-link window: ${allow.toInt()} s",
