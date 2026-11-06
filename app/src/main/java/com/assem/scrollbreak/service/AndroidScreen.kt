@@ -7,12 +7,16 @@ import android.view.accessibility.AccessibilityWindowInfo
 import com.assem.scrollbreak.core.NodeSnapshot
 import com.assem.scrollbreak.core.rules.Leaf
 import com.assem.scrollbreak.core.rules.ScreenView
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * [ScreenView] over every window of one package. A leaf that only names a view id is answered by
  * a targeted lookup; anything else walks the tree once (capped) and reuses that index.
  */
-class AndroidScreen private constructor(private val roots: List<AccessibilityNodeInfo>) : ScreenView {
+class AndroidScreen private constructor(
+    private val pkg: String,
+    private val roots: List<AccessibilityNodeInfo>,
+) : ScreenView {
 
     private val index: List<NodeSnapshot> by lazy { buildIndex() }
 
@@ -21,21 +25,30 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
     override fun has(leaf: Leaf): Boolean {
         if (leaf.isViewIdOnly) return roots.any { hasViewId(it, leaf) }
         // One call into the app finds nodes whose text or description contains the needle, which is
-        // far cheaper than walking the whole tree. A hit is trusted; a miss is not, because some
-        // custom node providers answer that call with nothing, so a miss still falls back to the walk.
-        if (hasByText(leaf)) return true
+        // far cheaper than walking the whole tree. A hit is trusted. A miss is only trusted for apps
+        // already seen answering that call, because some custom node providers answer it with
+        // nothing; for the rest a miss still falls back to the walk. This matters for rules that
+        // list one label per language: on an Arabic phone the English label always misses.
+        when (byText(leaf)) {
+            TextResult.HIT -> return true
+            TextResult.MISS -> if (pkg in textSearchWorks) return false
+            TextResult.NO_NEEDLE -> {}
+        }
         return index.any { leaf.matches(it) }
     }
 
-    private fun hasByText(leaf: Leaf): Boolean {
-        val needle = (leaf.desc ?: leaf.text)?.takeIf { it.isNotEmpty() } ?: return false
+    private enum class TextResult { HIT, MISS, NO_NEEDLE }
+
+    private fun byText(leaf: Leaf): TextResult {
+        val needle = (leaf.desc ?: leaf.text)?.takeIf { it.isNotEmpty() } ?: return TextResult.NO_NEEDLE
         for (root in roots) {
             val found = root.findAccessibilityNodeInfosByText(needle) ?: continue
+            if (found.isNotEmpty()) textSearchWorks += pkg
             val hit = found.any { leaf.matches(AndroidNode(it).snapshot()) }
             found.forEach(::release)
-            if (hit) return true
+            if (hit) return TextResult.HIT
         }
-        return false
+        return TextResult.MISS
     }
 
     override fun textOf(leaf: Leaf): String? {
@@ -78,6 +91,10 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
     /** Clicks the first clickable node matching [leaf]; false if none was found or the click failed. */
     fun click(leaf: Leaf): Boolean {
         if (clickByText(leaf)) return true
+        // Same rule as [has]: for an app known to answer text searches, a miss means the label is
+        // not on screen (e.g. the English tab name on an Arabic phone), so skip the slow walk.
+        val needle = leaf.desc ?: leaf.text
+        if (!needle.isNullOrEmpty() && pkg in textSearchWorks) return false
         var budget = MAX_NODES
         fun walk(info: AccessibilityNodeInfo, depth: Int): Boolean {
             if (budget-- <= 0) return false
@@ -117,6 +134,9 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
         private const val MAX_NODES = 3000
         private const val MAX_DEPTH = 60
 
+        /** Packages that have answered a text search with results, so their misses can be trusted. */
+        private val textSearchWorks: MutableSet<String> = ConcurrentHashMap.newKeySet()
+
         /**
          * Roots of all windows belonging to [pkg], on every display, so split-screen, floating and
          * PiP windows are all seen. A window's package never changes, so it is learned once per
@@ -137,7 +157,7 @@ class AndroidScreen private constructor(private val roots: List<AccessibilityNod
                 if (owner != null) cache.put(w.id, owner)
                 if (owner == pkg) roots += root else release(root)
             }
-            return AndroidScreen(roots)
+            return AndroidScreen(pkg, roots)
         }
 
         private fun allWindows(service: AccessibilityService): List<AccessibilityWindowInfo> {

@@ -69,7 +69,7 @@ class TikTokRuleTest {
 
     @Test
     fun blockedVideoRedirectsToTheFriendsTab() {
-        val target = rule.redirectTo!!
+        val target = rule.redirectTo.single()
         val nodes = DumpParser.parse(
             javaClass.getResource("/dumps/tiktok_feed.txt")!!.readText(),
         ).flatMap { it.nodes }

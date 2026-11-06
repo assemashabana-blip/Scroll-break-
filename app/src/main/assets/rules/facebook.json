@@ -4,19 +4,28 @@
   "packages": ["com.facebook.katana"],
 
   "playerSignature": {
-    "desc": "Reels, tab",
-    "match": "startsWith",
-    "selected": true
+    "anyOf": [
+      { "desc": "Reels, tab", "match": "startsWith", "selected": true },
+      { "desc": "ريلز، علامة التبويب", "match": "startsWith", "selected": true }
+    ]
   },
 
   "feedEntrySignatures": [
     {
       "name": "reels_tab_selected",
-      "signature": { "desc": "Reels, tab", "match": "startsWith", "selected": true }
+      "signature": {
+        "anyOf": [
+          { "desc": "Reels, tab", "match": "startsWith", "selected": true },
+          { "desc": "ريلز، علامة التبويب", "match": "startsWith", "selected": true }
+        ]
+      }
     }
   ],
 
   "scrollSignal": { "className": "androidx.recyclerview.widget.RecyclerView" },
 
-  "redirectTo": { "desc": "Home, tab", "match": "startsWith", "clickable": true }
+  "redirectTo": [
+    { "desc": "Home, tab", "match": "startsWith", "clickable": true },
+    { "desc": "الصفحة الرئيسية، علامة التبويب", "match": "startsWith", "clickable": true }
+  ]
 }

@@ -80,8 +80,14 @@ object RuleParser {
             scrollSignal = root["scrollSignal"]?.let {
                 leaf(it as? JsonObject ?: throw RuleParseException("scrollSignal must be an object"), "scrollSignal")
             },
-            redirectTo = root["redirectTo"]?.let {
-                leaf(it as? JsonObject ?: throw RuleParseException("redirectTo must be an object"), "redirectTo")
+            // One leaf, or a list of leaves (the same tab in several phone languages).
+            redirectTo = when (val r = root["redirectTo"]) {
+                null -> emptyList()
+                is JsonObject -> listOf(leaf(r, "redirectTo"))
+                is JsonArray -> r.mapIndexed { i, e ->
+                    leaf(e as? JsonObject ?: throw RuleParseException("redirectTo[$i] must be an object"), "redirectTo[$i]")
+                }
+                else -> throw RuleParseException("redirectTo must be an object or a list of objects")
             },
         )
     }

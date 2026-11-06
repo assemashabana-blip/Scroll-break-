@@ -24,6 +24,7 @@ import com.assem.scrollbreak.core.Throttle
 import com.assem.scrollbreak.core.rules.AppRule
 import com.assem.scrollbreak.core.rules.Fingerprint
 import com.assem.scrollbreak.core.rules.Leaf
+import com.assem.scrollbreak.core.rules.MatchMode
 import com.assem.scrollbreak.core.rules.Purpose
 import com.assem.scrollbreak.core.rules.UrlTracker
 import java.util.Collections
@@ -89,6 +90,24 @@ class ScrollBreakService : AccessibilityService() {
     /** Debug aid: renders the block overlay so its look and "Go back" button can be checked. */
     fun showTestOverlay() {
         mainHandler.post { overlay.show("Short-form video is blocked") }
+    }
+
+    /**
+     * Debug aid for phones that refuse `adb input` (Xiaomi without "USB debugging (Security
+     * settings)"): clicks the first clickable node in [pkg] whose description starts with [desc].
+     * Only used to switch tabs while capturing dumps; does nothing in release builds.
+     */
+    fun debugClick(pkg: String, desc: String) {
+        if (!debuggable) return
+        evalHandler.post {
+            safely("debug click") {
+                val clicked = redirectTo(pkg, Leaf(desc = desc, match = MatchMode.STARTS_WITH, clickable = true))
+                AppLog.events.add(
+                    System.currentTimeMillis(), pkg, "DEBUG_CLICK", desc, if (clicked) "clicked" else "not found",
+                )
+                Log.d("ScrollBreak", "DEBUG_CLICK $pkg '$desc' -> ${if (clicked) "clicked" else "not found"}")
+            }
+        }
     }
 
     /** Dumps all windows after [delayMs]; the walk itself runs off the main thread. */
@@ -398,8 +417,7 @@ class ScrollBreakService : AccessibilityService() {
      * Stage 2 (after [ESCALATE_DELAY_MS]): overlay if still in the player.
      */
     private fun block(eventUptimeMs: Long, pkg: String, rule: AppRule, reason: String) {
-        val redirect = rule.redirectTo
-        val redirected = redirect != null && redirectTo(pkg, redirect)
+        val redirected = rule.redirectTo.any { redirectTo(pkg, it) }
         if (!redirected) performGlobalAction(GLOBAL_ACTION_BACK)
         val latencyMs = SystemClock.uptimeMillis() - eventUptimeMs
         AppLog.recordBlock(rule.app, reason, latencyMs)

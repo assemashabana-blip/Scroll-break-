@@ -33,9 +33,33 @@ class FacebookRuleTest {
 
     @Test
     fun redirectGoesToTheHomeTab() {
-        val target = rule.redirectTo!!
         val nodes = DumpParser.parse(text("facebook_video1.txt")).flatMap { it.nodes }
-        assertEquals(1, nodes.count { target.matches(it) })
+        assertEquals(1, nodes.count { n -> rule.redirectTo.any { it.matches(n) } })
+    }
+
+    // Arabic phone (Xiaomi, HyperOS, ar-EG): the tab bar has six tabs and Arabic labels such as
+    // "ريلز، علامة التبويب ٢ من ٦" (Arabic comma and digits), so the English labels never match.
+
+    @Test
+    fun arabicReelsTabIsAPlayer() {
+        val s = screen("facebook_ar_reels.txt")
+        assertTrue(rule.isPlayer(s))
+        assertEquals(listOf("reels_tab_selected"), rule.matchingFeedEntries(s))
+    }
+
+    @Test
+    fun arabicHomeFeedIsNotAPlayer() {
+        val s = screen("facebook_ar_home.txt")
+        assertFalse(rule.isPlayer(s))
+        assertTrue(rule.matchingFeedEntries(s).isEmpty())
+    }
+
+    @Test
+    fun arabicRedirectFindsExactlyTheHomeTab() {
+        val nodes = DumpParser.parse(text("facebook_ar_reels.txt")).flatMap { it.nodes }
+        val hits = nodes.filter { n -> rule.redirectTo.any { it.matches(n) } }
+        assertEquals(1, hits.size)
+        assertTrue(hits.single().contentDescription!!.startsWith("الصفحة الرئيسية"))
     }
 
     @Test

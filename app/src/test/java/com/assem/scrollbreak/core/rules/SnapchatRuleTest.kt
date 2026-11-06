@@ -46,7 +46,7 @@ class SnapchatRuleTest {
 
     @Test
     fun blockedVideoRedirectsToTheChatTab() {
-        val target = rule.redirectTo!!
+        val target = rule.redirectTo.single()
         val nodes = DumpParser.parse(
             javaClass.getResource("/dumps/snapchat_spotlight1.txt")!!.readText(),
         ).flatMap { it.nodes }

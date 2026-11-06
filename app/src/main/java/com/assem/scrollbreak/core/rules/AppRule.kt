@@ -32,9 +32,10 @@ data class AppRule(
     val purpose: Purpose = Purpose.SHORT_VIDEO,
     /**
      * A tab to switch to when a video is blocked, instead of leaving the app (TikTok: Friends).
-     * If it cannot be clicked the block falls back to Back.
+     * Several leaves cover the same tab in different phone languages; the first that clicks wins.
+     * If none can be clicked the block falls back to Back.
      */
-    val redirectTo: Leaf? = null,
+    val redirectTo: List<Leaf> = emptyList(),
 ) {
     fun isPlayer(screen: ScreenView) = playerSignature?.evaluate(screen) ?: false
 

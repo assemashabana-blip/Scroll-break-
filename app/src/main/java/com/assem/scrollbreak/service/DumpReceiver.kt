@@ -29,6 +29,12 @@ class DumpReceiver : BroadcastReceiver() {
                 service.showTestOverlay()
                 return
             }
+            if (intent.action == ACTION_CLICK) {
+                val pkg = intent.getStringExtra("pkg") ?: return
+                val desc = intent.getStringExtra("desc") ?: return
+                service.debugClick(pkg, desc)
+                return
+            }
             if (intent.action == ACTION_INJECT_FAULT) {
                 service.injectFault()
                 return
@@ -46,5 +52,7 @@ class DumpReceiver : BroadcastReceiver() {
         const val ACTION_SHOW_OVERLAY = "com.assem.scrollbreak.SHOW_OVERLAY"
         const val ACTION_INJECT_FAULT = "com.assem.scrollbreak.INJECT_FAULT"
         const val ACTION_RUN_WATCHDOG = "com.assem.scrollbreak.RUN_WATCHDOG"
+        /** Debug only: extras "pkg" and "desc" (description prefix of the node to click). */
+        const val ACTION_CLICK = "com.assem.scrollbreak.CLICK"
     }
 }
