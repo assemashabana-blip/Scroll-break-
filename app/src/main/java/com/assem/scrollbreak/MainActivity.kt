@@ -21,7 +21,10 @@ import androidx.activity.SystemBarStyle
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.produceState
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
@@ -138,8 +141,17 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 val usageAccess = remember(tick) { AppUsage.hasAccess(this@MainActivity) }
+                // Loads at once, then again every minute while the app is open on Home, so today's
+                // time keeps counting up. It stops when the app goes to the background.
                 val usage by produceState<AppUsage.Result?>(null, tick, usageAccess) {
-                    value = withContext(Dispatchers.IO) { AppUsage.summarize(this@MainActivity) }
+                    lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                        while (true) {
+                            if (value == null || screen == "home") {
+                                value = withContext(Dispatchers.IO) { AppUsage.summarize(this@MainActivity) }
+                            }
+                            delay(60_000)
+                        }
+                    }
                 }
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
                     // Home stays composed underneath the other pages, so going back to it only slides
