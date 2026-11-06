@@ -28,7 +28,7 @@ object ProtectionAlert {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val n = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_stat_scrollbreak)
             .setContentTitle("ScrollBreak is OFF")
             .setContentText("Short-video scrolling is not being blocked. Tap to turn it back on.")
             .setPriority(NotificationCompat.PRIORITY_HIGH)

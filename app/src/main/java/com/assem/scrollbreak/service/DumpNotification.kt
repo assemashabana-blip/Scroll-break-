@@ -31,7 +31,7 @@ object DumpNotification {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val n = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_stat_scrollbreak)
             .setContentTitle("ScrollBreak")
             .setContentText(status)
             .setOngoing(true)

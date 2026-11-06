@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <group android:translateX="-0.8" android:translateY="-0.8" android:scaleX="0.128" android:scaleY="0.128">
+    <group android:rotation="-8" android:pivotX="100" android:pivotY="100">
+      <group android:translateX="-4" android:translateY="-8">
+        <path android:fillType="evenOdd" android:fillColor="#FFFFFF" android:pathData="M78 28H122Q136 28 136 42V92L122 100L108 90L94 104L80 94L64 102V42Q64 28 78 28Z M86 42Q84 41 84 44V82Q84 85 86 84L120 65Q123 63 120 61Z"/>
+      </group>
+    </group>
+    <group android:rotation="7" android:pivotX="100" android:pivotY="100">
+      <group android:translateX="5" android:translateY="10">
+        <path android:strokeColor="#FFFFFF" android:strokeWidth="13" android:strokeLineJoin="round"
+            android:pathData="M67 104L80 97.5L94 107.5L108 93.5L122 103.5L133 97V158Q133 169 122 169H78Q67 169 67 158Z"/>
+      </group>
+    </group>
+  </group>
+</vector>

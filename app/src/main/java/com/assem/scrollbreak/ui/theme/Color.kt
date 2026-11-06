@@ -2,10 +2,15 @@ package com.assem.scrollbreak.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Brand: black, white and one accent that marks "the break" only.
+val SbBlack = Color(0xFF000000)
+val SbWhite = Color(0xFFFFFFFF)
+val SbAccent = Color(0xFFFF4A1C)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val SbInk = Color(0xFF111111)
+val SbSurfaceDark = Color(0xFF141414)
+val SbSurfaceHighDark = Color(0xFF1F1F1F)
+val SbMutedDark = Color(0xFFA3A3A3)
+val SbSurfaceLight = Color(0xFFF4F4F4)
+val SbSurfaceHighLight = Color(0xFFE9E9E9)
+val SbMutedLight = Color(0xFF5C5C5C)
