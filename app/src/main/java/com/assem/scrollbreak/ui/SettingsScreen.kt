@@ -41,6 +41,8 @@ fun SettingsScreen(
     adminActive: Boolean,
     onEnableAdmin: () -> Unit,
     onOpenAdminSettings: () -> Unit,
+    setupLeft: Int,
+    onNavigate: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var allow by remember { mutableFloatStateOf(AppSettings.allowWindowSeconds.toFloat()) }
@@ -52,6 +54,16 @@ fun SettingsScreen(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+
+        Card(Modifier.fillMaxWidth()) {
+            Column {
+                NavRow("Setup checklist", if (setupLeft == 0) "All done" else "$setupLeft step(s) still to do") { onNavigate("setup") }
+                NavRow("Rules", "Import, export and reset app rules") { onNavigate("rules") }
+                NavRow("Detection health", "When each signal last matched") { onNavigate("health") }
+                NavRow("Event log", "What ScrollBreak decided, and when") { onNavigate("log") }
+                NavRow("Screen dumps", "Capture screens to write new rules") { onNavigate("dumps") }
+            }
+        }
 
         SliderCard(
             title = "Friend-link window: ${allow.toInt()} s",

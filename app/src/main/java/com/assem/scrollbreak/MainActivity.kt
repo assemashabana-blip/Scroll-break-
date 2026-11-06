@@ -82,7 +82,11 @@ class MainActivity : ComponentActivity() {
                 var screen by rememberSaveable {
                     mutableStateOf(if (Setup.remaining(this@MainActivity) > 0) "setup" else "home")
                 }
-                BackHandler(enabled = screen != "home") { screen = "home" }
+                // Where Back goes: Settings opens from Home, its tools open from Settings.
+                var back by rememberSaveable { mutableStateOf("home") }
+                val goBack = { screen = back; back = "home" }
+                val navigate = { to: String -> back = screen; screen = to }
+                BackHandler(enabled = screen != "home") { goBack() }
                 val tick = refreshTick
                 val latency by AppLog.latency.summary.collectAsState()
                 val loaded by RuleStore.loaded.collectAsState()
@@ -91,7 +95,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         if (screen != "home") {
-                            SubScreenBar(titles[screen] ?: "ScrollBreak", onBack = { screen = "home" })
+                            SubScreenBar(titles[screen] ?: "ScrollBreak", onBack = goBack)
                         }
                     },
                 ) { padding ->
@@ -108,6 +112,8 @@ class MainActivity : ComponentActivity() {
                             adminActive = AdminReceiver.isActive(this@MainActivity).also { tick.hashCode() },
                             onEnableAdmin = { startActivity(AdminReceiver.enableIntent(this@MainActivity)) },
                             onOpenAdminSettings = { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) },
+                            setupLeft = Setup.remaining(this@MainActivity).also { tick.hashCode() },
+                            onNavigate = navigate,
                             modifier = m,
                         )
                         "rules" -> RulesScreen(
@@ -136,12 +142,13 @@ class MainActivity : ComponentActivity() {
                                     stats = stats,
                                     apps = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
                                         .map { it.rule.app to AppSettings.isAppEnabled(it.rule.app) },
+                                    appPackages = loaded.associate { it.rule.app to it.rule.packages.toList() },
                                 ),
                                 actions = HomeActions(
                                     openAccessibilitySettings = {
                                         startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
                                     },
-                                    openSetup = { screen = "setup" },
+                                    openSetup = { navigate("setup") },
                                     setBlocking = {
                                         AppSettings.blockingEnabled = it
                                         blockingEnabled = it
@@ -150,7 +157,7 @@ class MainActivity : ComponentActivity() {
                                         AppSettings.setAppEnabled(app, on)
                                         refreshTick++
                                     },
-                                    navigate = { screen = it },
+                                    navigate = navigate,
                                 ),
                                 modifier = m,
                             )
