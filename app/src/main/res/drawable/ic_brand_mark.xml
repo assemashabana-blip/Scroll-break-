@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The ScrollBreak mark alone, cropped to its own bounds (same paths as ic_launcher_foreground,
+     on the 200-unit grid), so it renders sharp at any size instead of being scaled up. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="37dp" android:height="44dp"
+    android:viewportWidth="148" android:viewportHeight="176">
+  <group android:translateX="-26" android:translateY="-12">
+    <group android:rotation="-8" android:pivotX="100" android:pivotY="100">
+      <group android:translateX="-4" android:translateY="-8">
+        <path android:fillColor="#FFFFFF" android:pathData="M78 28H122Q136 28 136 42V92L122 100L108 90L94 104L80 94L64 102V42Q64 28 78 28Z"/>
+        <path android:fillColor="#000000" android:strokeColor="#000000" android:strokeWidth="8" android:strokeLineJoin="round" android:pathData="M89 48L115 63L89 78Z"/>
+      </group>
+    </group>
+    <group android:rotation="7" android:pivotX="100" android:pivotY="100">
+      <group android:translateX="5" android:translateY="10">
+        <path android:strokeColor="#FFFFFF" android:strokeWidth="6" android:strokeLineJoin="round"
+            android:pathData="M67 104L80 97.5L94 107.5L108 93.5L122 103.5L133 97V158Q133 169 122 169H78Q67 169 67 158Z"/>
+      </group>
+    </group>
+    <path android:strokeColor="#FF4A1C" android:strokeWidth="6" android:strokeLineCap="round" android:pathData="M48 98L34 92M50 110L36 114M152 96L166 88M150 108L164 112"/>
+  </group>
+</vector>

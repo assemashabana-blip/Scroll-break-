@@ -43,6 +43,8 @@ fun SettingsScreen(
     onOpenAdminSettings: () -> Unit,
     setupLeft: Int,
     onNavigate: (String) -> Unit,
+    /** Debug builds only: rules, detection health, event log and screen dumps. */
+    showDeveloperTools: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var allow by remember { mutableFloatStateOf(AppSettings.allowWindowSeconds.toFloat()) }
@@ -58,13 +60,7 @@ fun SettingsScreen(
     ) {
 
         Card(Modifier.fillMaxWidth()) {
-            Column {
-                NavRow("Setup checklist", if (setupLeft == 0) "All done" else "$setupLeft step(s) still to do") { onNavigate("setup") }
-                NavRow("Rules", "Import, export and reset app rules") { onNavigate("rules") }
-                NavRow("Detection health", "When each signal last matched") { onNavigate("health") }
-                NavRow("Event log", "What ScrollBreak decided, and when") { onNavigate("log") }
-                NavRow("Screen dumps", "Capture screens to write new rules") { onNavigate("dumps") }
-            }
+            NavRow("Setup checklist", if (setupLeft == 0) "All done" else "$setupLeft step(s) still to do") { onNavigate("setup") }
         }
 
         SliderCard(
@@ -162,6 +158,19 @@ fun SettingsScreen(
             },
             modifier = Modifier.fillMaxWidth(),
         ) { Text("Reset these settings to defaults") }
+
+        // Tools for writing and checking detection rules. A shipped (release) build hides them.
+        if (showDeveloperTools) {
+            SectionLabel("Developer tools")
+            Card(Modifier.fillMaxWidth()) {
+                Column {
+                    NavRow("Rules", "Import, export and reset app rules") { onNavigate("rules") }
+                    NavRow("Detection health", "When each signal last matched") { onNavigate("health") }
+                    NavRow("Event log", "What ScrollBreak decided, and when") { onNavigate("log") }
+                    NavRow("Screen dumps", "Capture screens to write new rules") { onNavigate("dumps") }
+                }
+            }
+        }
     }
 }
 

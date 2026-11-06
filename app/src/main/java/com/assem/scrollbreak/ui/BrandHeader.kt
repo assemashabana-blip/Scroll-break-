@@ -29,12 +29,16 @@ import com.assem.scrollbreak.ui.theme.SbAccent
 @Composable
 fun BrandHeader(modifier: Modifier = Modifier) {
     Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        // The launcher foreground keeps a wide safe-zone margin, so it is enlarged inside its tile.
-        Box(Modifier.size(52.dp).clip(RoundedCornerShape(13.dp)).background(Color.Black)) {
+        // A vector cropped to the mark, drawn at its real size: scaling a drawn layer up blurs it.
+        // The black tile keeps the white card visible in light mode; in dark mode it blends in.
+        Box(
+            Modifier.size(56.dp).clip(RoundedCornerShape(14.dp)).background(Color.Black),
+            contentAlignment = Alignment.Center,
+        ) {
             Image(
-                painter = painterResource(R.drawable.ic_launcher_foreground),
+                painter = painterResource(R.drawable.ic_brand_mark),
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize().scale(1.9f),
+                modifier = Modifier.size(width = 40.dp, height = 48.dp),
             )
         }
         Text(

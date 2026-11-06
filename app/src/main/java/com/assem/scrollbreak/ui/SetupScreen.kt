@@ -1,7 +1,7 @@
 package com.assem.scrollbreak.ui
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -94,8 +95,11 @@ private fun StepCard(step: SetupStep, onChanged: () -> Unit) {
     val finished = step.state == StepState.DONE
     // Open steps start expanded so the action is in reach; finished ones fold away.
     var expanded by remember(step.id, finished) { mutableStateOf(!finished) }
+    val arrow by animateFloatAsState(if (expanded) 180f else 0f, tween(250), label = "arrow")
     Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        // One size animation for the whole card. The gap above the details lives inside them, so
+        // nothing jumps when they finish folding (a spacedBy gap would vanish at the last frame).
+        Column(Modifier.animateContentSize(tween(250)).padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                 StatusBadge(step.state)
                 Column(Modifier.weight(1f)) {
@@ -110,10 +114,10 @@ private fun StepCard(step: SetupStep, onChanged: () -> Unit) {
                         color = if (finished) MaterialTheme.colorScheme.onSurfaceVariant else SbAccent,
                     )
                 }
-                Text(if (expanded) "⌃" else "⌄", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("⌄", color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.rotate(arrow))
             }
-            AnimatedVisibility(expanded) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            if (expanded) {
+                Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(step.help, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     if (!finished) {
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

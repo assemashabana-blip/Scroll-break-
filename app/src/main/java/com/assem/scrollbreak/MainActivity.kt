@@ -2,6 +2,7 @@ package com.assem.scrollbreak
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -139,6 +140,7 @@ class MainActivity : ComponentActivity() {
                             onOpenAdminSettings = { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) },
                             setupLeft = Setup.remaining(this@MainActivity).also { tick.hashCode() },
                             onNavigate = navigate,
+                            showDeveloperTools = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0,
                             modifier = m,
                         )
                         "rules" -> RulesScreen(
