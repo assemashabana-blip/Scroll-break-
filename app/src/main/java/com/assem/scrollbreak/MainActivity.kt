@@ -12,6 +12,16 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -51,6 +61,13 @@ private val titles = mapOf(
     "dumps" to "Screen dumps",
     "setup" to "Setup",
 )
+
+/** How deep a page is: Home 0, Settings 1, the tools opened from Settings 2. Decides the slide direction. */
+private fun depth(screen: String) = when (screen) {
+    "home" -> 0
+    "settings" -> 1
+    else -> 2
+}
 
 class MainActivity : ComponentActivity() {
 
@@ -94,13 +111,28 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
-                        if (screen != "home") {
+                        AnimatedVisibility(
+                            visible = screen != "home",
+                            enter = fadeIn(tween(250)) + expandVertically(tween(250)),
+                            exit = fadeOut(tween(200)) + shrinkVertically(tween(200)),
+                        ) {
                             SubScreenBar(titles[screen] ?: "ScrollBreak", onBack = goBack)
                         }
                     },
                 ) { padding ->
                     val m = Modifier.padding(padding)
-                    when (screen) {
+                    // Going deeper slides the new page in from the right; going back slides it from the left.
+                    AnimatedContent(
+                        targetState = screen,
+                        transitionSpec = {
+                            val deeper = depth(targetState) > depth(initialState)
+                            val dir = if (deeper) 1 else -1
+                            (slideInHorizontally(tween(320)) { dir * it / 5 } + fadeIn(tween(320)))
+                                .togetherWith(slideOutHorizontally(tween(320)) { -dir * it / 5 } + fadeOut(tween(200)))
+                        },
+                        label = "screen",
+                    ) { target ->
+                    when (target) {
                         "log" -> EventLogScreen(m)
                         "dumps" -> DumpsScreen(m)
                         "setup" -> SetupScreen(
@@ -161,6 +193,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = m,
                             )
                         }
+                    }
                     }
                 }
             }

@@ -1,5 +1,10 @@
 package com.assem.scrollbreak.ui
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +30,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SubScreenBar(title: String, onBack: () -> Unit) {
     TopAppBar(
-        title = { Text(title, fontWeight = FontWeight.SemiBold) },
+        title = {
+            // Fades between titles when moving from one sub-screen to another.
+            AnimatedContent(title, transitionSpec = { fadeIn(tween(250)) togetherWith fadeOut(tween(150)) }, label = "title") {
+                Text(it, fontWeight = FontWeight.SemiBold)
+            }
+        },
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Text(
