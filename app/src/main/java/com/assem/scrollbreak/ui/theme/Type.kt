@@ -1,34 +1,33 @@
 package com.assem.scrollbreak.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
+import com.assem.scrollbreak.R
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+/** Brand typeface (SIL Open Font License), a variable font so one file covers every weight. */
+@OptIn(ExperimentalTextApi::class)
+val SpaceGrotesk = FontFamily(
+    listOf(400, 500, 600, 700).map { w ->
+        Font(
+            R.font.space_grotesk,
+            weight = FontWeight(w),
+            variationSettings = FontVariation.Settings(FontVariation.weight(w)),
+        )
+    },
+)
+
+private val base = Typography()
+
+// Headings and numbers use the brand face; body text stays on the system font for legibility.
+val Typography = base.copy(
+    headlineLarge = base.headlineLarge.copy(fontFamily = SpaceGrotesk),
+    headlineMedium = base.headlineMedium.copy(fontFamily = SpaceGrotesk),
+    headlineSmall = base.headlineSmall.copy(fontFamily = SpaceGrotesk),
+    titleLarge = base.titleLarge.copy(fontFamily = SpaceGrotesk),
+    titleMedium = base.titleMedium.copy(fontFamily = SpaceGrotesk),
+    labelMedium = base.labelMedium.copy(fontFamily = SpaceGrotesk),
 )
