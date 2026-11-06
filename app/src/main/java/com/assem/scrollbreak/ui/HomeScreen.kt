@@ -46,8 +46,6 @@ class HomeState(
     val stats: BlockStats.Summary,
     /** Short-video rules by app name, with whether each is switched on. */
     val apps: List<Pair<String, Boolean>>,
-    /** Android packages per app name, used to show each app's own icon. */
-    val appPackages: Map<String, List<String>>,
 )
 
 class HomeActions(
@@ -132,7 +130,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                     row.forEach { (app, on) ->
                         AppTile(
                             name = appDisplayName(app),
-                            packages = state.appPackages[app].orEmpty(),
+                            glyph = appGlyph(app),
                             on = on,
                             onToggle = { actions.setAppEnabled(app, it) },
                             modifier = Modifier.weight(1f),

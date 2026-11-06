@@ -142,7 +142,6 @@ class MainActivity : ComponentActivity() {
                                     stats = stats,
                                     apps = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
                                         .map { it.rule.app to AppSettings.isAppEnabled(it.rule.app) },
-                                    appPackages = loaded.associate { it.rule.app to it.rule.packages.toList() },
                                 ),
                                 actions = HomeActions(
                                     openAccessibilitySettings = {
