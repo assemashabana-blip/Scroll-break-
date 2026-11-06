@@ -35,7 +35,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.R
-import com.assem.scrollbreak.ui.theme.SbAccent
+import com.assem.scrollbreak.ui.theme.SbOn
 
 /**
  * Simple outline glyph per watched app, drawn for ScrollBreak (not the apps' own logos), so it
@@ -111,7 +111,7 @@ fun AppTile(
         )
         Box(
             Modifier.size(width = 28.dp, height = 6.dp).clip(CircleShape)
-                .background(if (on) SbAccent else scheme.outline.copy(alpha = 0.35f)),
+                .background(if (on) SbOn else scheme.outline.copy(alpha = 0.35f)),
         )
     }
 }

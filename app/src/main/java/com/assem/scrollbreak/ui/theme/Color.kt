@@ -14,3 +14,6 @@ val SbMutedDark = Color(0xFFA3A3A3)
 val SbSurfaceLight = Color(0xFFF4F4F4)
 val SbSurfaceHighLight = Color(0xFFE9E9E9)
 val SbMutedLight = Color(0xFF5C5C5C)
+
+// "On" state of a per-app tile.
+val SbOn = Color(0xFF2ECC71)
