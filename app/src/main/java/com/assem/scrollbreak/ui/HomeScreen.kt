@@ -46,7 +46,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Text("ScrollBreak", style = MaterialTheme.typography.headlineMedium)
+        BrandHeader()
 
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
