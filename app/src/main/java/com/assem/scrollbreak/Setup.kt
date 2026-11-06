@@ -49,7 +49,7 @@ object Setup {
             add(
                 SetupStep(
                     "restricted", "Allow restricted settings (sideloaded apps)",
-                    "If the accessibility switch is greyed out: App info > ⋮ (top right) > Allow restricted settings, then go back and turn the service on.",
+                    "If the accessibility switch is greyed out, open App info, tap ⋮ (top right), choose Allow restricted settings, then go back and turn the service on.",
                     when {
                         serviceOn -> StepState.DONE
                         restricted -> StepState.TODO

@@ -272,7 +272,7 @@ private fun shotsFor(stepId: String): List<Shot> = when (stepId) {
                 SRow("Gallery", glyph = Glyph.DISPLAY, trail = Trail.Switch(true)),
                 SRow("Music", glyph = Glyph.SOUND, trail = Trail.Switch(false)),
             ),
-            tap = 0, caption = "Settings → Apps → Permissions → Autostart: turn on ScrollBreak",
+            tap = 0, caption = "Settings → Apps → Permissions → Autostart, then turn on ScrollBreak",
         ),
         Page(
             "Battery saver",
