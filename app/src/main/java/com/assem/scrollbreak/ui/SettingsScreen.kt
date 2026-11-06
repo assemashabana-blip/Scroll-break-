@@ -26,16 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.AppSettings
 
-/** Messaging apps that can count as "a friend sent this", with friendly names. */
-private val friendLabels = linkedMapOf(
-    "com.whatsapp" to "WhatsApp",
-    "com.whatsapp.w4b" to "WhatsApp Business",
-    "org.telegram.messenger" to "Telegram",
-    "com.facebook.orca" to "Messenger",
-    "org.thoughtcrime.securesms" to "Signal",
-    "com.google.android.gm" to "Gmail",
-)
-
 @Composable
 fun SettingsScreen(
     adminActive: Boolean,
@@ -50,7 +40,6 @@ fun SettingsScreen(
     var allow by remember { mutableFloatStateOf(AppSettings.allowWindowSeconds.toFloat()) }
     var throttle by remember { mutableFloatStateOf(AppSettings.throttleMs.toFloat()) }
     var friction by remember { mutableFloatStateOf(AppSettings.frictionSeconds.toFloat()) }
-    var friends by remember { mutableStateOf(AppSettings.friendApps) }
     var haptics by remember { mutableStateOf(AppSettings.hapticsEnabled) }
     val buzz = rememberBuzz()
 
@@ -89,25 +78,6 @@ fun SettingsScreen(
         ) {
             friction = it
             AppSettings.frictionSeconds = it.toInt()
-        }
-
-        Card(Modifier.fillMaxWidth()) {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text("Apps that count as \"a friend sent this\"", style = MaterialTheme.typography.titleMedium)
-                friendLabels.forEach { (pkg, label) ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(
-                            checked = pkg in friends,
-                            onCheckedChange = { on ->
-                                buzz(Buzz.CLICK)
-                                friends = if (on) friends + pkg else friends - pkg
-                                AppSettings.friendApps = friends
-                            },
-                        )
-                        Text(label)
-                    }
-                }
-            }
         }
 
         Card(Modifier.fillMaxWidth()) {
@@ -154,7 +124,6 @@ fun SettingsScreen(
                 allow = AppSettings.allowWindowSeconds.toFloat()
                 throttle = AppSettings.throttleMs.toFloat()
                 friction = AppSettings.frictionSeconds.toFloat()
-                friends = AppSettings.friendApps
             },
             modifier = Modifier.fillMaxWidth(),
         ) { Text("Reset these settings to defaults") }

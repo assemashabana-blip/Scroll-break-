@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,9 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.R
 import com.assem.scrollbreak.core.BlockStats
-import com.assem.scrollbreak.core.LatencyStats
+import com.assem.scrollbreak.AppSettings
 import com.assem.scrollbreak.ui.theme.SbAccent
 
 /** Everything Home needs; grouped so adding a card does not mean another ten parameters. */
@@ -43,7 +47,6 @@ class HomeState(
     val serviceEnabled: Boolean,
     val setupRemaining: Int,
     val blockingEnabled: Boolean,
-    val latency: LatencyStats.Summary,
     val stats: BlockStats.Summary,
     /** Short-video rules by app name, with whether each is switched on. */
     val apps: List<Pair<String, Boolean>>,
@@ -140,16 +143,13 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             }
         }
 
-        // Numbers: blocked today, last 7 days, typical reaction time.
+        // Numbers: blocked today and in the last 7 days.
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatTile("Today", state.stats.today.toString(), "blocked", Modifier.weight(1f))
             StatTile("7 days", state.stats.last7Days.toString(), "blocked", Modifier.weight(1f))
-            val l = state.latency
-            StatTile("Reaction", if (l.count == 0) "–" else l.medianMs.toString(), if (l.count == 0) "no blocks yet" else "ms median", Modifier.weight(1f))
         }
         WeekChart(state.stats.perDay)
         if (state.stats.weekByApp.isNotEmpty()) AppsChart(state.stats.weekByApp)
-        if (state.latency.count > 0) ReactionChart(state.latency)
 
         if (state.apps.isNotEmpty()) {
             SectionLabel("Apps")
@@ -166,6 +166,42 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                     }
                     // Keep a short last row aligned with the columns above it.
                     repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
+                }
+            }
+        }
+
+        FriendAppsCard()
+    }
+}
+
+/** Messaging apps that can count as "a friend sent this", with friendly names. */
+private val friendLabels = linkedMapOf(
+    "com.whatsapp" to "WhatsApp",
+    "com.whatsapp.w4b" to "WhatsApp Business",
+    "org.telegram.messenger" to "Telegram",
+    "com.facebook.orca" to "Messenger",
+    "org.thoughtcrime.securesms" to "Signal",
+    "com.google.android.gm" to "Gmail",
+)
+
+@Composable
+private fun FriendAppsCard() {
+    val buzz = rememberBuzz()
+    var friends by remember { mutableStateOf(AppSettings.friendApps) }
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text("Apps that count as \"a friend sent this\"", style = MaterialTheme.typography.titleMedium)
+            friendLabels.forEach { (pkg, label) ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = pkg in friends,
+                        onCheckedChange = { on ->
+                            buzz(Buzz.CLICK)
+                            friends = if (on) friends + pkg else friends - pkg
+                            AppSettings.friendApps = friends
+                        },
+                    )
+                    Text(label)
                 }
             }
         }

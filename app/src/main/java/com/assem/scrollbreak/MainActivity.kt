@@ -165,7 +165,6 @@ class MainActivity : ComponentActivity() {
                                     serviceEnabled = serviceEnabled,
                                     setupRemaining = Setup.remaining(this@MainActivity).also { tick.hashCode() },
                                     blockingEnabled = blockingEnabled,
-                                    latency = latency,
                                     stats = stats,
                                     apps = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
                                         .map { it.rule.app to AppSettings.isAppEnabled(it.rule.app) },
