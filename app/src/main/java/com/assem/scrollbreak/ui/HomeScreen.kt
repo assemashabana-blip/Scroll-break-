@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -170,7 +169,8 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             }
         }
 
-        FriendAppsCard()
+        SectionLabel("Counts as \"a friend sent this\"")
+        FriendAppTiles()
     }
 }
 
@@ -185,25 +185,24 @@ private val friendLabels = linkedMapOf(
 )
 
 @Composable
-private fun FriendAppsCard() {
-    val buzz = rememberBuzz()
+private fun FriendAppTiles() {
     var friends by remember { mutableStateOf(AppSettings.friendApps) }
-    Card(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text("Apps that count as \"a friend sent this\"", style = MaterialTheme.typography.titleMedium)
-            friendLabels.forEach { (pkg, label) ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(
-                        checked = pkg in friends,
-                        onCheckedChange = { on ->
-                            buzz(Buzz.CLICK)
-                            friends = if (on) friends + pkg else friends - pkg
-                            AppSettings.friendApps = friends
-                        },
-                    )
-                    Text(label)
-                }
+    friendLabels.entries.chunked(3).forEach { row ->
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            row.forEach { (pkg, label) ->
+                AppTile(
+                    name = label,
+                    glyph = null,
+                    on = pkg in friends,
+                    onToggle = { on ->
+                        friends = if (on) friends + pkg else friends - pkg
+                        AppSettings.friendApps = friends
+                    },
+                    modifier = Modifier.weight(1f),
+                    stateText = { "friend link ${if (it) "allowed once" else "not counted"}" },
+                )
             }
+            repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
         }
     }
 }

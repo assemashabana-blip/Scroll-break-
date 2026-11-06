@@ -63,6 +63,8 @@ fun AppTile(
     on: Boolean,
     onToggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    /** Spoken state, for tiles that mean something other than blocking. */
+    stateText: (Boolean) -> String = { "blocking ${if (it) "on" else "off"}" },
 ) {
     val buzz = rememberBuzz()
     val scheme = MaterialTheme.colorScheme
@@ -81,7 +83,7 @@ fun AppTile(
             .clip(RoundedCornerShape(20.dp))
             .background(container)
             .border(2.dp, border, RoundedCornerShape(20.dp))
-            .semantics { contentDescription = "$name, blocking ${if (on) "on" else "off"}" }
+            .semantics { contentDescription = "$name, ${stateText(on)}" }
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
