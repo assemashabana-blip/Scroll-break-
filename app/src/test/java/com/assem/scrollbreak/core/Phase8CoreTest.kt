@@ -152,6 +152,27 @@ class BlockStatsTest {
         val lines = listOf("${at(10, 0)},youtube,x,1", "${at(9, 23) + 59 * 60_000},youtube,x,1")
         assertEquals(1, BlockStats.summarize(lines, now, utc).today)
     }
+
+    @Test
+    fun countsEachOfTheLastSevenDaysOldestFirst() {
+        val lines = listOf(
+            "${at(10, 9)},youtube,x,1",
+            "${at(10, 14)},instagram,x,1",
+            "${at(9, 23) + 59 * 60_000},youtube,x,1",   // 23:59 yesterday
+            "${at(7, 8)},tiktok,x,1",
+            "${at(4, 0)},tiktok,x,1",                   // first minute of the oldest day
+            "${at(3, 23)},tiktok,x,1",                  // before the week: dropped
+        )
+        val s = BlockStats.summarize(lines, now, utc)
+        assertEquals(listOf(1, 0, 0, 1, 0, 1, 2), s.perDay)
+        assertEquals(s.last7Days, s.perDay.sum())
+        assertEquals(mapOf("tiktok" to 2, "youtube" to 2, "instagram" to 1), s.weekByApp)
+    }
+
+    @Test
+    fun anEmptyWeekStillHasSevenDays() {
+        assertEquals(List(7) { 0 }, BlockStats.summarize(emptyList(), now, utc).perDay)
+    }
 }
 
 class RulePurposeTest {

@@ -147,13 +147,9 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             val l = state.latency
             StatTile("Reaction", if (l.count == 0) "–" else l.medianMs.toString(), if (l.count == 0) "no blocks yet" else "ms median", Modifier.weight(1f))
         }
-        if (state.latency.count > 0) {
-            val l = state.latency
-            Text(
-                "Last ${l.lastMs} ms · 95% under ${l.p95Ms} ms · slowest ${l.maxMs} ms over ${l.count} blocks. Target: under 300 ms.",
-                style = MaterialTheme.typography.labelSmall, color = muted, modifier = Modifier.padding(horizontal = 4.dp),
-            )
-        }
+        WeekChart(state.stats.perDay)
+        if (state.stats.weekByApp.isNotEmpty()) AppsChart(state.stats.weekByApp)
+        if (state.latency.count > 0) ReactionChart(state.latency)
 
         if (state.apps.isNotEmpty()) {
             SectionLabel("Apps")
