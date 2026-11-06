@@ -13,7 +13,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -66,25 +65,28 @@ fun SettingsScreen(
         }
 
         SliderCard(
-            title = "Friend-link window: ${allow.toInt()} s",
+            title = "Friend-link window",
+            valueLabel = "${allow.toInt()} s",
             help = "A video opened this soon after leaving a messaging app (or a chat or story) counts as sent by a friend and is allowed once.",
-            value = allow, range = 1f..30f,
+            value = allow, range = 1f..30f, step = 1f, majorEvery = 5,
         ) {
             allow = it
             AppSettings.allowWindowSeconds = it.toInt()
         }
         SliderCard(
-            title = "Screen-check throttle: ${throttle.toInt()} ms",
+            title = "Screen-check throttle",
+            valueLabel = "${throttle.toInt()} ms",
             help = "Minimum gap between two checks of the same app while its screen is changing. Lower reacts faster and uses more battery.",
-            value = throttle, range = 50f..1000f,
+            value = throttle, range = 50f..1000f, step = 10f, majorEvery = 10,
         ) {
             throttle = it
             AppSettings.throttleMs = it.toInt()
         }
         SliderCard(
-            title = if (friction.toInt() == 0) "Turn-off delay: off" else "Turn-off delay: ${friction.toInt()} s",
+            title = "Turn-off delay",
+            valueLabel = if (friction.toInt() == 0) "off" else "${friction.toInt()} s",
             help = "How long the screen for switching ScrollBreak off stays covered by a countdown. 0 turns this off.",
-            value = friction, range = 0f..300f,
+            value = friction, range = 0f..300f, step = 5f, majorEvery = 6,
         ) {
             friction = it
             AppSettings.frictionSeconds = it.toInt()
@@ -140,16 +142,22 @@ fun SettingsScreen(
 @Composable
 private fun SliderCard(
     title: String,
+    valueLabel: String,
     help: String,
     value: Float,
     range: ClosedFloatingPointRange<Float>,
+    step: Float,
+    majorEvery: Int,
     onChange: (Float) -> Unit,
 ) {
     Card(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
-            Text(help, style = MaterialTheme.typography.bodySmall)
-            Slider(value = value, onValueChange = onChange, valueRange = range)
+            Text(help, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            LensDial(
+                value = value, range = range, step = step, majorEvery = majorEvery,
+                label = valueLabel, onChange = onChange, modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }
