@@ -33,6 +33,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.R
 import com.assem.scrollbreak.ui.theme.SbOn
@@ -49,6 +50,12 @@ fun appGlyph(app: String): Int? = when (app) {
     "snapchat" -> R.drawable.ic_app_snapchat
     "tiktok" -> R.drawable.ic_app_tiktok
     "youtube" -> R.drawable.ic_app_youtube
+    "com.whatsapp" -> R.drawable.ic_app_whatsapp
+    "com.whatsapp.w4b" -> R.drawable.ic_app_whatsapp_business
+    "org.telegram.messenger" -> R.drawable.ic_app_telegram
+    "com.facebook.orca" -> R.drawable.ic_app_messenger
+    "org.thoughtcrime.securesms" -> R.drawable.ic_app_signal
+    "com.google.android.gm" -> R.drawable.ic_app_gmail
     else -> null
 }
 
@@ -94,7 +101,7 @@ fun AppTile(
             }
             .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
     ) {
         Box(Modifier.size(44.dp), contentAlignment = Alignment.Center) {
             if (glyph != null) {
@@ -110,6 +117,9 @@ fun AppTile(
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.SemiBold,
             color = if (on) scheme.onSurface else scheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            modifier = Modifier.padding(horizontal = 6.dp),
         )
         Box(
             Modifier.size(width = 28.dp, height = 6.dp).clip(CircleShape)

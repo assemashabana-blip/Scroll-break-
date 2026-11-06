@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
@@ -24,7 +23,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import com.assem.scrollbreak.AppSettings
+
+/** Messaging apps that can count as "a friend sent this", with friendly names. */
+private val friendLabels = linkedMapOf(
+    "com.whatsapp" to "WhatsApp",
+    "com.whatsapp.w4b" to "WhatsApp Business",
+    "org.telegram.messenger" to "Telegram",
+    "com.facebook.orca" to "Messenger",
+    "org.thoughtcrime.securesms" to "Signal",
+    "com.google.android.gm" to "Gmail",
+)
 
 @Composable
 fun SettingsScreen(
@@ -40,6 +53,7 @@ fun SettingsScreen(
     var allow by remember { mutableFloatStateOf(AppSettings.allowWindowSeconds.toFloat()) }
     var throttle by remember { mutableFloatStateOf(AppSettings.throttleMs.toFloat()) }
     var friction by remember { mutableFloatStateOf(AppSettings.frictionSeconds.toFloat()) }
+    var friends by remember { mutableStateOf(AppSettings.friendApps) }
     var haptics by remember { mutableStateOf(AppSettings.hapticsEnabled) }
     val buzz = rememberBuzz()
 
@@ -80,12 +94,33 @@ fun SettingsScreen(
             AppSettings.frictionSeconds = it.toInt()
         }
 
+        SectionLabel("Counts as \"a friend sent this\"")
+        friendLabels.entries.chunked(3).forEach { row ->
+            // Equal heights, so a two-line name does not make one tile taller than its row.
+            Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                row.forEach { (pkg, label) ->
+                    AppTile(
+                        name = label,
+                        glyph = appGlyph(pkg),
+                        on = pkg in friends,
+                        onToggle = { on ->
+                            friends = if (on) friends + pkg else friends - pkg
+                            AppSettings.friendApps = friends
+                        },
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
+                        stateText = { "friend link ${if (it) "allowed once" else "not counted"}" },
+                    )
+                }
+                repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
+            }
+        }
+
         Card(Modifier.fillMaxWidth()) {
             Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text("Vibration", style = MaterialTheme.typography.titleMedium)
                     Text(
-                        "A light buzz on switches, app tiles, checkboxes and dial steps.",
+                        "A light buzz on switches, app tiles and dial steps.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -124,6 +159,7 @@ fun SettingsScreen(
                 allow = AppSettings.allowWindowSeconds.toFloat()
                 throttle = AppSettings.throttleMs.toFloat()
                 friction = AppSettings.frictionSeconds.toFloat()
+                friends = AppSettings.friendApps
             },
             modifier = Modifier.fillMaxWidth(),
         ) { Text("Reset these settings to defaults") }
