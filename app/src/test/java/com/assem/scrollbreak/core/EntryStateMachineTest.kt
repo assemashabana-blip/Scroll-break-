@@ -54,8 +54,9 @@ class EntryStateMachineTest {
 
     @Test
     fun messagingSourceTooOldIsBlocked() {
+        // Past the 5 s window plus the 10 s allowed for the app to load.
         openFromWhatsApp()
-        now += 5001
+        now += 15_001
         assertEquals(Action.BLOCK, m.onObservation(player()).action)
     }
 
@@ -63,8 +64,37 @@ class EntryStateMachineTest {
     fun allowWindowIsConfigurable() {
         m.allowWindowMs = 10_000
         openFromWhatsApp()
-        now += 8000
+        now += 19_000
         assertEquals(Action.NONE, m.onObservation(player()).action)
+    }
+
+    @Test
+    fun slowColdStartAfterALinkTapIsStillAllowed() {
+        // Seen on a Xiaomi: YouTube took about 6 s from the WhatsApp link to showing the Short.
+        openFromWhatsApp()
+        now += 9_000
+        assertEquals("allow:messaging:$wa", m.onObservation(player()).reason)
+    }
+
+    @Test
+    fun oneArrivalPaysForOneVideoOnly() {
+        // Watch the friend's video, leave the player, open Shorts again in the same visit.
+        openFromWhatsApp()
+        assertEquals(Action.NONE, m.onObservation(player(fp("a"))).action)
+        m.onObservation(notPlayer)
+        now += 2_000
+        assertEquals("block:no_friend_source", m.onObservation(player(fp("b"))).reason)
+    }
+
+    @Test
+    fun goingThroughTheHomeScreenBreaksTheChain() {
+        // WhatsApp, then the launcher, then YouTube: not a link tap.
+        m.onForeground(wa)
+        now += 1000
+        m.onForeground("com.miui.home")
+        now += 1000
+        m.onForeground(yt)
+        assertEquals(Action.BLOCK, m.onObservation(player()).action)
     }
 
     @Test

@@ -6,7 +6,8 @@
   "playerSignature": {
     "anyOf": [
       { "desc": "Reels, tab", "match": "startsWith", "selected": true },
-      { "desc": "ريلز، علامة التبويب", "match": "startsWith", "selected": true }
+      { "desc": "ريلز، علامة التبويب", "match": "startsWith", "selected": true },
+      { "desc": "تفاصيل مقطع ريلز", "match": "equals" }
     ]
   },
 
@@ -20,6 +21,10 @@
         ]
       }
     }
+  ],
+
+  "fingerprintNodes": [
+    { "name": "reel_author", "desc": "عرض مقاطع ريلز من", "match": "startsWith" }
   ],
 
   "scrollSignal": { "className": "androidx.recyclerview.widget.RecyclerView" },

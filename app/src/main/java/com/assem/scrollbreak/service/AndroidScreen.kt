@@ -53,6 +53,18 @@ class AndroidScreen private constructor(
 
     override fun textOf(leaf: Leaf): String? {
         if (leaf.isViewIdOnly) return roots.firstNotNullOfOrNull { textByViewId(it, leaf) }
+        // Same fast path as [has]: the fingerprint is read on every check while a video is allowed.
+        val needle = (leaf.desc ?: leaf.text)?.takeIf { it.isNotEmpty() }
+        if (needle != null) {
+            for (root in roots) {
+                val found = root.findAccessibilityNodeInfosByText(needle) ?: continue
+                if (found.isNotEmpty()) textSearchWorks += pkg
+                val hit = found.asSequence().map { AndroidNode(it).snapshot() }.firstOrNull { leaf.matches(it) }
+                found.forEach(::release)
+                if (hit != null) return (hit.text ?: hit.contentDescription)?.takeIf { it.isNotEmpty() }
+            }
+            if (pkg in textSearchWorks) return null
+        }
         val node = index.firstOrNull { leaf.matches(it) } ?: return null
         return (node.text ?: node.contentDescription)?.takeIf { it.isNotEmpty() }
     }
@@ -100,6 +112,26 @@ class AndroidScreen private constructor(
             if (budget-- <= 0) return false
             if (info.isClickable && leaf.matches(AndroidNode(info).snapshot()) &&
                 info.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            ) return true
+            if (depth >= MAX_DEPTH) return false
+            for (i in 0 until info.childCount) {
+                val child = info.getChild(i) ?: continue
+                val hit = walk(child, depth + 1)
+                release(child)
+                if (hit) return true
+            }
+            return false
+        }
+        return roots.any { walk(it, 0) }
+    }
+
+    /** Debug aid: scrolls the first visible scrollable node whose class contains [className] forward. */
+    fun scrollForward(className: String): Boolean {
+        var budget = MAX_NODES
+        fun walk(info: AccessibilityNodeInfo, depth: Int): Boolean {
+            if (budget-- <= 0) return false
+            if (info.isScrollable && info.isVisibleToUser && info.className?.contains(className) == true &&
+                info.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
             ) return true
             if (depth >= MAX_DEPTH) return false
             for (i in 0 until info.childCount) {

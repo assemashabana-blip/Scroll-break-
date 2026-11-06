@@ -1,0 +1,84 @@
+=== WINDOW id=126 type=APPLICATION layer=0 pkg=com.facebook.katana title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2460] children=2
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2460] children=1
+    [2] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2460] children=4
+      [3] id=com.facebook.katana:id/(name removed) cls=android.widget.FrameLayout bounds=[0,0][1080,2300] children=1
+        [4] id=com.facebook.katana:id/(name removed) cls=android.widget.FrameLayout bounds=[0,0][1080,2300] children=1
+          [5] id=com.facebook.katana:id/(name removed) cls=android.widget.FrameLayout bounds=[0,0][1080,2300] children=2
+            [6] id=com.facebook.katana:id/(name removed) cls=android.widget.FrameLayout bounds=[0,0][1080,2300] children=1
+              [7] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2300] children=1
+                [8] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2300] children=3
+                  [9] id=com.facebook.katana:id/(name removed) cls=android.view.ViewGroup bounds=[0,0][1080,2135] children=1 flags=disabled
+                    [10] id=com.facebook.katana:id/(name removed) cls=androidx.recyclerview.widget.RecyclerView bounds=[0,0][1080,2135] children=1 flags=scrollable
+                      [11] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2135] children=1
+                        [12] id=- cls=android.view.ViewGroup desc="h_138d03" bounds=[0,0][1080,2135] children=1
+                          [13] id=- cls=android.widget.Button desc="تفاصيل مقطع ريلز" bounds=[0,0][1080,2135] children=4 flags=longClickable
+                            [14] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2135] children=0 flags=invisible
+                            [14] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2135] children=1
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,0][1080,2135] children=1
+                                [16] id=- cls=android.widget.FrameLayout desc="h_af2a62" bounds=[0,0][1080,2135] children=0 flags=clickable
+                            [14] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2135] children=2
+                              [15] id=- cls=android.view.View bounds=[0,107][1080,2027] children=0
+                              [15] id=com.facebook.katana:id/(name removed) cls=android.widget.FrameLayout bounds=[0,1067][0,1067] children=0 flags=invisible
+                            [14] id=- cls=android.view.ViewGroup bounds=[0,145][1080,2135] children=3
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,145][1080,2135] children=2
+                                [16] id=- cls=android.view.ViewGroup bounds=[132,145][1080,2102] children=2
+                                  [17] id=- cls=android.widget.RelativeLayout bounds=[132,145][1080,1831] children=0
+                                  [17] id=- cls=android.view.ViewGroup bounds=[132,1814][1080,2102] children=3
+                                    [18] id=- cls=android.view.ViewGroup bounds=[132,1814][1080,1831] children=1
+                                      [19] id=- cls=android.view.ViewGroup bounds=[132,1831][1080,1831] children=0 flags=invisible
+                                    [18] id=- cls=android.view.ViewGroup bounds=[132,1831][1080,2102] children=1
+                                      [19] id=- cls=android.view.ViewGroup bounds=[132,1831][1080,2102] children=5
+                                        [20] id=- cls=android.widget.Button desc="عرض مقاطع ريلز من Author A" bounds=[948,1871][1047,1970] children=0 flags=clickable
+                                        [20] id=- cls=android.widget.Button desc="h_ceb762" bounds=[451,1922][947,2015] children=1 flags=clickable
+                                          [21] id=- cls=android.view.ViewGroup bounds=[473,1929][881,2010] children=0
+                                        [20] id=- cls=android.widget.Button text="h_92a103" desc="h_92a103" bounds=[472,1831][924,1932] children=0 flags=clickable
+                                        [20] id=- cls=android.widget.Button desc="h_71d0b9" bounds=[247,1863][434,1977] children=1 flags=clickable
+                                          [21] id=- cls=android.view.ViewGroup bounds=[317,1870][409,1972] children=0
+                                        [20] id=- cls=android.view.ViewGroup bounds=[176,2009][1047,2102] children=1
+                                          [21] id=- cls=android.widget.Button desc="h_138d03" bounds=[176,2013][1047,2102] children=1 flags=clickable
+                                            [22] id=- cls=android.widget.Button text="h_6a4ef5" bounds=[400,2013][524,2102] children=0 flags=clickable
+                                    [18] id=- cls=android.view.ViewGroup bounds=[132,2119][1080,2102] children=0 flags=invisible
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,1196][132,2102] children=1
+                                  [17] id=- cls=android.view.ViewGroup bounds=[0,1196][132,2102] children=5
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,1196][132,1404] children=2
+                                      [19] id=- cls=android.widget.Button desc="h_a7cd4d" bounds=[0,1196][132,1306] children=0 flags=clickable
+                                      [19] id=- cls=android.widget.Button desc="h_7c91d9" bounds=[0,1295][132,1404] children=0 flags=clickable,longClickable
+                                    [18] id=- cls=android.widget.Button desc="h_7a7003" bounds=[0,1404][132,1612] children=1 flags=clickable
+                                      [19] id=- cls=android.view.ViewGroup text="h_7a7003" desc="h_7a7003" bounds=[0,1503][132,1612] children=0
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,1612][132,1820] children=1
+                                      [19] id=- cls=android.widget.Button desc="h_9c23c1" bounds=[0,1612][132,1820] children=1 flags=clickable
+                                        [20] id=- cls=android.view.ViewGroup text="h_9c23c1" desc="h_9c23c1" bounds=[0,1711][132,1820] children=0
+                                    [18] id=- cls=android.widget.Button desc="h_56ee6e" bounds=[0,1820][132,2028] children=1 flags=clickable
+                                      [19] id=- cls=android.view.ViewGroup text="h_238e41" desc="h_238e41" bounds=[0,1919][132,2028] children=0
+                                    [18] id=- cls=android.view.ViewGroup bounds=[0,2028][132,2102] children=1
+                                      [19] id=- cls=android.widget.Button desc="h_6a4ef5" bounds=[0,2028][132,2102] children=0 flags=clickable
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,1788][1080,2063] children=0
+                              [15] id=- cls=android.view.ViewGroup bounds=[0,2063][1080,2135] children=0
+                  [9] id=- cls=android.widget.RelativeLayout bounds=[0,1113][1080,2193] children=1
+                    [10] id=com.facebook.katana:id/(name removed) cls=android.widget.RelativeLayout bounds=[0,1113][1080,2193] children=4
+                      [11] id=com.facebook.katana:id/(name removed) cls=android.widget.RelativeLayout bounds=[1080,1113][1080,1113] children=0 flags=invisible
+                      [11] id=com.facebook.katana:id/(name removed) cls=android.widget.FrameLayout bounds=[0,1918][1080,2193] children=0
+                      [11] id=com.facebook.katana:id/(name removed) cls=android.widget.LinearLayout bounds=[0,1962][1080,2078] children=0
+                      [11] id=com.facebook.katana:id/(name removed) cls=android.widget.LinearLayout bounds=[0,2078][1080,2193] children=0
+                  [9] id=- cls=android.widget.Button desc="h_f87161" bounds=[0,2135][1080,2300] children=1 flags=clickable
+                    [10] id=- cls=android.view.ViewGroup bounds=[33,2168][1047,2267] children=2
+                      [11] id=- cls=android.view.ViewGroup text="h_f87161" desc="h_f87161" bounds=[333,2168][1011,2267] children=0
+                      [11] id=- cls=android.view.ViewGroup bounds=[36,2191][300,2246] children=1
+                        [12] id=- cls=android.view.ViewGroup bounds=[36,2191][300,2246] children=3
+                          [13] id=- cls=android.widget.Button desc="h_6caaf9" bounds=[245,2191][300,2246] children=0 flags=clickable
+                          [13] id=- cls=android.widget.Button desc="h_1a9e62" bounds=[157,2191][212,2246] children=0 flags=clickable
+                          [13] id=- cls=android.widget.Button desc="h_d62271" bounds=[69,2191][124,2246] children=0 flags=clickable
+            [6] id=com.facebook.katana:id/(name removed) cls=android.view.ViewGroup bounds=[0,0][1080,330] children=1
+              [7] id=- cls=android.view.ViewGroup bounds=[0,0][1080,330] children=1
+                [8] id=- cls=android.view.ViewGroup bounds=[0,0][1080,238] children=3
+                  [9] id=- cls=android.view.ViewGroup bounds=[986,127][1063,198] children=1
+                    [10] id=- cls=android.view.ViewGroup bounds=[992,127][1057,192] children=1
+                      [11] id=- cls=android.view.ViewGroup bounds=[992,127][1057,192] children=1
+                        [12] id=- cls=android.widget.Button desc="h_7139df" bounds=[992,127][1057,192] children=0 flags=clickable
+                  [9] id=- cls=android.widget.Button desc="h_ba3add" bounds=[116,139][215,238] children=0 flags=clickable
+                  [9] id=- cls=android.widget.Button desc="h_f6f121" bounds=[17,139][116,238] children=0 flags=clickable
+      [3] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2052] children=0
+      [3] id=com.facebook.katana:id/(name removed) cls=android.view.View bounds=[0,0][1080,104] children=0 flags=invisible
+      [3] id=com.facebook.katana:id/(name removed) cls=android.view.View bounds=[0,2300][1080,2460] children=0 flags=invisible
+  [1] id=android:id/navigationBarBackground cls=android.view.View bounds=[0,2300][1080,2460] children=0 flags=invisible

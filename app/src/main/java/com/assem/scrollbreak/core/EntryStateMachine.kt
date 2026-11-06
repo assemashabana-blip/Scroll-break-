@@ -14,6 +14,8 @@ class EntryStateMachine(
     private val clock: () -> Long,
     @Volatile var allowWindowMs: Long = 5_000,
     private val retryMs: Long = 2_000,
+    /** Extra time, after the window, for the opened app to start and show the video. */
+    private val loadGraceMs: Long = 10_000,
 ) {
     enum class State { IDLE, ALLOW_ONE, BLOCK }
     enum class Action { NONE, BLOCK }
@@ -43,6 +45,8 @@ class EntryStateMachine(
         var sourceSeenAt: Long? = null
         var sourceName: String? = null
         var scrollIndex: Int? = null
+        /** The arrival (time the app came over a messaging app) that has already paid for one video. */
+        var usedArrival: Long? = null
     }
 
     private class Foreground(val pkg: String, val enteredAt: Long)
@@ -136,7 +140,14 @@ class EntryStateMachine(
         val source = candidateSource(o.pkg)
         if (source != null) {
             val exitedAt = history.last().enteredAt
-            if (isMessaging(source) && !o.sourceVisible && now - exitedAt <= allowWindowMs) {
+            // The app may need several seconds to start and load the video after a link tap (cold
+            // start, slow network), so the player gets [loadGraceMs] on top of the window. One
+            // arrival pays for one video only: coming back to a player later in the same visit
+            // does not get another.
+            if (isMessaging(source) && !o.sourceVisible && s.usedArrival != exitedAt &&
+                now - exitedAt <= allowWindowMs + loadGraceMs
+            ) {
+                s.usedArrival = exitedAt
                 return "messaging:$source"
             }
         }

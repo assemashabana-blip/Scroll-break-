@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds only: same as the main config plus canPerformGestures, so the debug SWIPE
+     broadcast can stand in for a finger on phones that refuse adb input (Xiaomi). -->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:canRetrieveWindowContent="true"
+    android:canPerformGestures="true"
+    android:description="@string/service_description"
+    android:settingsActivity="com.assem.scrollbreak.MainActivity" />

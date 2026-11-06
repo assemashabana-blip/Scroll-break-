@@ -33,5 +33,10 @@
   "fingerprintNodes": [
     { "name": "channel", "className": "android.widget.Button", "text": "@", "match": "startsWith" },
     { "name": "title", "className": "android.view.ViewGroup", "text": "", "clickable": true }
+  ],
+
+  "redirectTo": [
+    { "desc": "Home", "match": "equals", "className": "android.widget.Button", "clickable": true },
+    { "desc": "الصفحة الرئيسية", "match": "equals", "className": "android.widget.Button", "clickable": true }
   ]
 }

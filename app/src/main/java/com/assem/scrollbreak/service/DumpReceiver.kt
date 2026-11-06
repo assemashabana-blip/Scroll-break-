@@ -35,6 +35,15 @@ class DumpReceiver : BroadcastReceiver() {
                 service.debugClick(pkg, desc)
                 return
             }
+            if (intent.action == ACTION_SCROLL) {
+                val pkg = intent.getStringExtra("pkg") ?: return
+                service.debugScroll(pkg, intent.getStringExtra("cls") ?: "RecyclerView")
+                return
+            }
+            if (intent.action == ACTION_SWIPE) {
+                service.debugSwipeUp()
+                return
+            }
             if (intent.action == ACTION_INJECT_FAULT) {
                 service.injectFault()
                 return
@@ -54,5 +63,9 @@ class DumpReceiver : BroadcastReceiver() {
         const val ACTION_RUN_WATCHDOG = "com.assem.scrollbreak.RUN_WATCHDOG"
         /** Debug only: extras "pkg" and "desc" (description prefix of the node to click). */
         const val ACTION_CLICK = "com.assem.scrollbreak.CLICK"
+        /** Debug only: extras "pkg" and optional "cls" (class name part of the list to scroll forward). */
+        const val ACTION_SCROLL = "com.assem.scrollbreak.SCROLL"
+        /** Debug only: an upward swipe gesture (next video), for lists that are not scrollable nodes. */
+        const val ACTION_SWIPE = "com.assem.scrollbreak.SWIPE"
     }
 }

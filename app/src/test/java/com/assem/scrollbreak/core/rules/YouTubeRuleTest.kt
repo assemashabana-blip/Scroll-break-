@@ -81,4 +81,23 @@ class YouTubeRuleTest {
         val s = DumpParser.screenFor(DumpParser.parse(text), "com.other.app")
         assertFalse(rule.isPlayer(s))
     }
+
+    private fun redirectHits(dump: String) = DumpParser.parse(javaClass.getResource("/dumps/$dump")!!.readText())
+        .flatMap { it.nodes }
+        .filter { n -> rule.redirectTo.any { it.matches(n) } }
+
+    @Test
+    fun blockedShortRedirectsToTheHomeTab() {
+        // A Short opened straight from a link has nothing behind it, so Back cannot leave it;
+        // clicking the Home tab does, in English and on an Arabic phone.
+        assertEquals(listOf("Home"), redirectHits("youtube_short.txt").map { it.contentDescription })
+        assertEquals(listOf("الصفحة الرئيسية"), redirectHits("youtube_ar_short.txt").map { it.contentDescription })
+    }
+
+    @Test
+    fun arabicPhoneShortIsAPlayerWithAFingerprint() {
+        val s = screen("youtube_ar_short.txt")
+        assertTrue(rule.isPlayer(s))
+        assertFalse(rule.fingerprint(s).isEmpty)
+    }
 }

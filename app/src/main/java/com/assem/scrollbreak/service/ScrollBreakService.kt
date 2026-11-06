@@ -110,6 +110,36 @@ class ScrollBreakService : AccessibilityService() {
         }
     }
 
+    /** Debug aid, like [debugClick]: scrolls [pkg]'s first visible [className] list forward (a swipe). */
+    fun debugScroll(pkg: String, className: String) {
+        if (!debuggable) return
+        evalHandler.post {
+            safely("debug scroll") {
+                val screen = AndroidScreen.forPackage(this, pkg, windowCache)
+                val scrolled = try { screen.scrollForward(className) } finally { screen.close() }
+                Log.d("ScrollBreak", "DEBUG_SCROLL $pkg $className -> ${if (scrolled) "scrolled" else "not found"}")
+            }
+        }
+    }
+
+    /**
+     * Debug aid: an upward swipe through the middle of the screen, i.e. "next video". Needs the
+     * debug build's canPerformGestures; for lists the app does not expose as scrollable.
+     */
+    fun debugSwipeUp() {
+        if (!debuggable) return
+        val m = resources.displayMetrics
+        val path = android.graphics.Path().apply {
+            moveTo(m.widthPixels / 2f, m.heightPixels * 0.75f)
+            lineTo(m.widthPixels / 2f, m.heightPixels * 0.25f)
+        }
+        val gesture = android.accessibilityservice.GestureDescription.Builder()
+            .addStroke(android.accessibilityservice.GestureDescription.StrokeDescription(path, 0, 250))
+            .build()
+        val started = dispatchGesture(gesture, null, null)
+        Log.d("ScrollBreak", "DEBUG_SWIPE -> ${if (started) "dispatched" else "refused"}")
+    }
+
     /** Dumps all windows after [delayMs]; the walk itself runs off the main thread. */
     fun requestDump(delayMs: Long) {
         // The shade stays open after tapping a notification action and would hide the app.
@@ -149,13 +179,25 @@ class ScrollBreakService : AccessibilityService() {
                 flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
                     AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS or
                     AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS
-                packageNames = TargetPackages.all.toTypedArray()
+                // Launchers are watched only so the foreground history sees "went home" between a
+                // messaging app and a video app; they have no rule and are never evaluated.
+                packageNames = (TargetPackages.all + launcherPackages()).toTypedArray()
                 notificationTimeout = 0
             }
             AppLog.setServiceConnected(true)
             ProtectionAlert.cancel(this)
             AppLog.events.add(System.currentTimeMillis(), packageName, "SERVICE", "connected")
         }
+    }
+
+    /** Every installed home-screen app (Xiaomi, Samsung, Pixel... each ships its own). */
+    private fun launcherPackages(): Set<String> = try {
+        val home = android.content.Intent(android.content.Intent.ACTION_MAIN)
+            .addCategory(android.content.Intent.CATEGORY_HOME)
+        packageManager.queryIntentActivities(home, 0).map { it.activityInfo.packageName }.toSet()
+    } catch (t: Throwable) {
+        AppLog.error("launcher lookup failed", t)
+        emptySet()
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {

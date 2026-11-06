@@ -54,6 +54,36 @@ class FacebookRuleTest {
         assertTrue(rule.matchingFeedEntries(s).isEmpty())
     }
 
+    // A reel opened from a link (e.g. a friend's WhatsApp message) plays in Facebook's separate
+    // reel viewer (ImmersiveActivity): no tab bar, so only its own nodes identify it.
+
+    @Test
+    fun reelViewerFromALinkIsAPlayerButNotAFeedEntry() {
+        for (dump in listOf("facebook_ar_viewer1.txt", "facebook_ar_viewer2.txt")) {
+            val s = screen(dump)
+            assertTrue(dump, rule.isPlayer(s))
+            // Not a feed entry, so arriving here from a messaging app can still allow one reel.
+            assertTrue(dump, rule.matchingFeedEntries(s).isEmpty())
+        }
+    }
+
+    @Test
+    fun swipingToAnotherReelChangesTheFingerprint() {
+        val first = rule.fingerprint(screen("facebook_ar_viewer1.txt"))
+        val second = rule.fingerprint(screen("facebook_ar_viewer2.txt"))
+        assertTrue(first.values[0].isNotEmpty())
+        assertTrue(first.differsFrom(second))
+        assertFalse(first.differsFrom(rule.fingerprint(screen("facebook_ar_viewer1.txt"))))
+    }
+
+    @Test
+    fun reelViewerSignalIsNotOnHomeOrTheReelsTab() {
+        val viewer = Leaf(desc = "تفاصيل مقطع ريلز", match = MatchMode.EQUALS)
+        for (dump in listOf("facebook_ar_home.txt", "facebook_ar_reels.txt", "facebook_home.txt")) {
+            assertFalse(dump, screen(dump).has(viewer))
+        }
+    }
+
     @Test
     fun arabicRedirectFindsExactlyTheHomeTab() {
         val nodes = DumpParser.parse(text("facebook_ar_reels.txt")).flatMap { it.nodes }
