@@ -64,6 +64,7 @@ import com.assem.scrollbreak.ui.RulesScreen
 import com.assem.scrollbreak.ui.SettingsScreen
 import com.assem.scrollbreak.ui.SetupScreen
 import com.assem.scrollbreak.ui.SubScreenBar
+import com.assem.scrollbreak.ui.ThemeCrossfade
 import com.assem.scrollbreak.ui.theme.ScrollBreakTheme
 import java.io.File
 
@@ -110,15 +111,17 @@ class MainActivity : ComponentActivity() {
             // Null follows the phone; the Settings toggle stores an explicit choice.
             var darkPref by remember { mutableStateOf(AppSettings.darkMode) }
             val dark = darkPref ?: isSystemInDarkTheme()
+            // The switch moves at once; the theme follows once it has settled, cross-faded.
+            ThemeCrossfade(dark) { shownDark ->
             // Status and navigation bar icons follow the app's theme, not only the phone's.
-            DisposableEffect(dark) {
+            DisposableEffect(shownDark) {
                 enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { dark },
-                    navigationBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { dark },
+                    statusBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { shownDark },
+                    navigationBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { shownDark },
                 )
                 onDispose {}
             }
-            ScrollBreakTheme(darkTheme = dark) {
+            ScrollBreakTheme(darkTheme = shownDark) {
                 // First run on a fresh install lands on the checklist, not on a dead-looking Home.
                 var screen by rememberSaveable {
                     mutableStateOf(if (Setup.remaining(this@MainActivity) > 0) "setup" else "home")
@@ -264,6 +267,7 @@ class MainActivity : ComponentActivity() {
                     }
                     }
                 }
+            }
             }
         }
     }
