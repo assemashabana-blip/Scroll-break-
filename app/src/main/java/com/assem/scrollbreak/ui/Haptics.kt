@@ -27,7 +27,20 @@ object Haptics {
             context.getSystemService(Vibrator::class.java)
         }
         if (vibrator?.hasVibrator() != true) return
-        val effect = if (Build.VERSION.SDK_INT >= 29) {
+        // Tick and click primitives can be scaled, so feedback is a little softer than the stock
+        // effects. A heavy click is a full-strength click, a notch below the stock heavy click.
+        val primitive = when (kind) {
+            Buzz.TICK -> VibrationEffect.Composition.PRIMITIVE_TICK
+            Buzz.CLICK, Buzz.HEAVY -> VibrationEffect.Composition.PRIMITIVE_CLICK
+        }
+        val scale = when (kind) {
+            Buzz.TICK -> 0.7f
+            Buzz.CLICK -> 0.75f
+            Buzz.HEAVY -> 1f
+        }
+        val effect = if (Build.VERSION.SDK_INT >= 30 && vibrator.areAllPrimitivesSupported(primitive)) {
+            VibrationEffect.startComposition().addPrimitive(primitive, scale).compose()
+        } else if (Build.VERSION.SDK_INT >= 29) {
             VibrationEffect.createPredefined(
                 when (kind) {
                     Buzz.TICK -> VibrationEffect.EFFECT_TICK
@@ -41,7 +54,9 @@ object Haptics {
                 Buzz.CLICK -> 15L
                 Buzz.HEAVY -> 30L
             }
-            VibrationEffect.createOneShot(ms, VibrationEffect.DEFAULT_AMPLITUDE)
+            // About three quarters of full strength where the motor can vary it.
+            val amplitude = if (vibrator.hasAmplitudeControl()) 190 else VibrationEffect.DEFAULT_AMPLITUDE
+            VibrationEffect.createOneShot(ms, amplitude)
         }
         vibrator.vibrate(effect)
     }
