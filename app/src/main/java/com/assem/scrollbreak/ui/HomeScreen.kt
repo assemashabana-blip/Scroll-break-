@@ -35,7 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.R
 import com.assem.scrollbreak.core.BlockStats
-import com.assem.scrollbreak.core.UsageTime
+import com.assem.scrollbreak.AppUsage
 import com.assem.scrollbreak.ui.theme.SbAccent
 
 /** Everything Home needs; grouped so adding a card does not mean another ten parameters. */
@@ -47,7 +47,7 @@ class HomeState(
     /** False until the user grants Usage access. */
     val usageAccess: Boolean,
     /** Time per app; null without access or while it loads. */
-    val usage: UsageTime.Summary?,
+    val usage: AppUsage.Result?,
     /** Short-video rules by app name, with whether each is switched on. */
     val apps: List<Pair<String, Boolean>>,
 )
@@ -145,11 +145,6 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             }
         }
 
-        // Numbers: blocked today and in the last 7 days.
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            StatTile("Today", state.stats.today.toString(), "blocked", Modifier.weight(1f))
-            StatTile("7 days", state.stats.last7Days.toString(), "blocked", Modifier.weight(1f))
-        }
         if (!state.usageAccess || state.usage != null) UsageCard(state.usage, actions.openUsageAccess)
         WeekChart(state.stats.perDay)
         if (state.stats.weekByApp.isNotEmpty()) AppsChart(state.stats.weekByApp)
@@ -173,16 +168,5 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             }
         }
 
-    }
-}
-
-@Composable
-private fun StatTile(label: String, value: String, unit: String, modifier: Modifier = Modifier) {
-    Card(modifier) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(label.uppercase(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(value, style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-            Text(unit, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
     }
 }

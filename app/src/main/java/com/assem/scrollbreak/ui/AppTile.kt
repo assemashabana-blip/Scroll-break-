@@ -36,7 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.assem.scrollbreak.R
-import com.assem.scrollbreak.ui.theme.SbOn
+import com.assem.scrollbreak.ui.theme.SbAccent
 
 /**
  * Simple outline glyph per watched app, drawn for ScrollBreak (not the apps' own logos), so it
@@ -57,6 +57,44 @@ fun appGlyph(app: String): Int? = when (app) {
     "org.thoughtcrime.securesms" -> R.drawable.ic_app_signal
     "com.google.android.gm" -> R.drawable.ic_app_gmail
     else -> null
+}
+
+/**
+ * Outline glyph by package name, for lists of any app (Time in apps). Same drawing style as
+ * [appGlyph]; null when there is none, and the caller draws the first letter in a ring instead.
+ */
+@DrawableRes
+fun packageGlyph(pkg: String): Int? = when (pkg) {
+    "com.instagram.android" -> R.drawable.ic_app_instagram
+    "com.google.android.youtube" -> R.drawable.ic_app_youtube
+    "com.zhiliaoapp.musically", "com.ss.android.ugc.trill" -> R.drawable.ic_app_tiktok
+    "com.facebook.katana", "com.facebook.lite" -> R.drawable.ic_app_facebook
+    "com.snapchat.android" -> R.drawable.ic_app_snapchat
+    "com.android.chrome", "org.mozilla.firefox", "com.brave.browser", "com.microsoft.emmx",
+    "com.sec.android.app.sbrowser", "com.opera.browser" -> R.drawable.ic_app_browser
+    "com.google.android.dialer", "com.android.dialer", "com.samsung.android.dialer" -> R.drawable.ic_app_phone
+    "com.google.android.deskclock", "com.android.deskclock", "com.sec.android.app.clockpackage" -> R.drawable.ic_app_clock
+    "com.duolingo" -> R.drawable.ic_app_duolingo
+    "com.anthropic.claude" -> R.drawable.ic_app_claude
+    "com.block.juggle" -> R.drawable.ic_app_blocks
+    "com.google.android.apps.maps" -> R.drawable.ic_app_maps
+    "com.discord" -> R.drawable.ic_app_discord
+    "com.google.android.GoogleCamera", "com.android.camera", "com.sec.android.app.camera" -> R.drawable.ic_app_camera
+    "com.google.android.apps.photos" -> R.drawable.ic_app_photos
+    "com.twitter.android" -> R.drawable.ic_app_x
+    "com.spotify.music" -> R.drawable.ic_app_music
+    "com.mmmoussa.iqra" -> R.drawable.ic_app_book
+    "com.android.vending" -> R.drawable.ic_app_store
+    // Messaging apps (WhatsApp, Telegram...) are already keyed by package in appGlyph.
+    else -> appGlyph(pkg)
+}
+
+/** The first letter of [name] in a thin ring, for an app with no glyph of its own. */
+@Composable
+fun LetterGlyph(name: String, tint: androidx.compose.ui.graphics.Color, modifier: Modifier = Modifier) {
+    Box(modifier.clip(CircleShape).border(1.5.dp, tint, CircleShape), Alignment.Center) {
+        Text(name.take(1).uppercase(), style = MaterialTheme.typography.labelSmall, color = tint)
+    }
 }
 
 /**
@@ -123,7 +161,7 @@ fun AppTile(
         )
         Box(
             Modifier.size(width = 28.dp, height = 6.dp).clip(CircleShape)
-                .background(if (on) SbOn else scheme.outline.copy(alpha = 0.35f)),
+                .background(if (on) SbAccent else scheme.outline.copy(alpha = 0.35f)),
         )
     }
 }

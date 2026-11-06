@@ -35,22 +35,26 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.assem.scrollbreak.AppUsage
 import com.assem.scrollbreak.core.UsageTime
+import androidx.compose.ui.text.style.TextOverflow
 import kotlin.math.max
 
 /**
- * Time spent in each watched app, today or over 7 days. [usage] is null until the user grants
- * Usage access; the card then explains why and links to the setting.
+ * Time spent in the ten most-used apps (any app on the home screen), today or over 7 days.
+ * [result] is null until the user grants Usage access; the card then explains why and links to
+ * the setting.
  */
 @Composable
-fun UsageCard(usage: UsageTime.Summary?, onAllow: () -> Unit) {
+fun UsageCard(result: AppUsage.Result?, onAllow: () -> Unit) {
+    val usage = result?.summary
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            if (usage == null) {
+            if (result == null || usage == null) {
                 Text("Time in apps", style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "See how long you spend in each of these apps. Android keeps this count; allow ScrollBreak to read it. It stays on this phone.",
+                    "See how long you spend in each app. Android keeps this count; allow ScrollBreak to read it. It stays on this phone.",
                     style = MaterialTheme.typography.bodySmall, color = muted,
                 )
                 Button(onClick = onAllow, modifier = Modifier.fillMaxWidth()) { Text("Allow usage access") }
@@ -68,22 +72,30 @@ fun UsageCard(usage: UsageTime.Summary?, onAllow: () -> Unit) {
             }
             Text(UsageTime.format(total), style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
 
-            val shown = byApp.entries.filter { it.value >= 60_000 }.take(6)
+            val shown = byApp.entries.filter { it.value >= 60_000 }.take(10)
             if (shown.isEmpty()) {
-                Text("No time in these apps yet.", style = MaterialTheme.typography.bodySmall, color = muted)
+                Text("Nothing over a minute yet.", style = MaterialTheme.typography.bodySmall, color = muted)
             } else {
                 val ink = MaterialTheme.colorScheme.onSurface
                 val track = MaterialTheme.colorScheme.outline.copy(alpha = 0.18f)
                 val top = max(shown.first().value, 1L)
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    shown.forEach { (app, ms) ->
+                    shown.forEach { (pkg, ms) ->
+                        val name = result.labels[pkg] ?: pkg
                         val fraction by animateFloatAsState(ms.toFloat() / top, tween(600), label = "usage")
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            val glyph = appGlyph(app)
+                            val glyph = packageGlyph(pkg)
                             Box(Modifier.size(22.dp), contentAlignment = Alignment.Center) {
-                                if (glyph != null) Icon(painterResource(glyph), null, Modifier.size(20.dp), tint = ink)
+                                if (glyph != null) {
+                                    Icon(painterResource(glyph), null, Modifier.size(20.dp), tint = ink)
+                                } else {
+                                    LetterGlyph(name, ink, Modifier.size(20.dp))
+                                }
                             }
-                            Text(appDisplayName(app), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.width(84.dp))
+                            Text(
+                                name, style = MaterialTheme.typography.bodyMedium, maxLines = 1,
+                                overflow = TextOverflow.Ellipsis, modifier = Modifier.width(96.dp),
+                            )
                             Box(Modifier.weight(1f).height(10.dp).clip(RoundedCornerShape(5.dp)).background(track)) {
                                 Box(Modifier.fillMaxWidth(fraction).height(10.dp).clip(RoundedCornerShape(5.dp)).background(ink))
                             }

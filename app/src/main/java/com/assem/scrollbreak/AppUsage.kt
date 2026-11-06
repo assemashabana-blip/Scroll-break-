@@ -36,9 +36,21 @@ object AppUsage {
             .takeIf { it.resolveActivity(context.packageManager) != null }
             ?: Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
 
-    /** Null without access. [appOf] maps a package to a rule's app name. Call off the main thread. */
-    fun summarize(context: Context, appOf: (String) -> String?): UsageTime.Summary? {
+    /** Time per package, plus each package's name as the phone shows it. */
+    class Result(val summary: UsageTime.Summary, val labels: Map<String, String>)
+
+    /**
+     * Every app on the home screen except launchers and ScrollBreak itself. Null without
+     * access. Call off the main thread.
+     */
+    fun summarize(context: Context): Result? {
         if (!hasAccess(context)) return null
+        val pm = context.packageManager
+        val homes = pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0)
+            .map { it.activityInfo.packageName }.toSet()
+        val labels = pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0)
+            .filter { it.activityInfo.packageName !in homes && it.activityInfo.packageName != context.packageName }
+            .associate { it.activityInfo.packageName to it.activityInfo.applicationInfo.loadLabel(pm).toString() }
         val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val now = System.currentTimeMillis()
         val from = BlockStats.startOfDay(now, TimeZone.getDefault(), 6)
@@ -54,7 +66,7 @@ object AppUsage {
                 SCREEN_NON_INTERACTIVE -> list += UsageTime.Event(null, false, e.timeStamp)
             }
         }
-        return UsageTime.summarize(list, appOf, now)
+        return Result(UsageTime.summarize(list, { it.takeIf { p -> p in labels } }, now), labels)
     }
 
     /** UsageEvents.Event.SCREEN_NON_INTERACTIVE (API 28); older phones never send it. */

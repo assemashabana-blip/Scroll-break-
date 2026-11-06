@@ -12,11 +12,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.activity.SystemBarStyle
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.produceState
-import com.assem.scrollbreak.core.UsageTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import androidx.activity.result.contract.ActivityResultContracts
@@ -125,23 +129,85 @@ class MainActivity : ComponentActivity() {
                 val latency by AppLog.latency.summary.collectAsState()
                 val loaded by RuleStore.loaded.collectAsState()
                 val errors by RuleStore.errors.collectAsState()
+                // Home's data lives up here, outside the page animation: it is read off the main
+                // thread, and the last value stays on screen while a fresh one loads.
+                val setupLeft = remember(tick) { Setup.remaining(this@MainActivity) }
+                val stats by produceState(BlockStats.Summary.EMPTY, tick, latency.count) {
+                    value = withContext(Dispatchers.IO) {
+                        BlockStats.summarize(AppLog.readBlockLines(), System.currentTimeMillis())
+                    }
+                }
+                val usageAccess = remember(tick) { AppUsage.hasAccess(this@MainActivity) }
+                val usage by produceState<AppUsage.Result?>(null, tick, usageAccess) {
+                    value = withContext(Dispatchers.IO) { AppUsage.summarize(this@MainActivity) }
+                }
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    // The title bar lives inside each page, not in the Scaffold, so it slides with the
-                    // page instead of resizing the content area underneath it mid-transition.
+                    // Home stays composed underneath the other pages, so going back to it only slides
+                    // the page away; rebuilding Home (charts, cards, tiles) on every return dropped
+                    // frames. It fades and drifts left while covered, drawn from layer values only.
+                    val onHome = screen == "home"
+                    val shown by animateFloatAsState(if (onHome) 1f else 0f, tween(320), label = "home")
+                    Box(Modifier.fillMaxSize()) {
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .padding(padding)
+                            .graphicsLayer {
+                                alpha = shown
+                                translationX = -(1f - shown) * size.width / 5
+                            }
+                            // Hidden from TalkBack while another page covers it.
+                            .then(if (onHome) Modifier else Modifier.clearAndSetSemantics {}),
+                    ) {
+                    HomeScreen(
+                        state = HomeState(
+                            serviceEnabled = serviceEnabled,
+                            setupRemaining = setupLeft,
+                            blockingEnabled = blockingEnabled,
+                            stats = stats,
+                            usageAccess = usageAccess,
+                            usage = usage,
+                            apps = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
+                                .map { it.rule.app to AppSettings.isAppEnabled(it.rule.app) },
+                        ),
+                        actions = HomeActions(
+                            openAccessibilitySettings = {
+                                startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                            },
+                            openSetup = { navigate("setup") },
+                            openUsageAccess = { startActivity(AppUsage.accessIntent(this@MainActivity)) },
+                            setBlocking = {
+                                AppSettings.blockingEnabled = it
+                                blockingEnabled = it
+                            },
+                            setAppEnabled = { app, on ->
+                                AppSettings.setAppEnabled(app, on)
+                                refreshTick++
+                            },
+                            navigate = navigate,
+                        ),
+                        modifier = Modifier,
+                    )
+                    }
+
+                    // The other pages. The title bar lives inside each page, so it slides with it.
+                    // Going deeper slides the new page in from the right; going back slides it out.
                     val m = Modifier
-                    // Going deeper slides the new page in from the right; going back slides it from the left.
                     AnimatedContent(
-                        targetState = screen,
+                        targetState = screen.takeIf { it != "home" },
                         transitionSpec = {
-                            val deeper = depth(targetState) > depth(initialState)
+                            val deeper = depth(targetState ?: "home") > depth(initialState ?: "home")
                             val dir = if (deeper) 1 else -1
                             (slideInHorizontally(tween(320)) { dir * it / 5 } + fadeIn(tween(320)))
                                 .togetherWith(slideOutHorizontally(tween(320)) { -dir * it / 5 } + fadeOut(tween(200)))
                         },
                         label = "screen",
                     ) { target ->
+                    if (target != null) {
+                    // Opaque, and it takes the touches, so Home underneath never gets them.
+                    Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     Column(Modifier.padding(padding)) {
-                    if (target != "home") SubScreenBar(titles[target] ?: "ScrollBreak", onBack = goBack)
+                    SubScreenBar(titles[target] ?: "ScrollBreak", onBack = goBack)
                     Box(Modifier.weight(1f)) {
                     when (target) {
                         "log" -> EventLogScreen(m)
@@ -155,7 +221,7 @@ class MainActivity : ComponentActivity() {
                             adminActive = AdminReceiver.isActive(this@MainActivity).also { tick.hashCode() },
                             onEnableAdmin = { startActivity(AdminReceiver.enableIntent(this@MainActivity)) },
                             onOpenAdminSettings = { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) },
-                            setupLeft = Setup.remaining(this@MainActivity).also { tick.hashCode() },
+                            setupLeft = setupLeft,
                             onNavigate = navigate,
                             dark = dark,
                             followsPhone = darkPref == null,
@@ -177,47 +243,10 @@ class MainActivity : ComponentActivity() {
                             onExportLogs = { shareFiles(AppLog.logFiles(), "Export logs") },
                             modifier = m,
                         )
-                        else -> {
-                            val stats = remember(tick, latency.count) {
-                                BlockStats.summarize(AppLog.readBlockLines(), System.currentTimeMillis())
-                            }
-                            val usageAccess = remember(tick) { AppUsage.hasAccess(this@MainActivity) }
-                            // Reading a week of usage events takes a moment; keep it off the main thread.
-                            val usage by produceState<UsageTime.Summary?>(null, tick, loaded, usageAccess) {
-                                val appOf = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
-                                    .flatMap { l -> l.rule.packages.map { it to l.rule.app } }.toMap()
-                                value = withContext(Dispatchers.IO) { AppUsage.summarize(this@MainActivity) { appOf[it] } }
-                            }
-                            HomeScreen(
-                                state = HomeState(
-                                    serviceEnabled = serviceEnabled,
-                                    setupRemaining = Setup.remaining(this@MainActivity).also { tick.hashCode() },
-                                    blockingEnabled = blockingEnabled,
-                                    stats = stats,
-                                    usageAccess = usageAccess,
-                                    usage = usage,
-                                    apps = loaded.filter { it.rule.purpose == Purpose.SHORT_VIDEO }
-                                        .map { it.rule.app to AppSettings.isAppEnabled(it.rule.app) },
-                                ),
-                                actions = HomeActions(
-                                    openAccessibilitySettings = {
-                                        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-                                    },
-                                    openSetup = { navigate("setup") },
-                                    openUsageAccess = { startActivity(AppUsage.accessIntent(this@MainActivity)) },
-                                    setBlocking = {
-                                        AppSettings.blockingEnabled = it
-                                        blockingEnabled = it
-                                    },
-                                    setAppEnabled = { app, on ->
-                                        AppSettings.setAppEnabled(app, on)
-                                        refreshTick++
-                                    },
-                                    navigate = navigate,
-                                ),
-                                modifier = m,
-                            )
-                        }
+                        else -> Unit
+                    }
+                    }
+                    }
                     }
                     }
                     }
