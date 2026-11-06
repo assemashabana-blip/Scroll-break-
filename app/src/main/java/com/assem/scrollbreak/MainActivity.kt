@@ -13,15 +13,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -108,19 +107,10 @@ class MainActivity : ComponentActivity() {
                 val latency by AppLog.latency.summary.collectAsState()
                 val loaded by RuleStore.loaded.collectAsState()
                 val errors by RuleStore.errors.collectAsState()
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    topBar = {
-                        AnimatedVisibility(
-                            visible = screen != "home",
-                            enter = fadeIn(tween(250)) + expandVertically(tween(250)),
-                            exit = fadeOut(tween(200)) + shrinkVertically(tween(200)),
-                        ) {
-                            SubScreenBar(titles[screen] ?: "ScrollBreak", onBack = goBack)
-                        }
-                    },
-                ) { padding ->
-                    val m = Modifier.padding(padding)
+                Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+                    // The title bar lives inside each page, not in the Scaffold, so it slides with the
+                    // page instead of resizing the content area underneath it mid-transition.
+                    val m = Modifier
                     // Going deeper slides the new page in from the right; going back slides it from the left.
                     AnimatedContent(
                         targetState = screen,
@@ -132,6 +122,9 @@ class MainActivity : ComponentActivity() {
                         },
                         label = "screen",
                     ) { target ->
+                    Column(Modifier.padding(padding)) {
+                    if (target != "home") SubScreenBar(titles[target] ?: "ScrollBreak", onBack = goBack)
+                    Box(Modifier.weight(1f)) {
                     when (target) {
                         "log" -> EventLogScreen(m)
                         "dumps" -> DumpsScreen(m)
@@ -193,6 +186,8 @@ class MainActivity : ComponentActivity() {
                                 modifier = m,
                             )
                         }
+                    }
+                    }
                     }
                     }
                 }
