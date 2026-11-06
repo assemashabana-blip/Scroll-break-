@@ -1,5 +1,6 @@
 package com.assem.scrollbreak.ui
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -75,16 +76,27 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             }
         }
 
-        // Status: no words. A white circle means blocking is off, the accent colour means it is on.
+        // Status: no words. A white circle with a plain play button means feeds play freely; the
+        // accent circle with a struck-through play button means they are blocked.
         val active = state.serviceEnabled && state.blockingEnabled
         val orb by animateColorAsState(if (active) SbAccent else Color.White, label = "orb")
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
-                        Modifier.size(56.dp).clip(CircleShape).background(orb)
+                        Modifier.size(64.dp).clip(CircleShape).background(orb)
                             .semantics { contentDescription = if (active) "Blocking is on" else "Blocking is off" },
-                    )
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Crossfade(active, label = "orbIcon") { blocked ->
+                            Icon(
+                                painterResource(if (blocked) R.drawable.ic_status_blocked else R.drawable.ic_status_play),
+                                contentDescription = null,
+                                modifier = Modifier.size(34.dp),
+                                tint = Color.Black,
+                            )
+                        }
+                    }
                     Spacer(Modifier.weight(1f))
                     Switch(checked = state.blockingEnabled, onCheckedChange = actions.setBlocking)
                 }
