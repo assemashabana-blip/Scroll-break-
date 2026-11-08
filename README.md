@@ -1,8 +1,8 @@
 # ScrollBreak
 
-An open-source Android app against doom scrolling. It gets you out of Reels, Shorts, TikTok and every other short-video feed, but still lets you watch the one video a friend sent you, so you stay social without getting pulled into the feed.
+An Android app against doom scrolling. It gets you out of Reels, Shorts, TikTok and every other short-video feed, but still lets you watch the one video a friend sent you, so you stay social without getting pulled into the feed.
 
-ScrollBreak is free and open source under the [MIT License](LICENSE). Contributions are welcome.
+ScrollBreak is free to download and use, and its source code is public so you can read it and build it yourself. Bug reports and pull requests are welcome.
 
 **[⬇ Download ScrollBreak for Android (latest APK)](https://github.com/assemashabana-blip/Scroll-break-/releases/latest)**: Android 8.0 or newer, then follow [the setup steps](#install-it-on-your-android-phone).
 
@@ -142,6 +142,6 @@ Bug reports are just as useful: open an issue with your phone model, Android ver
 
 Logo: a video card snapped in half. The top half (the one video you're allowed) stays, the next one breaks away, and the accent marks the break. Black `#000000`, white `#FFFFFF`, and one accent `#FF4A1C`, used only for the break. Wordmark typeface: Space Grotesk (SIL Open Font License).
 
-## License
+## Copyright
 
-[MIT](LICENSE) © 2026 Assem Shabana
+© 2026 Assem Shabana. All rights reserved.
