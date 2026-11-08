@@ -38,3 +38,7 @@ Thumbs.db
 CLAUDE.md
 .claude/
 scrollbreak-android_1/
+
+# Signing key (saved without an extension) and signed release output
+/key
+app/release/
