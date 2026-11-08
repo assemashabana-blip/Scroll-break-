@@ -34,7 +34,7 @@ You need **Android 8.0 or newer**. ScrollBreak is not on the Play Store, so you 
 
 ### 1. Get the APK
 
-**Option A: download it.** On your phone, open the [latest release](https://github.com/assemashabana-blip/Scroll-break-/releases/latest) and tap the `.apk` file under **Assets** (for example `ScrollBreak-1.0.apk`).
+**Option A: download it.** On your phone, open the [latest release](https://github.com/assemashabana-blip/Scroll-break-/releases/latest) and tap the `.apk` file under **Assets** (for example `ScrollBreak-1.0.1.apk`).
 
 **Option B: build it yourself.** Follow [Work on the project](#work-on-the-project) below, then in Android Studio choose **Build → Generate Signed App Bundle or APK → APK**, create a key when it asks (keep that key file safe: you need the same key for every update), pick the **release** build, and copy the APK to your phone.
 
@@ -43,6 +43,18 @@ You need **Android 8.0 or newer**. ScrollBreak is not on the Play Store, so you 
 1. Open the APK on your phone.
 2. Android asks to allow installing from this source (your browser or file manager). Allow it, go back, and tap **Install**.
 3. Play Protect may warn that the app is unknown. Choose **More details → Install anyway**. That warning appears for any app that is not from the Play Store.
+
+#### If the phone blocks the install
+
+ScrollBreak comes from outside the Play Store and asks for the Accessibility service, which scam apps also misuse, so phones check it strictly. What to do depends on the message:
+
+| Message | What to do |
+|---|---|
+| "Blocked by Play Protect" / "Unsafe app blocked" | Tap **More details → Install anyway**. If there is no such button: Play Store → your profile picture → **Play Protect** → ⚙ → turn off **Scan apps with Play Protect**, install, then turn it back on. |
+| Samsung: "Blocked by Auto Blocker" | Settings → **Security and privacy → Auto Blocker** → off, install, then turn it back on. |
+| Xiaomi / Redmi / Poco: security scan warning | Wait for the countdown, tick the box and tap **Install anyway**. |
+| "App blocked to protect your device" (mentions sensitive permissions) | Google's fraud protection, which some countries enforce with no "install anyway". Install from a computer instead: turn on USB debugging on the phone, connect it, and run `adb install ScrollBreak-<version>.apk`. |
+| "App not installed" / "conflicts with an existing package" | A ScrollBreak signed with a different key is already installed (for example a debug build). Uninstall it first. |
 
 ### 3. Set it up
 
