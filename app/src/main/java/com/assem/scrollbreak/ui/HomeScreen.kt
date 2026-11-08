@@ -1,7 +1,7 @@
 package com.assem.scrollbreak.ui
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -85,7 +85,9 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
         // circle with a struck-through play button means they are blocked. The text says the same.
         val active = state.serviceEnabled && state.blockingEnabled
         val idle = MaterialTheme.colorScheme.onSurface
-        val orb by animateColorAsState(if (active) SbAccent else idle, label = "orb")
+        // Animates on/off only; a theme change swaps the colour at once.
+        val orbOn by animateFloatAsState(if (active) 1f else 0f, label = "orb")
+        val orb = androidx.compose.ui.graphics.lerp(idle, SbAccent, orbOn)
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {

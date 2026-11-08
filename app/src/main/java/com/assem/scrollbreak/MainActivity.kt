@@ -19,7 +19,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.activity.SystemBarStyle
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.DisposableEffect
+import android.content.res.Configuration
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import com.assem.scrollbreak.ui.ThemeReveal
+import com.assem.scrollbreak.ui.ThemeRevealOverlay
+import androidx.core.view.WindowCompat
 import androidx.compose.runtime.produceState
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
@@ -64,7 +69,6 @@ import com.assem.scrollbreak.ui.RulesScreen
 import com.assem.scrollbreak.ui.SettingsScreen
 import com.assem.scrollbreak.ui.SetupScreen
 import com.assem.scrollbreak.ui.SubScreenBar
-import com.assem.scrollbreak.ui.ThemeCrossfade
 import com.assem.scrollbreak.ui.theme.ScrollBreakTheme
 import java.io.File
 
@@ -107,24 +111,46 @@ class MainActivity : ComponentActivity() {
         AppSettings.init(this)
         blockingEnabled = AppSettings.blockingEnabled
         requestNotificationPermission()
+        val startDark = AppSettings.darkMode
+            ?: (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { startDark },
+            navigationBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { startDark },
+        )
         setContent {
-            // Null follows the phone; the Settings toggle stores an explicit choice.
-            var darkPref by remember { mutableStateOf(AppSettings.darkMode) }
-            val dark = darkPref ?: isSystemInDarkTheme()
-            // The switch moves at once; the theme follows once it has settled, cross-faded.
-            ThemeCrossfade(dark) { shownDark ->
-            // Status and navigation bar icons follow the app's theme, not only the phone's.
-            DisposableEffect(shownDark) {
-                enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { shownDark },
-                    navigationBarStyle = SystemBarStyle.auto(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT) { shownDark },
-                )
-                onDispose {}
+            // Null follows the phone; the Settings toggle stores an explicit choice. Kept as a plain
+            // State and read only by the Settings page and the effect below, so flipping the switch
+            // recomposes that page alone instead of this whole body (Home included).
+            val darkPref = remember { mutableStateOf(AppSettings.darkMode) }
+            val systemDark = isSystemInDarkTheme()
+            val scope = rememberCoroutineScope()
+            // The theme the app draws with. Changing it grows the new theme out of the day/night
+            // switch in a circle (see ThemeReveal).
+            val reveal = remember {
+                val still = Settings.Global.getFloat(contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
+                ThemeReveal(window, still, darkPref.value ?: systemDark)
             }
+            val shownDark = reveal.dark
+            // Status and navigation bar icons follow the app's theme. Only flips two window flags;
+            // re-running enableEdgeToEdge here re-dispatched insets and relaid out every page.
+            LaunchedEffect(reveal.barsDark) {
+                WindowCompat.getInsetsController(window, window.decorView).apply {
+                    isAppearanceLightStatusBars = !reveal.barsDark
+                    isAppearanceLightNavigationBars = !reveal.barsDark
+                }
+            }
+            Box(Modifier.fillMaxSize()) {
             ScrollBreakTheme(darkTheme = shownDark) {
                 // First run on a fresh install lands on the checklist, not on a dead-looking Home.
                 var screen by rememberSaveable {
                     mutableStateOf(if (Setup.remaining(this@MainActivity) > 0) "setup" else "home")
+                }
+                // Home stays composed, hidden, under the other pages. While it is hidden it takes a
+                // new theme only after the reveal has finished, so rebuilding it never stalls the
+                // circle mid-way.
+                var homeDark by remember { mutableStateOf(shownDark) }
+                LaunchedEffect(shownDark, reveal.running) {
+                    if (homeDark != shownDark && (screen == "home" || !reveal.running)) homeDark = shownDark
                 }
                 // Where Back goes: Settings opens from Home, its tools open from Settings.
                 var back by rememberSaveable { mutableStateOf("home") }
@@ -146,7 +172,10 @@ class MainActivity : ComponentActivity() {
                 val usageAccess = remember(tick) { AppUsage.hasAccess(this@MainActivity) }
                 // Loads at once, then again every minute while the app is open on Home, so today's
                 // time keeps counting up. It stops when the app goes to the background.
-                val usage by produceState<AppUsage.Result?>(null, tick, usageAccess) {
+                // Starts from the last saved result, so the card is there on the first frame
+                // instead of popping in about half a second later.
+                val usageCached = remember { if (usageAccess) AppUsage.cached(this@MainActivity) else null }
+                val usage by produceState(usageCached, tick, usageAccess) {
                     lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                         while (true) {
                             if (value == null || screen == "home") {
@@ -174,6 +203,7 @@ class MainActivity : ComponentActivity() {
                             // Hidden from TalkBack while another page covers it.
                             .then(if (onHome) Modifier else Modifier.clearAndSetSemantics {}),
                     ) {
+                    ScrollBreakTheme(darkTheme = homeDark) {
                     HomeScreen(
                         state = HomeState(
                             serviceEnabled = serviceEnabled,
@@ -203,6 +233,7 @@ class MainActivity : ComponentActivity() {
                         ),
                         modifier = Modifier,
                     )
+                    }
                     }
 
                     // The other pages. The title bar lives inside each page, so it slides with it.
@@ -238,10 +269,18 @@ class MainActivity : ComponentActivity() {
                             onOpenAdminSettings = { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) },
                             setupLeft = setupLeft,
                             onNavigate = navigate,
-                            dark = dark,
-                            followsPhone = darkPref == null,
-                            onDarkChange = { darkPref = it; AppSettings.darkMode = it },
-                            onFollowPhone = { darkPref = null; AppSettings.darkMode = null },
+                            dark = shownDark,
+                            followsPhone = darkPref.value == null,
+                            onDarkChange = { on, from ->
+                                darkPref.value = on
+                                AppSettings.darkMode = on
+                                reveal.switchTo(on, from, scope)
+                            },
+                            onFollowPhone = { from ->
+                                darkPref.value = null
+                                AppSettings.darkMode = null
+                                reveal.switchTo(systemDark, from, scope)
+                            },
                             showDeveloperTools = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0,
                             modifier = m,
                         )
@@ -268,6 +307,8 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+            // The old theme's picture, with the circle of new theme growing through it.
+            ThemeRevealOverlay(reveal)
             }
         }
     }

@@ -86,7 +86,9 @@ fun LensDial(
 
     val ink = MaterialTheme.colorScheme.onSurface
     val measurer = rememberTextMeasurer()
-    val tickLabelStyle = MaterialTheme.typography.labelSmall.copy(color = ink)
+    // No colour in the measured style (it is given at draw time), so a theme swap reuses the
+    // cached label layouts instead of measuring every tick label again.
+    val tickLabelStyle = MaterialTheme.typography.labelSmall
 
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = SbAccent)
@@ -137,7 +139,7 @@ fun LensDial(
                     val text = (range.start + i * step).roundToInt().toString()
                     val layout = measurer.measure(text, tickLabelStyle)
                     drawText(
-                        layout, alpha = alpha * 0.8f,
+                        layout, color = ink, alpha = alpha * 0.8f,
                         topLeft = Offset(x - layout.size.width / 2f, y + h + 4.dp.toPx()),
                     )
                 }

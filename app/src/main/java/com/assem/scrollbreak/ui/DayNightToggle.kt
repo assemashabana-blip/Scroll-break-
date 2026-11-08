@@ -28,6 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -64,23 +67,30 @@ private val cloudFront = listOf(Triple(0.44f, 1.02f, 0.30f), Triple(0.60f, 0.92f
  * animations" on, it swaps states without moving.
  */
 @Composable
-fun DayNightToggle(dark: Boolean, onChange: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+fun DayNightToggle(
+    dark: Boolean,
+    onChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    /** Where the track is, in window coordinates; the theme reveal grows from it. */
+    onTrackBounds: (Rect) -> Unit = {},
+) {
     val context = LocalContext.current
     val still = remember {
         Settings.Global.getFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
     }
     val buzz = rememberBuzz()
     // Same springy feel as the app tiles, a little softer so the trip takes about half a second.
-    val p by animateFloatAsState(
+    // Both animations are read only inside the Canvas, so each frame is a redraw of this switch,
+    // never a recomposition (the twinkle runs forever; recomposing on it cost every frame).
+    val p = animateFloatAsState(
         if (dark) 1f else 0f,
         if (still) snap() else spring(dampingRatio = 0.68f, stiffness = Spring.StiffnessMediumLow),
         label = "dayNight",
     )
-    val twinkle = if (still) 1f else {
-        val t by rememberInfiniteTransition(label = "twinkle").animateFloat(
+    val twinkle = if (still) null else {
+        rememberInfiniteTransition(label = "twinkle").animateFloat(
             0f, 1f, infiniteRepeatable(tween(1400), RepeatMode.Reverse), label = "twinkle",
         )
-        t
     }
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
@@ -98,7 +108,10 @@ fun DayNightToggle(dark: Boolean, onChange: (Boolean) -> Unit, modifier: Modifie
         contentAlignment = Alignment.Center,
     ) {
         Box(Modifier.border(2.dp, if (focused) ring else Color.Transparent, pill).padding(3.dp)) {
-            Canvas(Modifier.size(width = 76.dp, height = 36.dp)) { drawToggle(p, twinkle) }
+            Canvas(
+                Modifier.size(width = 76.dp, height = 36.dp)
+                    .onGloballyPositioned { onTrackBounds(it.boundsInWindow()) },
+            ) { drawToggle(p.value, twinkle?.value ?: 1f) }
         }
     }
 }

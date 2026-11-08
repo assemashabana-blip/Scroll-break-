@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
@@ -51,8 +52,9 @@ fun SettingsScreen(
     /** The theme on screen now, and whether it follows the phone's own setting. */
     dark: Boolean,
     followsPhone: Boolean,
-    onDarkChange: (Boolean) -> Unit,
-    onFollowPhone: () -> Unit,
+    /** Both get the day/night switch's track (window coordinates), where the theme reveal starts. */
+    onDarkChange: (Boolean, Rect) -> Unit,
+    onFollowPhone: (Rect) -> Unit,
     /** Debug builds only: rules, detection health, event log and screen dumps. */
     showDeveloperTools: Boolean,
     modifier: Modifier = Modifier,
@@ -63,6 +65,8 @@ fun SettingsScreen(
     var friends by remember { mutableStateOf(AppSettings.friendApps) }
     var haptics by remember { mutableStateOf(AppSettings.hapticsEnabled) }
     val buzz = rememberBuzz()
+    // Not state: only read when the switch is tapped, so moving it (scrolling) recomposes nothing.
+    val track = remember { arrayOf(Rect.Zero) }
 
     Column(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -83,10 +87,14 @@ fun SettingsScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     if (!followsPhone) {
-                        TextButton(onClick = onFollowPhone, contentPadding = PaddingValues(0.dp)) { Text("Follow the phone") }
+                        TextButton(onClick = { onFollowPhone(track[0]) }, contentPadding = PaddingValues(0.dp)) { Text("Follow the phone") }
                     }
                 }
-                DayNightToggle(dark = dark, onChange = onDarkChange)
+                DayNightToggle(
+                    dark = dark,
+                    onChange = { onDarkChange(it, track[0]) },
+                    onTrackBounds = { track[0] = it },
+                )
             }
         }
 

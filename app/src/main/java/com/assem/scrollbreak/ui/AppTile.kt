@@ -1,7 +1,7 @@
 package com.assem.scrollbreak.ui
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -113,9 +113,11 @@ fun AppTile(
 ) {
     val buzz = rememberBuzz()
     val scheme = MaterialTheme.colorScheme
-    val container by animateColorAsState(if (on) scheme.surfaceContainerHigh else scheme.surfaceContainer, label = "tile")
-    val border by animateColorAsState(if (on) scheme.onSurface else scheme.surfaceContainer, label = "border")
-    val tint by animateColorAsState(if (on) scheme.onSurface else scheme.outline.copy(alpha = 0.55f), label = "tint")
+    // Animates on/off only; a theme change swaps the colours at once instead of fading every tile.
+    val t by animateFloatAsState(if (on) 1f else 0f, label = "tileOn")
+    val container = lerp(scheme.surfaceContainer, scheme.surfaceContainerHigh, t)
+    val border = lerp(scheme.surfaceContainer, scheme.onSurface, t)
+    val tint = lerp(scheme.outline.copy(alpha = 0.55f), scheme.onSurface, t)
     val lift by animateFloatAsState(
         if (on) 1f else 0.94f,
         spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMedium),
