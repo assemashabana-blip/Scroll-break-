@@ -1,3 +1,8 @@
+# Scroll-break-
+Anti doom scrooling app that gets you out of any app reels, shorts and tiktoks or out of any short form videos but keeps you socialized by letting you watch shared videos without any inturuption.
+
+---
+
 # ScrollBreak — Android icon & brand files
 
 Logo: **Snap, black & white + one accent.** A video card snapped in half. The top half (the one video you're allowed) stays, the next one breaks away, and the accent marks the break.
