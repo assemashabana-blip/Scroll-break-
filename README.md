@@ -4,6 +4,8 @@ An open-source Android app against doom scrolling. It gets you out of Reels, Sho
 
 ScrollBreak is free and open source under the [MIT License](LICENSE). Contributions are welcome.
 
+**[⬇ Download ScrollBreak for Android (latest APK)](https://github.com/assemashabana-blip/Scroll-break-/releases/latest)**: Android 8.0 or newer, then follow [the setup steps](#install-it-on-your-android-phone).
+
 ## What it does
 
 - **Blocks short-video feeds** the moment they appear, in under 300 ms: it goes back (or switches to a safer tab) and covers the feed if it is still there.
@@ -32,7 +34,7 @@ You need **Android 8.0 or newer**. ScrollBreak is not on the Play Store, so you 
 
 ### 1. Get the APK
 
-**Option A: download it.** If there is an APK on the [Releases](https://github.com/assemashabana-blip/Scroll-break-/releases) page, download the latest `.apk` on your phone.
+**Option A: download it.** On your phone, open the [latest release](https://github.com/assemashabana-blip/Scroll-break-/releases/latest) and tap the `.apk` file under **Assets** (for example `ScrollBreak-1.0.apk`).
 
 **Option B: build it yourself.** Follow [Work on the project](#work-on-the-project) below, then in Android Studio choose **Build → Generate Signed App Bundle or APK → APK**, create a key when it asks (keep that key file safe: you need the same key for every update), pick the **release** build, and copy the APK to your phone.
 
