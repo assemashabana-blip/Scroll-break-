@@ -33,3 +33,8 @@ google-services.json
 # Logs, exported dumps and OS files
 *.log
 Thumbs.db
+
+# Local only: assistant notes and the brand/design pack
+CLAUDE.md
+.claude/
+scrollbreak-android_1/
