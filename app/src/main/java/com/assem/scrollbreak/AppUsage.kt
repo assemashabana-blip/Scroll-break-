@@ -11,6 +11,9 @@ import android.os.Process
 import android.provider.Settings
 import com.assem.scrollbreak.core.BlockStats
 import com.assem.scrollbreak.core.UsageTime
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
 import java.util.TimeZone
 
 /**
@@ -67,7 +70,59 @@ object AppUsage {
             }
         }
         return Result(UsageTime.summarize(list, { it.takeIf { p -> p in labels } }, now), labels)
+            .also { runCatching { save(context, it, from) } }
     }
+
+    /**
+     * The last result, saved by [summarize], so Home can show the card on its very first frame
+     * while a fresh one is read (that read takes about half a second). A copy from an earlier day
+     * is moved along by the days in between, so "today" never shows yesterday's time. Small
+     * enough to read on the main thread; null if there is none or it cannot be read.
+     */
+    fun cached(context: Context): Result? = runCatching {
+        val file = cacheFile(context)
+        if (!file.exists()) return null
+        val json = JSONObject(file.readText())
+        val now = System.currentTimeMillis()
+        val tz = TimeZone.getDefault()
+        val weekStart = BlockStats.startOfDay(now, tz, 6)
+        val days = Math.round((weekStart - json.getLong("weekStart")) / 86_400_000.0).toInt()
+        if (days < 0) return null // the clock went back; do not guess
+        val byDay = json.getJSONArray("perDayByApp").let { a -> List(a.length()) { readMap(a.getJSONObject(it)) } }
+        if (byDay.isEmpty()) return null
+        val shifted = (byDay.drop(days) + List(minOf(days, byDay.size)) { emptyMap() }).takeLast(byDay.size)
+        val week = HashMap<String, Long>()
+        shifted.forEach { day -> day.forEach { (k, v) -> week[k] = (week[k] ?: 0) + v } }
+        val today = shifted.lastOrNull().orEmpty()
+        val summary = UsageTime.Summary(
+            todayMs = today.values.sum(),
+            todayByApp = today,
+            weekByApp = week.entries.sortedByDescending { it.value }.associate { it.key to it.value },
+            perDay = shifted.map { it.values.sum() },
+            perDayByApp = shifted,
+        )
+        val names = json.getJSONObject("labels")
+        Result(summary, names.keys().asSequence().associateWith { names.getString(it) })
+    }.getOrNull()
+
+    private fun save(context: Context, result: Result, weekStart: Long) {
+        val s = result.summary
+        // Only the names of apps that appear, not every app on the phone.
+        val used = s.perDayByApp.flatMap { it.keys }.toSet()
+        val json = JSONObject()
+            .put("weekStart", weekStart)
+            .put("perDayByApp", JSONArray(s.perDayByApp.map { JSONObject(it as Map<*, *>) }))
+            .put("labels", JSONObject(result.labels.filterKeys { it in used } as Map<*, *>))
+        val file = cacheFile(context)
+        val tmp = File(file.parentFile, file.name + ".tmp")
+        tmp.writeText(json.toString())
+        tmp.renameTo(file)
+    }
+
+    private fun readMap(o: JSONObject): Map<String, Long> =
+        o.keys().asSequence().map { it to o.getLong(it) }.sortedByDescending { it.second }.toMap()
+
+    private fun cacheFile(context: Context) = File(context.filesDir, "usage_cache.json")
 
     /** UsageEvents.Event.SCREEN_NON_INTERACTIVE (API 28); older phones never send it. */
     private const val SCREEN_NON_INTERACTIVE = 16
