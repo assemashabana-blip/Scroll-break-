@@ -1,12 +1,14 @@
-# Add project specific R8 rules here.
-# AGP will combine all keep rule files in src/main/keepRules to pass to R8
-#
-# For more details, see
-#   https://d.android.com/r/tools/r8/keep-rules
+# R8 keep rules for the release build. AGP passes every file in src/main/keepRules to R8.
+# The release build crashed at launch without these: libraries create the classes below by
+# reflection (by name, with a no-argument or fixed constructor), which R8 cannot see.
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# WorkManager's Room database (WorkDatabase_Impl) is created with a no-argument constructor.
+-keep class * extends androidx.room.RoomDatabase { <init>(); }
+
+# WorkManager creates workers (WatchdogWorker) by class name with this constructor.
+-keep class * extends androidx.work.ListenableWorker {
+    public <init>(android.content.Context, androidx.work.WorkerParameters);
+}
+
+# androidx.startup initializers listed in the manifest are created with a no-argument constructor.
+-keep class * implements androidx.startup.Initializer { <init>(); }

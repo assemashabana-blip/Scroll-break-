@@ -22,8 +22,10 @@ android {
     buildTypes {
         release {
             optimization {
+                // Whole-program: limiting R8 to the library packages (androidx/kotlin/kotlinx)
+                // moved a Kotlin class away from its package-private parent, and the app crashed
+                // at launch with IllegalAccessError.
                 enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
             }
         }
     }
