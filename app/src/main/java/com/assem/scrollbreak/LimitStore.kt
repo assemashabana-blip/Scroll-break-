@@ -1,6 +1,7 @@
 package com.assem.scrollbreak
 
 import com.assem.scrollbreak.core.LimitBook
+import com.assem.scrollbreak.core.WebSites
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,6 +25,9 @@ object LimitStore {
     fun isLimited(pkg: String): Boolean = _book.value.isLimited(pkg, System.currentTimeMillis())
 
     fun limitedPackages(): Set<String> = _book.value.limitedPackages(System.currentTimeMillis())
+
+    /** True when some limited app has a website that should follow its limit. */
+    fun hasWebLimits(): Boolean = limitedPackages().any { WebSites.domainsOf(it).isNotEmpty() }
 
     /** Milliseconds ScrollBreak must refuse to be uninstalled or switched off because of limits. */
     fun protectionRemainingMs(): Long = _book.value.protectionRemainingMs(System.currentTimeMillis())

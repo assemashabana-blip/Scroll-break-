@@ -14,9 +14,9 @@ import java.util.TimeZone
 /**
  * What one app is held to: a daily time allowance, a block for a stretch of time, or both.
  *
- * Both are commitments. A daily limit can be lowered but not raised or removed until the next
- * midnight after it was set ([dailyLockedUntil]); a block cannot be touched until it ends
- * ([blockedUntil]). Times are wall-clock milliseconds so they survive restarts.
+ * Both are commitments. A daily limit cannot be changed or removed until the next midnight after
+ * it was set ([dailyLockedUntil]); a block cannot be touched until it ends ([blockedUntil]). Times
+ * are wall-clock milliseconds so they survive restarts.
  */
 data class AppLimit(
     val pkg: String,
@@ -73,11 +73,10 @@ data class LimitBook(val limits: Map<String, AppLimit> = emptyMap()) {
             return Change(this, "A daily limit is between 1 minute and 24 hours.")
         }
         val existing = limits[pkg]
-        val locked = existing?.dailyLocked(now) == true
-        if (locked && minutes >= existing!!.dailyMinutes!!) {
-            return Change(this, "This limit is locked until tomorrow. It can only be lowered.")
+        if (existing?.dailyLocked(now) == true) {
+            return Change(this, "This limit is locked until tomorrow and cannot be changed.")
         }
-        val until = if (locked) existing!!.dailyLockedUntil else nextMidnight(now, zone)
+        val until = nextMidnight(now, zone)
         return Change(with((existing ?: AppLimit(pkg)).copy(dailyMinutes = minutes, dailyLockedUntil = until), now))
     }
 

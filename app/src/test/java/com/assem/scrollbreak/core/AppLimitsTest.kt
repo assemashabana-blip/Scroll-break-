@@ -42,15 +42,14 @@ class AppLimitsTest {
     }
 
     @Test
-    fun whileLockedADailyLimitCanOnlyBeLowered() {
+    fun whileLockedADailyLimitCannotBeChangedAtAll() {
         val book = LimitBook().setDaily(pkg, 30, now, utc).book
         assertNotNull(book.setDaily(pkg, 30, now + 5 * min, utc).error)    // same
         assertNotNull(book.setDaily(pkg, 45, now + 5 * min, utc).error)    // raised
+        assertNotNull(book.setDaily(pkg, 20, now + 5 * min, utc).error)    // even lowered
         assertNotNull(book.removeDaily(pkg, now + 5 * min).error)          // removed
-        val lowered = book.setDaily(pkg, 20, now + 5 * min, utc)
-        assertNull(lowered.error)
-        assertEquals(20, lowered.book.get(pkg)!!.dailyMinutes)
-        assertEquals(midnight, lowered.book.get(pkg)!!.dailyLockedUntil)   // lowering does not extend the lock
+        assertEquals(book, book.setDaily(pkg, 20, now + 5 * min, utc).book) // and nothing changed
+        assertEquals(30, book.get(pkg)!!.dailyMinutes)
     }
 
     @Test

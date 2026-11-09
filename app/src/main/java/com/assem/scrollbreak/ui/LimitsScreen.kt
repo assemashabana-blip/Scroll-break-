@@ -49,6 +49,7 @@ import com.assem.scrollbreak.core.AppLimit
 import com.assem.scrollbreak.core.LimitBook
 import com.assem.scrollbreak.core.LockTimer
 import com.assem.scrollbreak.core.UsageTime
+import com.assem.scrollbreak.core.WebSites
 import com.assem.scrollbreak.ui.theme.SbAccent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -97,7 +98,7 @@ fun LimitsScreen(
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Limit an app", style = MaterialTheme.typography.titleMedium)
                     Text(
-                        "Give an app a daily time allowance, or block it for a while. A daily limit can be lowered but not raised or removed until tomorrow, a block cannot be changed until it ends, and while either is locked ScrollBreak cannot be switched off or uninstalled.",
+                        "Give an app a daily time allowance, or block it for a while. A daily limit cannot be changed or removed until tomorrow, a block cannot be changed until it ends, and while either is locked ScrollBreak cannot be switched off or uninstalled.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -186,10 +187,12 @@ private fun LimitEditor(app: AppUsage.LaunchableApp, limit: AppLimit?, usageAcce
     val now = System.currentTimeMillis()
     val blocked = limit?.blockActive(now) == true
     val dailyLocked = limit?.dailyLocked(now) == true
-    var mode by rememberSaveable { mutableStateOf(LimitMode.DAILY) }
+    var mode by rememberSaveable { mutableStateOf(if (blocked && !dailyLocked) LimitMode.BLOCK else LimitMode.DAILY) }
     var dailyMinutes by rememberSaveable { mutableIntStateOf(limit?.dailyMinutes ?: 30) }
     var blockMinutes by rememberSaveable { mutableIntStateOf(60) }
     var confirming by remember { mutableStateOf(false) }
+    // Each part is editable only while it is not locked.
+    val canEdit = if (mode == LimitMode.DAILY) !dailyLocked else !blocked
 
     fun report(error: String?) {
         if (error != null) Toast.makeText(context, error, Toast.LENGTH_LONG).show() else onClose()
@@ -200,23 +203,28 @@ private fun LimitEditor(app: AppUsage.LaunchableApp, limit: AppLimit?, usageAcce
         title = { Text(app.label) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                if (blocked) {
+                val sites = WebSites.domainsOf(app.pkg)
+                if (sites.isNotEmpty()) {
                     Text(
-                        "Blocked until ${untilText(limit!!.blockedUntil, now)}. A block cannot be changed or removed until it ends.",
-                        style = MaterialTheme.typography.bodyMedium,
+                        "Its website (${sites.joinToString(", ")}) follows the same limit in Chrome. Chrome itself is not limited, and time on the site counts towards the daily limit.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                } else {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilterChip(mode == LimitMode.DAILY, { mode = LimitMode.DAILY }, label = { Text("Daily limit") })
-                        FilterChip(mode == LimitMode.BLOCK, { mode = LimitMode.BLOCK }, label = { Text("Block for a while") })
-                    }
-                    if (mode == LimitMode.DAILY) {
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(mode == LimitMode.DAILY, { mode = LimitMode.DAILY }, label = { Text("Daily limit") })
+                    FilterChip(mode == LimitMode.BLOCK, { mode = LimitMode.BLOCK }, label = { Text("Block for a while") })
+                }
+                if (mode == LimitMode.DAILY) {
+                    if (dailyLocked) {
                         Text(
-                            when {
-                                dailyLocked -> "Locked until tomorrow: you can lower the limit, not raise or remove it."
-                                limit?.dailyMinutes != null -> "Today's limit is set. It can be changed or removed now."
-                                else -> "How long this app may be open each day."
-                            },
+                            "A daily limit of ${LockTimer.describe(limit!!.dailyMinutes ?: 0)} is set. It is locked until tomorrow and cannot be changed or removed.",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    } else {
+                        Text(
+                            if (limit?.dailyMinutes != null) "The limit is no longer locked. It can be changed or removed now."
+                            else "How long this app may be open each day. Once set, it cannot be changed until tomorrow.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -228,12 +236,19 @@ private fun LimitEditor(app: AppUsage.LaunchableApp, limit: AppLimit?, usageAcce
                                 color = SbAccent,
                             )
                         }
-                        if (limit?.dailyMinutes != null && !dailyLocked) {
+                        if (limit?.dailyMinutes != null) {
                             TextButton(onClick = { report(LimitStore.removeDaily(app.pkg)) }) { Text("Remove the daily limit") }
                         }
+                    }
+                } else {
+                    if (blocked) {
+                        Text(
+                            "Blocked until ${untilText(limit!!.blockedUntil, now)}. A block cannot be changed or removed until it ends.",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
                     } else {
                         Text(
-                            "The app cannot be opened until the time is up.",
+                            "The app cannot be opened until the time is up, and the block cannot be changed meanwhile.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -243,13 +258,13 @@ private fun LimitEditor(app: AppUsage.LaunchableApp, limit: AppLimit?, usageAcce
             }
         },
         confirmButton = {
-            if (!blocked) {
+            if (canEdit) {
                 Button(onClick = { confirming = true }) {
                     Text(if (mode == LimitMode.DAILY) "Set the limit" else "Block")
                 }
             }
         },
-        dismissButton = { TextButton(onClick = onClose) { Text(if (blocked) "Close" else "Cancel") } },
+        dismissButton = { TextButton(onClick = onClose) { Text(if (canEdit) "Cancel" else "Close") } },
     )
 
     if (confirming) {

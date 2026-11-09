@@ -15,6 +15,9 @@ import com.assem.scrollbreak.AppLog
 import com.assem.scrollbreak.AppSettings
 import com.assem.scrollbreak.AppUsage
 import com.assem.scrollbreak.LimitStore
+import com.assem.scrollbreak.WebUsageStore
+import com.assem.scrollbreak.core.WebSites
+import com.assem.scrollbreak.core.WebTimeTracker
 import com.assem.scrollbreak.core.LimitDecision
 import com.assem.scrollbreak.RuleStore
 import com.assem.scrollbreak.core.EntryStateMachine
@@ -76,6 +79,10 @@ class ScrollBreakService : AccessibilityService() {
     private val limitPending: MutableSet<String> = Collections.synchronizedSet(HashSet())
     private val limitTimers = HashMap<String, Runnable>()      // eval thread only
     private val lastLimitBlock = HashMap<String, Long>()       // eval thread only
+    private val webUrls = UrlTracker()                         // browser pages seen by the website limits
+    private val webTrackers = HashMap<String, WebTimeTracker>() // eval thread only
+    private val webPending: MutableSet<String> = Collections.synchronizedSet(HashSet())
+    private val lastWebBlock = HashMap<String, Long>()          // eval thread only
     private val pollingPackages = HashSet<String>()      // eval thread only
     private val urls = UrlTracker()
     // Lazy: system services are unavailable until the service is attached to its context.
@@ -239,6 +246,8 @@ class ScrollBreakService : AccessibilityService() {
 
             contentThrottle.intervalMs = AppSettings.throttleMs.toLong()
             val rule = RuleStore.current.forPackage(pkg)
+            // Websites of limited apps follow the app's limit, whatever the Home tile for browsers says.
+            if (rule != null && rule.isBrowser && LimitStore.hasWebLimits()) requestWebCheck(pkg, rule)
             val enabled = rule == null || AppSettings.isAppEnabled(rule.app)
             val detail = if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED) {
                 "from=${event.fromIndex} to=${event.toIndex} count=${event.itemCount} " +
@@ -326,7 +335,8 @@ class ScrollBreakService : AccessibilityService() {
         val now = System.currentTimeMillis()
         val book = LimitStore.book.value
         val limit = book.get(pkg)?.takeIf { book.isLimited(pkg, now) } ?: return
-        val used = if (limit.dailyMinutes != null) AppUsage.todayMs(this, pkg, now) else 0L
+        // The app's own time plus any time spent on its website in a browser.
+        val used = if (limit.dailyMinutes != null) AppUsage.todayMs(this, pkg, now) + WebUsageStore.todayMs(pkg, now) else 0L
         when (val decision = book.decide(pkg, used, now)) {
             is LimitDecision.Blocked -> blockLimited(pkg, decision)
             is LimitDecision.Allowed -> decision.remainingMs?.let { scheduleLimitCheck(pkg, it) }
@@ -348,11 +358,7 @@ class ScrollBreakService : AccessibilityService() {
         val nowMs = SystemClock.elapsedRealtime()
         // The app can come straight back (a notification, the recents screen): block each time, explain once.
         if (nowMs - (lastLimitBlock[pkg] ?: -10_000L) > 3000) {
-            val label = try {
-                packageManager.getApplicationLabel(packageManager.getApplicationInfo(pkg, 0)).toString()
-            } catch (_: Exception) {
-                pkg
-            }
+            val label = labelOf(pkg)
             val message = when (decision.reason) {
                 LimitDecision.Reason.DAILY -> "$label: today's limit is used up. It opens again tomorrow."
                 LimitDecision.Reason.BLOCK -> "$label is blocked until ${untilText(decision.untilMs)}."
@@ -361,6 +367,90 @@ class ScrollBreakService : AccessibilityService() {
         }
         lastLimitBlock[pkg] = nowMs
         action(pkg, "LIMIT_BLOCK", decision.reason.name, "until=${decision.untilMs}")
+    }
+
+    private fun labelOf(pkg: String): String = try {
+        packageManager.getApplicationLabel(packageManager.getApplicationInfo(pkg, 0)).toString()
+    } catch (_: Exception) {
+        pkg
+    }
+
+    /** Queues one website check for the browser [pkg]; a burst of events costs a single check. */
+    private fun requestWebCheck(pkg: String, rule: AppRule) {
+        if (!webPending.add(pkg)) return
+        evalHandler.post {
+            webPending.remove(pkg)
+            safely("web check") { webCheck(pkg, rule) }
+        }
+    }
+
+    /**
+     * If the browser [pkg] is showing the website of an app that has a limit or a block, counts the
+     * time and applies the same decision as for the app. The browser itself is never stopped, only the
+     * page: a new tab is opened in front of it. Runs on the evaluation thread.
+     */
+    private fun webCheck(pkg: String, rule: AppRule) {
+        val now = System.currentTimeMillis()
+        val book = LimitStore.book.value
+        val screen = AndroidScreen.forPackage(this, pkg, windowCache)
+        val url = try {
+            if (screen.isEmpty) {
+                webUrls.forget(pkg)
+                null
+            } else {
+                webUrls.observe(pkg, rule.urlText(screen))
+            }
+        } finally {
+            screen.close()
+        }
+        val host = url?.let { WebSites.hostOf(it) }
+        val app = host?.let { h -> WebSites.packagesFor(h).firstOrNull { book.isLimited(it, now) } }
+        val added = webTrackers.getOrPut(pkg) { WebTimeTracker() }.tick(app != null, now)
+        if (app == null || host == null) return
+        WebUsageStore.add(app, added, now)
+
+        val limit = book.get(app)
+        val used = if (limit?.dailyMinutes != null) AppUsage.todayMs(this, app, now) + WebUsageStore.todayMs(app, now) else 0L
+        when (val decision = book.decide(app, used, now)) {
+            is LimitDecision.Blocked -> blockWeb(pkg, app, host, decision)
+            is LimitDecision.Allowed -> {
+                // No events arrive while a page is just being read, so look again in a few seconds.
+                val wait = (decision.remainingMs ?: 5_000L).coerceIn(1_000L, 5_000L)
+                evalHandler.postDelayed({ requestWebCheck(pkg, rule) }, wait)
+            }
+        }
+    }
+
+    private fun blockWeb(browser: String, app: String, host: String, decision: LimitDecision.Blocked) {
+        val nowMs = SystemClock.elapsedRealtime()
+        val first = nowMs - (lastWebBlock[browser] ?: -10_000L) > 3000
+        lastWebBlock[browser] = nowMs
+        if (first) {
+            val label = labelOf(app)
+            val message = when (decision.reason) {
+                LimitDecision.Reason.DAILY -> "$host: today's limit for $label is used up."
+                LimitDecision.Reason.BLOCK -> "$host is blocked because $label is blocked until ${untilText(decision.untilMs)}."
+            }
+            mainHandler.post { Toast.makeText(this, message, Toast.LENGTH_LONG).show() }
+            // A new tab in front of the blocked page, so the browser stays usable. If that is not
+            // possible, step back out of the page instead.
+            if (!openNewTab(browser)) performGlobalAction(GLOBAL_ACTION_BACK)
+        } else {
+            performGlobalAction(GLOBAL_ACTION_BACK)
+        }
+        action(browser, "LIMIT_BLOCK", "WEB_${decision.reason.name}", "app=$app host=$host until=${decision.untilMs}")
+    }
+
+    private fun openNewTab(browser: String): Boolean = try {
+        startActivity(
+            android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.google.com/"))
+                .setPackage(browser)
+                .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK),
+        )
+        true
+    } catch (t: Throwable) {
+        AppLog.error("open new tab failed", t)
+        false
     }
 
     /** "6:30 PM" for later today, with the date for another day. */

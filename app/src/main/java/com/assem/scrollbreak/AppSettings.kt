@@ -20,6 +20,7 @@ object AppSettings {
     private const val KEY_LOCK_START = "lock_started_at"
     private const val KEY_LOCK_END = "lock_ends_at"
     private const val KEY_LIMITS = "app_limits"
+    private const val KEY_WEB_USAGE = "web_usage"
 
     const val DEFAULT_ALLOW_SECONDS = 5
     const val DEFAULT_THROTTLE_MS = 200
@@ -35,6 +36,7 @@ object AppSettings {
             prefs = context.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             LimitStore.load(limitsJson)
             EmergencyStore.init(context)
+            WebUsageStore.load(webUsageJson)
         }
     }
 
@@ -63,6 +65,13 @@ object AppSettings {
         get() = prefs?.getString(KEY_LIMITS, null)
         set(value) {
             prefs?.edit()?.putString(KEY_LIMITS, value)?.apply()
+        }
+
+    /** Time on limited apps' websites today, as saved text; [WebUsageStore] owns reading and writing it. */
+    var webUsageJson: String?
+        get() = prefs?.getString(KEY_WEB_USAGE, null)
+        set(value) {
+            prefs?.edit()?.putString(KEY_WEB_USAGE, value)?.apply()
         }
 
     /**
