@@ -38,7 +38,7 @@ You need **Android 8.0 or newer**. ScrollBreak is not on the Play Store, so you 
 
 ### 1. Get the APK
 
-**Option A: download it.** On your phone, open the [latest release](https://github.com/assemashabana-blip/Scroll-break-/releases/latest) and tap the `.apk` file under **Assets** (for example `ScrollBreak-1.0.1.apk`).
+**Option A: download it.** On your phone, open the [latest release](https://github.com/assemashabana-blip/Scroll-break-/releases/latest) and tap the `.apk` file under **Assets** (for example `ScrollBreak-1.2.2.apk`).
 
 **Option B: build it yourself.** Follow [Work on the project](#work-on-the-project) below, then in Android Studio choose **Build → Generate Signed App Bundle or APK → APK**, create a key when it asks (keep that key file safe: you need the same key for every update), pick the **release** build, and copy the APK to your phone.
 

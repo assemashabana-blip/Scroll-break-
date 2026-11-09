@@ -2,21 +2,17 @@ package com.assem.scrollbreak
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.assem.scrollbreak.core.Attempts
 import com.assem.scrollbreak.core.EmergencyPassword
-import com.assem.scrollbreak.core.LockTimer
 
 /**
  * The emergency code (six digits): set by a friend or family member, it lifts the lock timer and every app
  * limit and block. Kept in its own preferences file, which the backup rules leave out, as a salted
- * hash only. Wrong guesses are slowed down (see [Attempts]) and survive restarts.
+ * hash only. Wrong guesses are not limited (a deliberate choice).
  */
 object EmergencyStore {
     private const val PREFS = "emergency"
     private const val KEY_SALT = "salt"
     private const val KEY_HASH = "hash"
-    private const val KEY_FAILURES = "failures"
-    private const val KEY_LOCKED_UNTIL = "locked_until"
 
     /** [message] is what to show the user when [ok] is false; null on success. */
     class Outcome(val ok: Boolean, val message: String? = null)
@@ -67,24 +63,10 @@ object EmergencyStore {
         return Outcome(true)
     }
 
-    /** Null when [password] is right; otherwise why not, and the guess is counted. */
+    /** Null when [password] is right, otherwise why not. */
     private fun verifyOrFail(password: String): Outcome? {
         val stored = stored() ?: return Outcome(false, "No code is set.")
-        val now = System.currentTimeMillis()
-        val attempts = attempts()
-        val wait = attempts.remainingMs(now)
-        if (wait > 0) return Outcome(false, "Too many wrong tries. Try again in ${LockTimer.format(wait)}.")
-        if (EmergencyPassword.verify(password, stored)) {
-            saveAttempts(attempts.succeeded())
-            return null
-        }
-        val after = attempts.failed(now)
-        saveAttempts(after)
-        val next = after.remainingMs(now)
-        return Outcome(
-            false,
-            if (next > 0) "Wrong code. Try again in ${LockTimer.format(next)}." else "Wrong code.",
-        )
+        return if (EmergencyPassword.verify(password, stored)) null else Outcome(false, "Wrong code.")
     }
 
     private fun stored(): EmergencyPassword.Stored? {
@@ -96,15 +78,5 @@ object EmergencyStore {
 
     private fun save(stored: EmergencyPassword.Stored) {
         prefs?.edit()?.putString(KEY_SALT, stored.salt)?.putString(KEY_HASH, stored.hash)?.apply()
-        saveAttempts(Attempts())
-    }
-
-    private fun attempts(): Attempts {
-        val p = prefs ?: return Attempts()
-        return Attempts(p.getInt(KEY_FAILURES, 0), p.getLong(KEY_LOCKED_UNTIL, 0))
-    }
-
-    private fun saveAttempts(a: Attempts) {
-        prefs?.edit()?.putInt(KEY_FAILURES, a.failures)?.putLong(KEY_LOCKED_UNTIL, a.lockedUntil)?.apply()
     }
 }

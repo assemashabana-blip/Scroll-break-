@@ -52,39 +52,4 @@ class EmergencyPasswordTest {
         assertNotNull(EmergencyPassword.problemWith(""))
         assertNotNull(EmergencyPassword.problemWith("48 913"))
     }
-
-    @Test
-    fun theFirstTwoWrongTriesAreFree() {
-        var a = Attempts()
-        a = a.failed(1_000)
-        assertEquals(0L, a.remainingMs(1_000))
-        a = a.failed(2_000)
-        assertEquals(0L, a.remainingMs(2_000))
-    }
-
-    @Test
-    fun fromTheThirdWrongTryEachOneWaitsLonger() {
-        var a = Attempts().failed(0).failed(0)
-        a = a.failed(0)                                   // 3rd: 1 minute
-        assertEquals(60_000L, a.remainingMs(0))
-        a = a.failed(100_000)                             // 4th: 2 minutes
-        assertEquals(120_000L, a.remainingMs(100_000))
-        a = a.failed(300_000)                             // 5th: 4 minutes
-        assertEquals(240_000L, a.remainingMs(300_000))
-    }
-
-    @Test
-    fun theWaitStopsGrowingAtAnHour() {
-        var a = Attempts()
-        repeat(40) { a = a.failed(0) }
-        assertEquals(3_600_000L, a.remainingMs(0))
-    }
-
-    @Test
-    fun theWaitCountsDownAndARightPasswordResets() {
-        val a = Attempts().failed(0).failed(0).failed(0)
-        assertEquals(30_000L, a.remainingMs(30_000))
-        assertEquals(0L, a.remainingMs(60_000))
-        assertEquals(Attempts(), a.succeeded())
-    }
 }
