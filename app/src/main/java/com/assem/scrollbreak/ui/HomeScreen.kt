@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,6 +44,8 @@ class HomeState(
     val serviceEnabled: Boolean,
     val setupRemaining: Int,
     val blockingEnabled: Boolean,
+    /** How many apps have a daily limit or a block in force. */
+    val limitsActive: Int,
     val stats: BlockStats.Summary,
     /** False until the user grants Usage access. */
     val usageAccess: Boolean,
@@ -57,6 +60,7 @@ class HomeActions(
     val openSetup: () -> Unit,
     val openUsageAccess: () -> Unit,
     val setBlocking: (Boolean) -> Unit,
+    val startLock: (Int) -> Unit,
     val setAppEnabled: (String, Boolean) -> Unit,
     val navigate: (String) -> Unit,
 )
@@ -65,6 +69,7 @@ class HomeActions(
 fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modifier) {
     val buzz = rememberBuzz()
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    val lockRemaining by rememberLockRemaining()
     Column(
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -125,13 +130,24 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
                             color = muted,
                         )
                     }
-                    Switch(checked = state.blockingEnabled, onCheckedChange = { buzz(Buzz.HEAVY); actions.setBlocking(it) })
+                    Switch(
+                        checked = state.blockingEnabled,
+                        enabled = lockRemaining <= 0,
+                        // Locked still reads as on: same black track and white thumb, just not pressable.
+                        colors = SwitchDefaults.colors(
+                            disabledCheckedTrackColor = MaterialTheme.colorScheme.primary,
+                            disabledCheckedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                            disabledCheckedBorderColor = MaterialTheme.colorScheme.primary,
+                        ),
+                        onCheckedChange = { buzz(Buzz.HEAVY); actions.setBlocking(it) },
+                    )
                 }
                 if (!state.serviceEnabled) {
                     Button(onClick = actions.openAccessibilitySettings, modifier = Modifier.fillMaxWidth()) {
                         Text("Turn on in Accessibility settings")
                     }
                 }
+                LockSection(remainingMs = lockRemaining, onStart = actions.startLock)
             }
         }
 
@@ -147,6 +163,7 @@ fun HomeScreen(state: HomeState, actions: HomeActions, modifier: Modifier = Modi
             }
         }
 
+        LimitsCard(state.limitsActive) { actions.navigate("limits") }
         if (!state.usageAccess || state.usage != null) UsageCard(state.usage, actions.openUsageAccess)
         WeekChart(state.stats.perDay)
         if (state.stats.weekByApp.isNotEmpty()) AppsChart(state.stats.weekByApp)

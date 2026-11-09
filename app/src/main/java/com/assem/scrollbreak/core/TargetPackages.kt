@@ -36,8 +36,15 @@ object TargetPackages {
         "com.google.android.gm",
     )
 
-    /** System screens the service watches for its own safeguards (the "turn me off" page). */
-    val system = setOf("com.android.settings")
+    /**
+     * System screens the service watches for its own safeguards: Settings (the "turn me off" page
+     * and ScrollBreak's App info page) and the package installer (the uninstall dialog).
+     */
+    val system = setOf(
+        "com.android.settings",
+        "com.google.android.packageinstaller",
+        "com.android.packageinstaller",
+    )
 
     val all: Set<String> = videoApps + browsers + messaging + system
 }

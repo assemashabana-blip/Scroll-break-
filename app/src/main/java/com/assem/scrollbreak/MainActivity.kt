@@ -55,7 +55,6 @@ import androidx.compose.ui.Modifier
 import androidx.core.content.FileProvider
 import com.assem.scrollbreak.core.BlockStats
 import com.assem.scrollbreak.core.rules.Purpose
-import com.assem.scrollbreak.service.AdminReceiver
 import com.assem.scrollbreak.service.DumpNotification
 import com.assem.scrollbreak.service.ScrollBreakService
 import com.assem.scrollbreak.service.ServiceStatus
@@ -65,6 +64,7 @@ import com.assem.scrollbreak.ui.HealthScreen
 import com.assem.scrollbreak.ui.HomeActions
 import com.assem.scrollbreak.ui.HomeScreen
 import com.assem.scrollbreak.ui.HomeState
+import com.assem.scrollbreak.ui.LimitsScreen
 import com.assem.scrollbreak.ui.RulesScreen
 import com.assem.scrollbreak.ui.SettingsScreen
 import com.assem.scrollbreak.ui.SetupScreen
@@ -74,6 +74,7 @@ import java.io.File
 
 private val titles = mapOf(
     "settings" to "Settings",
+    "limits" to "App limits",
     "rules" to "Rules",
     "health" to "Detection health",
     "log" to "Event log",
@@ -84,7 +85,7 @@ private val titles = mapOf(
 /** How deep a page is: Home 0, Settings 1, the tools opened from Settings 2. Decides the slide direction. */
 private fun depth(screen: String) = when (screen) {
     "home" -> 0
-    "settings" -> 1
+    "settings", "limits" -> 1
     else -> 2
 }
 
@@ -170,6 +171,14 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 val usageAccess = remember(tick) { AppUsage.hasAccess(this@MainActivity) }
+                val limitBook by LimitStore.book.collectAsState()
+                // The list of apps a limit can be set on; only read once the limits page is opened.
+                var launchable by remember { mutableStateOf<List<AppUsage.LaunchableApp>?>(null) }
+                LaunchedEffect(screen) {
+                    if (screen == "limits" && launchable == null) {
+                        launchable = withContext(Dispatchers.IO) { AppUsage.launchableApps(this@MainActivity) }
+                    }
+                }
                 // Loads at once, then again every minute while the app is open on Home, so today's
                 // time keeps counting up. It stops when the app goes to the background.
                 // Starts from the last saved result, so the card is there on the first frame
@@ -209,6 +218,7 @@ class MainActivity : ComponentActivity() {
                             serviceEnabled = serviceEnabled,
                             setupRemaining = setupLeft,
                             blockingEnabled = blockingEnabled,
+                            limitsActive = limitBook.activeCount(System.currentTimeMillis()),
                             stats = stats,
                             usageAccess = usageAccess,
                             usage = usage,
@@ -223,7 +233,13 @@ class MainActivity : ComponentActivity() {
                             openUsageAccess = { startActivity(AppUsage.accessIntent(this@MainActivity)) },
                             setBlocking = {
                                 AppSettings.blockingEnabled = it
-                                blockingEnabled = it
+                                // Read back: a running lock timer refuses to turn blocking off.
+                                blockingEnabled = AppSettings.blockingEnabled
+                            },
+                            startLock = {
+                                AppSettings.startLock(it)
+                                blockingEnabled = AppSettings.blockingEnabled
+                                refreshTick++
                             },
                             setAppEnabled = { app, on ->
                                 AppSettings.setAppEnabled(app, on)
@@ -256,6 +272,13 @@ class MainActivity : ComponentActivity() {
                     SubScreenBar(titles[target] ?: "ScrollBreak", onBack = goBack)
                     Box(Modifier.weight(1f)) {
                     when (target) {
+                        "limits" -> LimitsScreen(
+                            apps = launchable,
+                            usedToday = usage?.summary?.todayByApp.orEmpty(),
+                            usageAccess = usageAccess,
+                            onAllowUsage = { startActivity(AppUsage.accessIntent(this@MainActivity)) },
+                            modifier = m,
+                        )
                         "log" -> EventLogScreen(m)
                         "dumps" -> DumpsScreen(m)
                         "setup" -> SetupScreen(
@@ -264,9 +287,6 @@ class MainActivity : ComponentActivity() {
                             modifier = m,
                         )
                         "settings" -> SettingsScreen(
-                            adminActive = AdminReceiver.isActive(this@MainActivity).also { tick.hashCode() },
-                            onEnableAdmin = { startActivity(AdminReceiver.enableIntent(this@MainActivity)) },
-                            onOpenAdminSettings = { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) },
                             setupLeft = setupLeft,
                             onNavigate = navigate,
                             dark = shownDark,
@@ -345,6 +365,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         serviceEnabled = ServiceStatus.isEnabled(this)
+        blockingEnabled = AppSettings.blockingEnabled
         refreshTick++
     }
 }

@@ -25,6 +25,12 @@ data class AppRule(
      * Matched against the event source; null when the app reports no usable index.
      */
     val scrollSignal: Leaf? = null,
+    /**
+     * Web content (an in-app browser) reports no item index, only how far it has scrolled. When
+     * true, the scroll position itself stands in for the index: any movement after the first
+     * event means the user swiped on to another video.
+     */
+    val scrollByPosition: Boolean = false,
     /** Browsers: view ids of the URL bar, tried in order. */
     val urlBarIds: List<String> = emptyList(),
     /** Browsers: URL shapes that mean "short-video page", matched on the canonical host/path. */
@@ -36,7 +42,14 @@ data class AppRule(
      * If none can be clicked the block falls back to Back.
      */
     val redirectTo: List<Leaf> = emptyList(),
+    /**
+     * A screen that is covered only while the lock timer runs (ScrollBreak's own App info page,
+     * the uninstall dialog). Independent of [purpose]; null for most rules.
+     */
+    val lockSignature: Signature? = null,
 ) {
+    fun isLockGuarded(screen: ScreenView) = lockSignature?.evaluate(screen) ?: false
+
     fun isPlayer(screen: ScreenView) = playerSignature?.evaluate(screen) ?: false
 
     val isBrowser: Boolean get() = urlBarIds.isNotEmpty() && urlPatterns.isNotEmpty()

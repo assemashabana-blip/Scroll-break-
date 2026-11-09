@@ -12,6 +12,9 @@ ScrollBreak is free to download and use, and its source code is public so you ca
 - **One video from a friend still plays.** If you open a video from a chat (WhatsApp, Telegram, Instagram DMs, a story…), that one video plays. Swiping to the next one is blocked.
 - **Time in apps** on the home screen: how long you spent in each app today and over the week.
 - **Blocks counted per day**, so you can see the habit fading.
+- **App limits:** give any app on your phone a daily time limit, or block it for a while. A daily limit can be lowered but not raised or removed until tomorrow, and a block cannot be changed until it ends. While a limit is locked, ScrollBreak cannot be switched off or uninstalled from the usual screens. Daily limits need Usage access.
+- **Emergency code:** a friend or family member sets a six-digit code in Settings (you do not need to know it). If you ever truly need out, entering it removes the lock timer and every app limit and block.
+- **Lock timer:** pick a time on the first card of the home screen (drag the dial, or tap the number to type days, hours and minutes, up to 30 days) and blocking stays on until it ends. You cannot turn it off, cancel the timer, change the settings, switch ScrollBreak off in Accessibility or uninstall it from the usual screens meanwhile.
 - **Friction on switching it off:** the Android page that turns ScrollBreak off is covered by a countdown, so turning it off is a decision, not a reflex.
 - **Light and dark theme**, English and Arabic phones.
 
@@ -22,6 +25,7 @@ ScrollBreak is free to download and use, and its source code is public so you ca
 | TikTok | The feed |
 | Facebook | Reels |
 | Snapchat | Spotlight |
+| Messenger | Reels opened from a chat in Messenger (one plays, swiping on is blocked) |
 | Chrome | Shorts, Reels and TikTok opened in the browser |
 
 ### Privacy
@@ -69,7 +73,6 @@ Open ScrollBreak. The first time, it shows a **Setup checklist** with a button f
 Optional:
 
 - **Usage access**, to see *Time in apps* on the home screen (the card has a button for it).
-- **Uninstall protection** (Settings inside ScrollBreak). It adds one extra step before ScrollBreak can be uninstalled, and grants no other power.
 
 That's it. The orange circle on the home screen means blocking is on. Use the tiles to choose which apps are blocked, and *Settings* to tune how long a friend's link counts and which messaging apps count as "a friend sent this".
 

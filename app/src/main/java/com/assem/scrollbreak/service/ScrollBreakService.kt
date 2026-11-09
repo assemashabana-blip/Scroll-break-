@@ -13,9 +13,13 @@ import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
 import com.assem.scrollbreak.AppLog
 import com.assem.scrollbreak.AppSettings
+import com.assem.scrollbreak.AppUsage
+import com.assem.scrollbreak.LimitStore
+import com.assem.scrollbreak.core.LimitDecision
 import com.assem.scrollbreak.RuleStore
 import com.assem.scrollbreak.core.EntryStateMachine
 import com.assem.scrollbreak.core.FrictionGate
+import com.assem.scrollbreak.core.LockTimer
 import com.assem.scrollbreak.core.EntryStateMachine.Action
 import com.assem.scrollbreak.core.EntryStateMachine.Observation
 import com.assem.scrollbreak.core.EntryStateMachine.State
@@ -27,7 +31,9 @@ import com.assem.scrollbreak.core.rules.Leaf
 import com.assem.scrollbreak.core.rules.MatchMode
 import com.assem.scrollbreak.core.rules.Purpose
 import com.assem.scrollbreak.core.rules.UrlTracker
+import java.text.DateFormat
 import java.util.Collections
+import java.util.Date
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -66,7 +72,10 @@ class ScrollBreakService : AccessibilityService() {
     private val frictionGate = FrictionGate { SystemClock.elapsedRealtime() }
     private val frictionTickScheduled = AtomicBoolean(false)
     private val frictionOverlay by lazy { FrictionOverlay(this) { performGlobalAction(GLOBAL_ACTION_BACK) } }
-    private var foregroundPkg: String? = null            // main thread only
+    @Volatile private var foregroundPkg: String? = null  // written on the main thread only
+    private val limitPending: MutableSet<String> = Collections.synchronizedSet(HashSet())
+    private val limitTimers = HashMap<String, Runnable>()      // eval thread only
+    private val lastLimitBlock = HashMap<String, Long>()       // eval thread only
     private val pollingPackages = HashSet<String>()      // eval thread only
     private val urls = UrlTracker()
     // Lazy: system services are unavailable until the service is attached to its context.
@@ -168,6 +177,7 @@ class ScrollBreakService : AccessibilityService() {
             AppLog.init(this)
             AppSettings.init(this)
             instance = this
+            LimitStore.onChanged = { refreshWatchedPackages() }
             RuleStore.reload(this)
             DumpNotification.show(this)
             serviceInfo = (serviceInfo ?: AccessibilityServiceInfo()).apply {
@@ -181,12 +191,27 @@ class ScrollBreakService : AccessibilityService() {
                     AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS
                 // Launchers are watched only so the foreground history sees "went home" between a
                 // messaging app and a video app; they have no rule and are never evaluated.
-                packageNames = (TargetPackages.all + launcherPackages()).toTypedArray()
+                packageNames = watchedPackages().toTypedArray()
                 notificationTimeout = 0
             }
             AppLog.setServiceConnected(true)
             ProtectionAlert.cancel(this)
             AppLog.events.add(System.currentTimeMillis(), packageName, "SERVICE", "connected")
+        }
+    }
+
+    /** Apps with rules, the messaging apps, launchers, and any app that has a limit. */
+    private fun watchedPackages(): Set<String> =
+        TargetPackages.all + launcherPackages() + LimitStore.limitedPackages()
+
+    /** Called when limits change: starts or stops watching apps without waiting for a reconnect. */
+    private fun refreshWatchedPackages() {
+        mainHandler.post {
+            safely("refresh watched packages") {
+                val info = serviceInfo ?: return@safely
+                info.packageNames = watchedPackages().toTypedArray()
+                serviceInfo = info
+            }
         }
     }
 
@@ -205,6 +230,9 @@ class ScrollBreakService : AccessibilityService() {
             if (event == null) return
             val pkg = event.packageName?.toString() ?: return
             noteForeground(pkg)
+            if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && LimitStore.isLimited(pkg)) {
+                requestLimitCheck(pkg)
+            }
             if (event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED &&
                 !contentThrottle.shouldPass(pkg)
             ) return
@@ -213,7 +241,8 @@ class ScrollBreakService : AccessibilityService() {
             val rule = RuleStore.current.forPackage(pkg)
             val enabled = rule == null || AppSettings.isAppEnabled(rule.app)
             val detail = if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED) {
-                "from=${event.fromIndex} to=${event.toIndex} count=${event.itemCount}"
+                "from=${event.fromIndex} to=${event.toIndex} count=${event.itemCount} " +
+                    "scrollX=${event.scrollX} scrollY=${event.scrollY} maxX=${event.maxScrollX} maxY=${event.maxScrollY}"
             } else ""
             val state = when {
                 rule == null -> "n/a"
@@ -279,6 +308,69 @@ class ScrollBreakService : AccessibilityService() {
         return has
     }
 
+    /** Queues one limit check for [pkg]; a burst of window events costs a single check. */
+    private fun requestLimitCheck(pkg: String) {
+        if (!limitPending.add(pkg)) return
+        evalHandler.post {
+            limitPending.remove(pkg)
+            safely("limit check") { enforceLimit(pkg) }
+        }
+    }
+
+    /**
+     * Stops [pkg] if its limit says so, otherwise arms a timer for the moment its daily time runs
+     * out. Runs on the evaluation thread.
+     */
+    private fun enforceLimit(pkg: String) {
+        limitTimers.remove(pkg)?.let { evalHandler.removeCallbacks(it) }
+        val now = System.currentTimeMillis()
+        val book = LimitStore.book.value
+        val limit = book.get(pkg)?.takeIf { book.isLimited(pkg, now) } ?: return
+        val used = if (limit.dailyMinutes != null) AppUsage.todayMs(this, pkg, now) else 0L
+        when (val decision = book.decide(pkg, used, now)) {
+            is LimitDecision.Blocked -> blockLimited(pkg, decision)
+            is LimitDecision.Allowed -> decision.remainingMs?.let { scheduleLimitCheck(pkg, it) }
+        }
+    }
+
+    private fun scheduleLimitCheck(pkg: String, remainingMs: Long) {
+        val timer = Runnable {
+            limitTimers.remove(pkg)
+            // Only worth checking while the app is still open; coming back to it checks again.
+            safely("limit timer") { if (hasWindow(pkg)) enforceLimit(pkg) }
+        }
+        limitTimers[pkg] = timer
+        evalHandler.postDelayed(timer, remainingMs.coerceAtLeast(1000L))
+    }
+
+    private fun blockLimited(pkg: String, decision: LimitDecision.Blocked) {
+        performGlobalAction(GLOBAL_ACTION_HOME)
+        val nowMs = SystemClock.elapsedRealtime()
+        // The app can come straight back (a notification, the recents screen): block each time, explain once.
+        if (nowMs - (lastLimitBlock[pkg] ?: -10_000L) > 3000) {
+            val label = try {
+                packageManager.getApplicationLabel(packageManager.getApplicationInfo(pkg, 0)).toString()
+            } catch (_: Exception) {
+                pkg
+            }
+            val message = when (decision.reason) {
+                LimitDecision.Reason.DAILY -> "$label: today's limit is used up. It opens again tomorrow."
+                LimitDecision.Reason.BLOCK -> "$label is blocked until ${untilText(decision.untilMs)}."
+            }
+            mainHandler.post { Toast.makeText(this, message, Toast.LENGTH_LONG).show() }
+        }
+        lastLimitBlock[pkg] = nowMs
+        action(pkg, "LIMIT_BLOCK", decision.reason.name, "until=${decision.untilMs}")
+    }
+
+    /** "6:30 PM" for later today, with the date for another day. */
+    private fun untilText(untilMs: Long): String {
+        val sameDay = untilMs - System.currentTimeMillis() < 12 * 3_600_000L
+        val format = if (sameDay) DateFormat.getTimeInstance(DateFormat.SHORT)
+        else DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        return format.format(Date(untilMs))
+    }
+
     /**
      * Friction: while the "turn ScrollBreak off" page is open, cover it with a countdown. The
      * page is recognised by the rule (a system screen, not a video), and the countdown is
@@ -287,16 +379,41 @@ class ScrollBreakService : AccessibilityService() {
      */
     private fun observeFriction(pkg: String, rule: AppRule) {
         frictionGate.durationMs = AppSettings.frictionSeconds * 1000L
+        val lockMs = AppSettings.protectionRemainingMs()
         val screen = AndroidScreen.forPackage(this, pkg, windowCache)
-        val visible = try {
-            !screen.isEmpty && rule.isPlayer(screen)
+        var visible = false
+        var guarded = false
+        try {
+            if (!screen.isEmpty) {
+                visible = rule.isPlayer(screen)
+                // Only worth a look while a lock runs: ScrollBreak's App info page, the uninstall dialog.
+                guarded = lockMs > 0 && rule.isLockGuarded(screen)
+            }
         } finally {
             screen.close()
+        }
+        // A running lock timer is stronger than the countdown: these pages stay covered until it ends.
+        if (lockMs > 0 && (visible || guarded)) {
+            val left = LockTimer.format(lockMs)
+            val hint = if (guarded) {
+                "A lock timer or an app limit is running. ScrollBreak cannot be switched off or uninstalled until it ends."
+            } else {
+                "A lock timer or an app limit is running. It cannot be switched off until it ends."
+            }
+            mainHandler.post { frictionOverlay.show("ScrollBreak is locked", left, hint) }
+            scheduleFrictionTick(pkg, rule)
+            return
         }
         val status = frictionGate.update(visible)
         if (status.locked) {
             val seconds = (status.remainingMs + 999) / 1000
-            mainHandler.post { frictionOverlay.show(seconds) }
+            mainHandler.post {
+                frictionOverlay.show(
+                    "Turning ScrollBreak off is delayed",
+                    "$seconds s",
+                    "Wait it out, or go back and keep scrolling under control.",
+                )
+            }
             scheduleFrictionTick(pkg, rule)
         } else if (frictionOverlay.isShowing) {
             mainHandler.post { frictionOverlay.dismiss() }
@@ -429,11 +546,13 @@ class ScrollBreakService : AccessibilityService() {
      */
     private fun scrollIndexOf(event: AccessibilityEvent, pkg: String, rule: AppRule): Int? {
         val signal = rule.scrollSignal ?: return null
-        if (event.eventType != AccessibilityEvent.TYPE_VIEW_SCROLLED || event.toIndex < 0) return null
-        if (machine.state(pkg) != State.ALLOW_ONE) return null
+        if (event.eventType != AccessibilityEvent.TYPE_VIEW_SCROLLED) return null
+        // Lists report an item index; web content (Messenger's browser) only a scroll position.
+        val index = if (rule.scrollByPosition) event.scrollY.takeIf { it > 0 } else event.toIndex.takeIf { it >= 0 }
+        if (index == null || machine.state(pkg) != State.ALLOW_ONE) return null
         val node = AndroidNode(event.source ?: return null)
         return try {
-            if (signal.copy(visible = false).matches(node.snapshot())) event.toIndex else null
+            if (signal.copy(visible = false).matches(node.snapshot())) index else null
         } finally {
             node.release()
         }
@@ -501,6 +620,7 @@ class ScrollBreakService : AccessibilityService() {
     override fun onUnbind(intent: android.content.Intent?): Boolean {
         AppLog.setServiceConnected(false)
         instance = null
+        LimitStore.onChanged = null
         evalHandler.removeCallbacksAndMessages(null)
         overlay.dismiss()
         frictionOverlay.dismiss()

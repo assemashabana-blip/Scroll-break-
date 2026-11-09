@@ -1,0 +1,21 @@
+=== WINDOW id=60 type=APPLICATION layer=0 pkg=com.google.android.packageinstaller title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[19,679][1060,1705] children=1
+  [1] id=- cls=android.widget.LinearLayout bounds=[82,889][997,1495] children=1
+    [2] id=- cls=android.widget.FrameLayout bounds=[82,889][997,1495] children=1
+      [3] id=com.android.packageinstaller:id/action_bar_root cls=android.widget.FrameLayout bounds=[82,889][997,1495] children=1
+        [4] id=android:id/content cls=android.widget.FrameLayout bounds=[82,889][997,1495] children=1
+          [5] id=com.android.packageinstaller:id/parentPanel cls=androidx.appcompat.widget.LinearLayoutCompat bounds=[82,889][997,1495] children=3
+            [6] id=com.android.packageinstaller:id/topPanel cls=android.widget.LinearLayout bounds=[82,889][997,1031] children=1
+              [7] id=com.android.packageinstaller:id/title_template cls=android.widget.LinearLayout bounds=[82,889][997,1031] children=1
+                [8] id=com.android.packageinstaller:id/alertTitle cls=android.widget.TextView text="Uninstall this app?" bounds=[145,952][934,1031] children=0
+            [6] id=com.android.packageinstaller:id/customPanel cls=android.widget.FrameLayout bounds=[82,1031][997,1305] children=1
+              [7] id=com.android.packageinstaller:id/custom cls=android.widget.FrameLayout bounds=[82,1031][997,1305] children=1
+                [8] id=- cls=android.widget.ScrollView bounds=[82,1031][997,1305] children=1
+                  [9] id=- cls=android.widget.LinearLayout bounds=[145,1031][934,1242] children=1
+                    [10] id=com.android.packageinstaller:id/app_snippet cls=android.widget.LinearLayout bounds=[145,1073][934,1242] children=2
+                      [11] id=com.android.packageinstaller:id/app_icon cls=android.widget.ImageView bounds=[145,1105][250,1210] children=0
+                      [11] id=com.android.packageinstaller:id/app_label cls=android.widget.TextView text="ScrollBreak" bounds=[282,1129][934,1185] children=0
+            [6] id=com.android.packageinstaller:id/buttonPanel cls=android.widget.ScrollView bounds=[82,1305][997,1495] children=1
+              [7] id=- cls=android.widget.LinearLayout bounds=[82,1305][997,1495] children=2
+                [8] id=android:id/button2 cls=android.widget.Button text="Cancel" bounds=[443,1316][674,1442] children=0 flags=clickable
+                [8] id=android:id/button1 cls=android.widget.Button text="Uninstall" bounds=[695,1316][934,1442] children=0 flags=clickable

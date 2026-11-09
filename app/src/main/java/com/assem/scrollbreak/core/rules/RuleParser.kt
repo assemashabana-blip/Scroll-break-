@@ -61,7 +61,10 @@ object RuleParser {
             throw RuleParseException("urlPatterns needs urlBarIds to read the URL from")
         }
         val player = root["playerSignature"]?.let { signature(it, "playerSignature") }
-        if (player == null && urlPatterns.isEmpty()) throw RuleParseException("playerSignature missing")
+        val lockSignature = root["lockSignature"]?.let { signature(it, "lockSignature") }
+        if (player == null && urlPatterns.isEmpty() && lockSignature == null) {
+            throw RuleParseException("playerSignature missing")
+        }
 
         return AppRule(
             app = root.string("app", "app"),
@@ -76,6 +79,12 @@ object RuleParser {
                 null, "shortVideo" -> Purpose.SHORT_VIDEO
                 "friction" -> Purpose.FRICTION
                 else -> throw RuleParseException("purpose must be shortVideo or friction, not $p")
+            },
+            lockSignature = lockSignature,
+            scrollByPosition = when (val m = (root["scrollMeasure"] as? JsonPrimitive)?.contentOrNull) {
+                null, "index" -> false
+                "scrollY" -> true
+                else -> throw RuleParseException("scrollMeasure must be index or scrollY, not $m")
             },
             scrollSignal = root["scrollSignal"]?.let {
                 leaf(it as? JsonObject ?: throw RuleParseException("scrollSignal must be an object"), "scrollSignal")

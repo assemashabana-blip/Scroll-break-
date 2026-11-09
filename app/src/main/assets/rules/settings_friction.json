@@ -9,5 +9,13 @@
       { "viewId": "com.android.settings:id/settingslib_main_switch_bar" },
       { "viewId": "com.android.settings:id/collapsing_toolbar", "desc": "ScrollBreak", "match": "equals" }
     ]
+  },
+
+  "lockSignature": {
+    "allOf": [
+      { "text": "ScrollBreak", "match": "equals", "className": "android.widget.TextView" },
+      { "text": "Uninstall", "match": "equals", "className": "android.widget.TextView" },
+      { "text": "Force stop", "match": "equals", "className": "android.widget.TextView" }
+    ]
   }
 }

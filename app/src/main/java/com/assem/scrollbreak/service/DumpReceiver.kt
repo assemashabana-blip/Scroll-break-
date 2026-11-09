@@ -6,6 +6,7 @@ import android.content.Intent
 import android.widget.Toast
 import com.assem.scrollbreak.AppLog
 import com.assem.scrollbreak.AppSettings
+import com.assem.scrollbreak.LimitStore
 
 /** Handles the notification actions; debug builds also export it for `adb shell am broadcast`. */
 class DumpReceiver : BroadcastReceiver() {
@@ -14,6 +15,34 @@ class DumpReceiver : BroadcastReceiver() {
             if (intent.action == ACTION_SET_BLOCKING) {
                 AppSettings.init(context)
                 AppSettings.blockingEnabled = intent.getBooleanExtra("enabled", false)
+                return
+            }
+            if (intent.action == ACTION_START_LOCK || intent.action == ACTION_CLEAR_LOCK) {
+                // Test aids for the lock timer; a shipped build ignores them.
+                if (context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE == 0) return
+                AppSettings.init(context)
+                if (intent.action == ACTION_START_LOCK) {
+                    AppSettings.startLock(intent.getIntExtra("minutes", 5))
+                } else {
+                    AppSettings.debugClearLock(intent.getBooleanExtra("blocking", false))
+                }
+                return
+            }
+            if (intent.action == ACTION_SET_LIMIT || intent.action == ACTION_CLEAR_LIMITS) {
+                // Test aids for app limits; a shipped build ignores them.
+                if (context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE == 0) return
+                AppSettings.init(context)
+                if (intent.action == ACTION_CLEAR_LIMITS) {
+                    LimitStore.debugClear()
+                } else {
+                    val pkg = intent.getStringExtra("pkg") ?: return
+                    val error = if (intent.hasExtra("block")) {
+                        LimitStore.startBlock(pkg, intent.getIntExtra("block", 1))
+                    } else {
+                        LimitStore.setDaily(pkg, intent.getIntExtra("daily", 1))
+                    }
+                    android.util.Log.i("ScrollBreak", "SET_LIMIT $pkg -> ${error ?: "ok"}")
+                }
                 return
             }
             if (intent.action == ACTION_RUN_WATCHDOG) {
@@ -60,6 +89,14 @@ class DumpReceiver : BroadcastReceiver() {
         const val ACTION_SET_BLOCKING = "com.assem.scrollbreak.SET_BLOCKING"
         const val ACTION_SHOW_OVERLAY = "com.assem.scrollbreak.SHOW_OVERLAY"
         const val ACTION_INJECT_FAULT = "com.assem.scrollbreak.INJECT_FAULT"
+        /** Debug only: starts a lock timer (extra "minutes", default 5). */
+        const val ACTION_START_LOCK = "com.assem.scrollbreak.START_LOCK"
+        /** Debug only: ends the lock timer early (extra "blocking", default false). */
+        const val ACTION_CLEAR_LOCK = "com.assem.scrollbreak.CLEAR_LOCK"
+        /** Debug only: extras "pkg" and "daily" (minutes) or "block" (minutes). */
+        const val ACTION_SET_LIMIT = "com.assem.scrollbreak.SET_LIMIT"
+        /** Debug only: drops every app limit, ignoring the locks. */
+        const val ACTION_CLEAR_LIMITS = "com.assem.scrollbreak.CLEAR_LIMITS"
         const val ACTION_RUN_WATCHDOG = "com.assem.scrollbreak.RUN_WATCHDOG"
         /** Debug only: extras "pkg" and "desc" (description prefix of the node to click). */
         const val ACTION_CLICK = "com.assem.scrollbreak.CLICK"

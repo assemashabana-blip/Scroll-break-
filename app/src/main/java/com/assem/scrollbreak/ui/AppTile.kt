@@ -46,6 +46,7 @@ import com.assem.scrollbreak.ui.theme.SbAccent
 fun appGlyph(app: String): Int? = when (app) {
     "browsers" -> R.drawable.ic_app_browser
     "facebook" -> R.drawable.ic_app_facebook
+    "messenger" -> R.drawable.ic_app_messenger
     "instagram" -> R.drawable.ic_app_instagram
     "snapchat" -> R.drawable.ic_app_snapchat
     "tiktok" -> R.drawable.ic_app_tiktok

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "app": "messenger",
+  "packages": ["com.facebook.orca"],
+
+  "playerSignature": {
+    "allOf": [
+      { "text": "facebook.com", "className": "android.view.ViewGroup" },
+      { "className": "android.webkit.WebView" }
+    ]
+  },
+
+  "allowSources": [
+    {
+      "name": "messenger_screen",
+      "signature": { "viewId": "android:id/content" }
+    }
+  ],
+
+  "scrollSignal": { "className": "android.view.View" },
+  "scrollMeasure": "scrollY"
+}

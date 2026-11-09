@@ -1,0 +1,23 @@
+=== WINDOW id=194 type=APPLICATION layer=0 pkg=com.facebook.orca title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+    [2] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=1
+        [4] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=3
+          [5] id=com.facebook.orca:id/(name removed) cls=android.widget.LinearLayout bounds=[0,108][1080,2277] children=1
+            [6] id=com.facebook.orca:id/(name removed) cls=android.widget.LinearLayout bounds=[0,108][1080,2277] children=2
+              [7] id=com.facebook.orca:id/(name removed) cls=android.view.View bounds=[0,108][1080,108] children=0 flags=invisible
+              [7] id=com.facebook.orca:id/(name removed) cls=android.widget.LinearLayout bounds=[0,108][1080,2277] children=2
+                [8] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,255] children=1
+                  [9] id=- cls=android.widget.LinearLayout bounds=[0,108][1080,255] children=1
+                    [10] id=- cls=android.view.ViewGroup bounds=[0,108][1080,255] children=5
+                      [11] id=- cls=android.widget.Button desc="Close" bounds=[32,139][116,223] children=0 flags=clickable
+                      [11] id=- cls=android.widget.Button desc="Secure connection" bounds=[367,129][430,192] children=0 flags=clickable
+                      [11] id=- cls=android.view.ViewGroup text="facebook.com" desc="facebook.com" bounds=[430,132][713,189] children=0
+                      [11] id=- cls=android.view.ViewGroup text="Messenger" desc="Messenger" bounds=[460,192][620,235] children=0
+                      [11] id=- cls=android.widget.Button desc="More options" bounds=[964,139][1048,223] children=0 flags=clickable
+                [8] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,255][1080,2277] children=1
+                  [9] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,255][1080,2277] children=1
+                    [10] id=- cls=android.webkit.WebView bounds=[0,255][1080,2277] children=0 flags=clickable,focused
+          [5] id=- cls=android.widget.LinearLayout bounds=[0,2277][1080,2277] children=0 flags=invisible
+          [5] id=- cls=android.widget.LinearLayout bounds=[0,2277][1080,2277] children=0 flags=invisible

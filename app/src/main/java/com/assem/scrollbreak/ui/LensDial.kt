@@ -7,7 +7,18 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.ui.res.painterResource
+import com.assem.scrollbreak.R
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -56,6 +67,8 @@ fun LensDial(
     label: String,
     onChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
+    /** When set, tapping the number opens a way to type a value (the dial itself stays as it is). */
+    onLabelClick: (() -> Unit)? = null,
 ) {
     val buzz = rememberBuzz()
     val spacing = with(LocalDensity.current) { 12.dp.toPx() }
@@ -91,7 +104,28 @@ fun LensDial(
     val tickLabelStyle = MaterialTheme.typography.labelSmall
 
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = SbAccent)
+        if (onLabelClick == null) {
+            Text(label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = SbAccent)
+        } else {
+            // Outlined and with a pencil, so it reads as a field you can type into.
+            Row(
+                Modifier
+                    .clip(RoundedCornerShape(14.dp))
+                    .border(1.5.dp, SbAccent.copy(alpha = 0.7f), RoundedCornerShape(14.dp))
+                    .clickable { buzz(Buzz.CLICK); onLabelClick() }
+                    .padding(start = 16.dp, end = 12.dp, top = 6.dp, bottom = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(label, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = SbAccent)
+                Icon(
+                    painterResource(R.drawable.ic_edit),
+                    contentDescription = "Type a value",
+                    tint = SbAccent,
+                    modifier = Modifier.size(18.dp),
+                )
+            }
+        }
         Canvas(
             Modifier
                 .fillMaxWidth()
@@ -144,7 +178,8 @@ fun LensDial(
                     )
                 }
             }
-            // Fixed pointer: a small notch and a line through the ruler.
+            // Fixed pointer: a small notch and a line through the ruler. It stops where the major
+            // ticks end, so it never covers the number printed under the ruler.
             val notch = Path().apply {
                 moveTo(cx - 6.dp.toPx(), 0f)
                 lineTo(cx + 6.dp.toPx(), 0f)
@@ -152,7 +187,7 @@ fun LensDial(
                 close()
             }
             drawPath(notch, SbAccent)
-            drawLine(SbAccent, Offset(cx, 0f), Offset(cx, baseY + 30.dp.toPx()), strokeWidth = 3.dp.toPx(), cap = StrokeCap.Round)
+            drawLine(SbAccent, Offset(cx, 0f), Offset(cx, baseY + 22.dp.toPx()), strokeWidth = 3.dp.toPx(), cap = StrokeCap.Round)
         }
     }
 }

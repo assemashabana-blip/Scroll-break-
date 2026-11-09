@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "app": "uninstall_guard",
+  "purpose": "friction",
+  "packages": ["com.google.android.packageinstaller", "com.android.packageinstaller"],
+
+  "lockSignature": {
+    "allOf": [
+      { "viewId": "com.android.packageinstaller:id/alertTitle" },
+      { "viewId": "com.android.packageinstaller:id/app_label", "text": "ScrollBreak", "match": "equals" }
+    ]
+  }
+}

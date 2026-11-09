@@ -1,0 +1,60 @@
+=== WINDOW id=58 type=APPLICATION layer=0 pkg=com.android.settings title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.LinearLayout bounds=[0,0][1080,2340] children=1
+    [2] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+      [3] id=- cls=androidx.compose.ui.platform.ComposeView bounds=[0,0][1080,2340] children=1
+        [4] id=- cls=android.view.View bounds=[0,0][1080,2340] children=1
+          [5] id=- cls=android.view.View bounds=[0,0][1080,2340] children=1
+            [6] id=- cls=android.view.View bounds=[0,0][1080,2340] children=2
+              [7] id=- cls=android.widget.ScrollView bounds=[0,0][1080,2340] children=9 flags=scrollable
+                [8] id=- cls=android.view.View bounds=[446,297][635,486] children=1
+                  [9] id=- cls=android.view.View bounds=[446,297][635,486] children=0
+                [8] id=- cls=android.widget.TextView text="ScrollBreak" bounds=[393,528][688,601] children=0
+                [8] id=- cls=android.view.View bounds=[42,675][374,885] children=3 flags=clickable,disabled
+                  [9] id=- cls=android.view.View bounds=[114,675][303,822] children=0
+                  [9] id=- cls=android.widget.TextView text="Archive" bounds=[137,838][280,885] children=0
+                  [9] id=- cls=android.widget.Button bounds=[42,675][374,885] children=0
+                [8] id=- cls=android.view.View bounds=[374,675][706,885] children=3 flags=clickable
+                  [9] id=- cls=android.view.View bounds=[446,675][635,822] children=0
+                  [9] id=- cls=android.widget.TextView text="Uninstall" bounds=[458,838][622,885] children=0
+                  [9] id=- cls=android.widget.Button bounds=[374,675][706,885] children=0
+                [8] id=- cls=android.view.View bounds=[706,675][1038,885] children=3 flags=clickable
+                  [9] id=- cls=android.view.View bounds=[778,675][967,822] children=0
+                  [9] id=- cls=android.widget.TextView text="Force stop" bounds=[773,838][971,885] children=0
+                  [9] id=- cls=android.widget.Button bounds=[706,675][1038,885] children=0
+                [8] id=- cls=android.view.View bounds=[42,938][1038,2291] children=7
+                  [9] id=- cls=android.view.View bounds=[42,938][1038,1127] children=2 flags=clickable
+                    [10] id=- cls=android.widget.TextView text="Notifications" bounds=[84,983][343,1036] children=0
+                    [10] id=- cls=android.widget.TextView text="h_fb4abd" bounds=[84,1041][592,1088] children=0
+                  [9] id=- cls=android.view.View bounds=[42,1132][1038,1321] children=2 flags=clickable
+                    [10] id=- cls=android.widget.TextView text="Permissions" bounds=[84,1177][328,1230] children=0
+                    [10] id=- cls=android.widget.TextView text="Notifications" bounds=[84,1235][295,1282] children=0
+                  [9] id=- cls=android.view.View bounds=[42,1326][1038,1515] children=2 flags=clickable
+                    [10] id=- cls=android.widget.TextView text="h_649294" bounds=[84,1371][412,1424] children=0
+                    [10] id=- cls=android.widget.TextView text="h_d9280b" bounds=[84,1429][628,1476] children=0
+                  [9] id=- cls=android.view.View bounds=[42,1520][1038,1709] children=2 flags=clickable
+                    [10] id=- cls=android.widget.TextView text="h_264bcd" bounds=[84,1565][455,1618] children=0
+                    [10] id=- cls=android.widget.TextView text="h_ca0656" bounds=[84,1623][307,1670] children=0
+                  [9] id=- cls=android.view.View bounds=[42,1714][1038,1903] children=2 flags=clickable
+                    [10] id=- cls=android.widget.TextView text="h_c81f3c" bounds=[84,1759][327,1812] children=0
+                    [10] id=- cls=android.widget.TextView text="h_089406" bounds=[84,1817][350,1864] children=0
+                  [9] id=- cls=android.view.View bounds=[42,1908][1038,2097] children=2 flags=clickable
+                    [10] id=- cls=android.widget.TextView text="h_ef7052" bounds=[84,1953][459,2006] children=0
+                    [10] id=- cls=android.widget.TextView text="h_a969bc" bounds=[84,2011][682,2058] children=0
+                  [9] id=- cls=android.view.View bounds=[42,2102][1038,2291] children=2 flags=clickable
+                    [10] id=- cls=android.widget.TextView text="h_63a8ba" bounds=[84,2147][413,2200] children=0
+                    [10] id=- cls=android.widget.TextView text="h_812233" bounds=[84,2205][651,2252] children=0
+                [8] id=- cls=android.view.View bounds=[0,2249][1080,2340] children=0
+                [8] id=- cls=android.view.View bounds=[0,2249][1080,2340] children=0
+                [8] id=- cls=android.widget.TextView text="h_6d5126" bounds=[42,2333][460,2340] children=0
+              [7] id=- cls=android.view.View bounds=[0,0][1080,255] children=2
+                [8] id=- cls=android.view.View bounds=[0,108][1080,255] children=3
+                  [9] id=- cls=android.view.View bounds=[54,119][180,245] children=2 flags=clickable
+                    [10] id=- cls=android.view.View desc="h_c8f852" bounds=[85,150][148,213] children=0
+                    [10] id=- cls=android.widget.Button bounds=[64,129][169,234] children=0
+                  [9] id=- cls=android.view.View bounds=[190,118][488,244] children=1
+                    [10] id=- cls=android.widget.TextView text="h_64dec0" bounds=[222,144][446,218] children=0
+                  [9] id=- cls=android.view.View bounds=[944,119][1070,245] children=2 flags=clickable
+                    [10] id=- cls=android.view.View desc="h_cf9b77" bounds=[975,150][1038,213] children=0
+                    [10] id=- cls=android.widget.Button bounds=[954,129][1059,234] children=0
+                [8] id=- cls=android.view.View bounds=[0,192][1080,318] children=0

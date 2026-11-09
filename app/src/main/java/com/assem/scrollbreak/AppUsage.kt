@@ -74,6 +74,47 @@ object AppUsage {
     }
 
     /**
+     * How long [pkg] has been on screen since midnight, including a session that is still open.
+     * 0 without Usage access. Call off the main thread; reads only today's events.
+     */
+    fun todayMs(context: Context, pkg: String, now: Long = System.currentTimeMillis()): Long {
+        if (!hasAccess(context)) return 0L
+        val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val from = BlockStats.startOfDay(now, TimeZone.getDefault(), 0)
+        val list = ArrayList<UsageTime.Event>()
+        val raw = usm.queryEvents(from, now)
+        val e = UsageEvents.Event()
+        while (raw.hasNextEvent()) {
+            raw.getNextEvent(e)
+            when (e.eventType) {
+                1 -> list += UsageTime.Event(e.packageName, true, e.timeStamp)
+                2 -> list += UsageTime.Event(e.packageName, false, e.timeStamp)
+                SCREEN_NON_INTERACTIVE -> list += UsageTime.Event(null, false, e.timeStamp)
+            }
+        }
+        return UsageTime.summarize(list, { if (it == pkg) pkg else null }, now).todayByApp[pkg] ?: 0L
+    }
+
+    /** One app a limit can be set on: its package and the name the phone shows. */
+    class LaunchableApp(val pkg: String, val label: String)
+
+    /**
+     * Every app on the home screen except launchers, ScrollBreak itself and Settings (a limit on
+     * Settings would lock the user out of their own phone). Sorted by name. Call off the main thread.
+     */
+    fun launchableApps(context: Context): List<LaunchableApp> {
+        val pm = context.packageManager
+        val homes = pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0)
+            .map { it.activityInfo.packageName }.toSet()
+        val never = homes + context.packageName + "com.android.settings" + "com.android.systemui"
+        return pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0)
+            .filter { it.activityInfo.packageName !in never }
+            .distinctBy { it.activityInfo.packageName }
+            .map { LaunchableApp(it.activityInfo.packageName, it.activityInfo.applicationInfo.loadLabel(pm).toString()) }
+            .sortedBy { it.label.lowercase() }
+    }
+
+    /**
      * The last result, saved by [summarize], so Home can show the card on its very first frame
      * while a fresh one is read (that read takes about half a second). A copy from an earlier day
      * is moved along by the days in between, so "today" never shows yesterday's time. Small

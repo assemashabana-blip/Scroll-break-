@@ -44,9 +44,6 @@ private val friendLabels = linkedMapOf(
 
 @Composable
 fun SettingsScreen(
-    adminActive: Boolean,
-    onEnableAdmin: () -> Unit,
-    onOpenAdminSettings: () -> Unit,
     setupLeft: Int,
     onNavigate: (String) -> Unit,
     /** The theme on screen now, and whether it follows the phone's own setting. */
@@ -65,6 +62,8 @@ fun SettingsScreen(
     var friends by remember { mutableStateOf(AppSettings.friendApps) }
     var haptics by remember { mutableStateOf(AppSettings.hapticsEnabled) }
     val buzz = rememberBuzz()
+    val lockRemaining by rememberLockRemaining()
+    val locked = lockRemaining > 0
     // Not state: only read when the switch is tapped, so moving it (scrolling) recomposes nothing.
     val track = remember { arrayOf(Rect.Zero) }
 
@@ -98,6 +97,18 @@ fun SettingsScreen(
             }
         }
 
+        if (locked) {
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text("Locked", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        "The timer on Home is running (${com.assem.scrollbreak.core.LockTimer.format(lockRemaining)} left). The tuning settings and friend apps cannot be changed until it ends.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        } else {
         SliderCard(
             title = "Friend-link window",
             valueLabel = "${allow.toInt()} s",
@@ -147,6 +158,8 @@ fun SettingsScreen(
             }
         }
 
+        }
+
         Card(Modifier.fillMaxWidth()) {
             Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -169,22 +182,10 @@ fun SettingsScreen(
             }
         }
 
-        Card(Modifier.fillMaxWidth()) {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Uninstall protection", style = MaterialTheme.typography.titleMedium)
-                Text(
-                    if (adminActive) "On. Android will not uninstall ScrollBreak until you switch this off first."
-                    else "Off. Turning it on adds one extra step before ScrollBreak can be uninstalled. It grants no other power.",
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                if (adminActive) {
-                    OutlinedButton(onClick = onOpenAdminSettings) { Text("Open device-admin settings") }
-                } else {
-                    Button(onClick = onEnableAdmin) { Text("Turn on") }
-                }
-            }
-        }
+        // Stays visible while locked: it is the way out of a lock.
+        EmergencyCard()
 
+        if (!locked) {
         OutlinedButton(
             onClick = {
                 AppSettings.resetTuning()
@@ -195,6 +196,7 @@ fun SettingsScreen(
             },
             modifier = Modifier.fillMaxWidth(),
         ) { Text("Reset these settings to defaults") }
+        }
 
         // Tools for writing and checking detection rules. A shipped (release) build hides them.
         if (showDeveloperTools) {

@@ -1,0 +1,104 @@
+=== WINDOW id=207 type=APPLICATION layer=0 pkg=com.facebook.orca title="" active=true focused=true pip=false ===
+[0] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+  [1] id=- cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=1
+    [2] id=android:id/content cls=android.widget.FrameLayout bounds=[0,0][1080,2340] children=3
+      [3] id=com.facebook.orca:id/(name removed) cls=android.view.View bounds=[0,0][1080,108] children=0 flags=invisible
+      [3] id=- cls=android.widget.LinearLayout bounds=[0,108][1080,2277] children=2
+        [4] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,108] children=1 flags=invisible
+          [5] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,108] children=1 flags=invisible
+            [6] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,108] children=0 flags=invisible
+        [4] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=6
+          [5] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=0
+          [5] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=0
+          [5] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=0
+          [5] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=0
+          [5] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=1
+            [6] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=2 flags=clickable
+              [7] id=- cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=0
+              [7] id=com.facebook.orca:id/(name removed) cls=android.widget.LinearLayout bounds=[0,108][1080,2277] children=3
+                [8] id=com.facebook.orca:id/(name removed) cls=android.view.ViewGroup bounds=[0,108][1080,255] children=5 flags=clickable
+                  [9] id=- cls=android.widget.Button desc="Back" bounds=[11,119][137,245] children=0 flags=clickable
+                  [9] id=- cls=android.widget.Button desc="h_324572" bounds=[148,119][559,245] children=3 flags=clickable,longClickable
+                    [10] id=- cls=android.view.View bounds=[148,135][243,230] children=1
+                      [11] id=- cls=android.view.View bounds=[148,135][243,230] children=0
+                    [10] id=- cls=android.view.ViewGroup text="h_c5dc4a" desc="h_c5dc4a" bounds=[275,132][524,189] children=0
+                    [10] id=- cls=android.view.ViewGroup bounds=[275,189][559,232] children=1
+                      [11] id=- cls=android.view.ViewGroup text="h_4ea7cf" desc="h_4ea7cf" bounds=[275,189][559,232] children=0
+                  [9] id=- cls=android.view.ViewGroup bounds=[691,119][817,245] children=1
+                    [10] id=- cls=android.widget.Button desc="Audio call" bounds=[691,119][817,245] children=0 flags=clickable
+                  [9] id=- cls=android.view.ViewGroup bounds=[817,119][943,245] children=1
+                    [10] id=- cls=android.widget.Button desc="Video call" bounds=[817,119][943,245] children=0 flags=clickable,longClickable
+                  [9] id=- cls=android.widget.Button desc="Thread details" bounds=[943,119][1069,245] children=0 flags=clickable
+                [8] id=- cls=android.widget.FrameLayout bounds=[0,255][1080,255] children=0 flags=invisible
+                [8] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,255][1080,2277] children=1
+                  [9] id=com.facebook.orca:id/(name removed) cls=android.widget.LinearLayout bounds=[0,255][1080,2277] children=2
+                    [10] id=com.facebook.orca:id/(name removed) cls=android.view.ViewGroup bounds=[0,255][1080,2113] children=3
+                      [11] id=- cls=android.view.ViewGroup bounds=[0,255][1080,255] children=0 flags=invisible
+                      [11] id=- cls=android.view.View bounds=[0,255][1080,2113] children=0
+                      [11] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,255][1080,2113] children=2
+                        [12] id=com.facebook.orca:id/(name removed) cls=android.view.ViewGroup bounds=[0,255][1080,2113] children=0
+                        [12] id=com.facebook.orca:id/(name removed) cls=android.view.ViewGroup bounds=[0,255][1080,2113] children=2
+                          [13] id=- cls=android.view.ViewGroup bounds=[0,255][1080,2113] children=1
+                            [14] id=com.facebook.orca:id/(name removed) cls=android.view.ViewGroup bounds=[0,255][1080,2113] children=1 flags=disabled
+                              [15] id=- cls=android.view.View bounds=[0,255][1080,2113] children=4
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,255][1080,1000] children=1
+                                  [17] id=- cls=android.view.ViewGroup bounds=[0,255][1080,1000] children=4
+                                    [18] id=- cls=android.view.ViewGroup bounds=[138,255][590,953] children=1 flags=longClickable
+                                      [19] id=- cls=android.view.ViewGroup bounds=[138,255][590,953] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.Button bounds=[138,255][590,953] children=1 flags=clickable
+                                          [21] id=- cls=android.view.ViewGroup bounds=[138,255][590,953] children=3
+                                            [22] id=- cls=android.view.ViewGroup bounds=[138,255][590,953] children=1
+                                              [23] id=- cls=android.view.ViewGroup bounds=[138,255][590,953] children=1
+                                                [24] id=- cls=android.view.ViewGroup bounds=[138,255][590,953] children=2
+                                                  [25] id=- cls=android.widget.ImageView bounds=[138,255][590,953] children=0
+                                                  [25] id=- cls=android.view.ViewGroup bounds=[138,255][590,953] children=0
+                                            [22] id=- cls=android.view.ViewGroup bounds=[138,255][590,275] children=0
+                                            [22] id=- cls=android.view.ViewGroup bounds=[138,841][590,953] children=1
+                                              [23] id=- cls=android.view.ViewGroup bounds=[138,873][590,927] children=2
+                                                [24] id=- cls=android.widget.ImageView bounds=[164,885][206,927] children=0
+                                                [24] id=- cls=android.view.ViewGroup text="h_b858cb" desc="h_b858cb" bounds=[211,884][219,927] children=0
+                                    [18] id=- cls=android.widget.ImageView desc="h_508996" bounds=[622,503][717,598] children=0 flags=clickable
+                                    [18] id=- cls=android.widget.ImageView desc="h_454f02" bounds=[32,879][106,953] children=1 flags=clickable
+                                      [19] id=- cls=android.view.View bounds=[32,879][106,953] children=0
+                                    [18] id=- cls=android.widget.ImageView desc="h_01122b" bounds=[985,958][1027,1000] children=0
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,1005][1080,2091] children=3
+                                  [17] id=- cls=android.view.ViewGroup text="h_a76959" desc="h_a76959" bounds=[411,1079][669,1122] children=0
+                                  [17] id=- cls=android.view.ViewGroup text="h_39102a" desc="h_39102a" bounds=[400,1164][679,1207] children=0
+                                  [17] id=- cls=android.view.ViewGroup bounds=[0,1233][1080,2091] children=4
+                                    [18] id=- cls=android.view.ViewGroup bounds=[138,1233][590,2091] children=1 flags=longClickable
+                                      [19] id=- cls=android.view.ViewGroup bounds=[138,1233][590,2038] children=1 flags=clickable
+                                        [20] id=- cls=android.widget.Button bounds=[138,1233][590,2038] children=1 flags=clickable
+                                          [21] id=- cls=android.view.ViewGroup bounds=[138,1233][590,2038] children=3
+                                            [22] id=- cls=android.view.ViewGroup bounds=[138,1233][590,2038] children=1
+                                              [23] id=- cls=android.view.ViewGroup bounds=[138,1233][590,2038] children=1
+                                                [24] id=- cls=android.view.ViewGroup bounds=[138,1233][590,2038] children=2
+                                                  [25] id=- cls=android.widget.ImageView bounds=[138,1233][590,2038] children=0
+                                                  [25] id=- cls=android.view.ViewGroup bounds=[138,1233][590,2038] children=0
+                                            [22] id=- cls=android.view.ViewGroup bounds=[138,1233][590,1360] children=1
+                                              [23] id=- cls=android.view.ViewGroup bounds=[170,1265][558,1328] children=2
+                                                [24] id=- cls=android.view.View bounds=[170,1265][233,1328] children=1
+                                                  [25] id=- cls=android.view.View bounds=[170,1265][233,1328] children=0
+                                                [24] id=- cls=android.view.ViewGroup text="h_30d0a9" desc="h_30d0a9" bounds=[249,1275][436,1318] children=0
+                                            [22] id=- cls=android.view.ViewGroup bounds=[138,1926][590,2038] children=1
+                                              [23] id=- cls=android.view.ViewGroup bounds=[138,1958][590,2012] children=2
+                                                [24] id=- cls=android.widget.ImageView bounds=[164,1970][206,2012] children=0
+                                                [24] id=- cls=android.view.ViewGroup text="h_b858cb" desc="h_b858cb" bounds=[211,1969][219,2012] children=0
+                                    [18] id=- cls=android.widget.ImageView desc="h_a5147f" bounds=[622,1588][717,1683] children=0 flags=clickable
+                                    [18] id=- cls=android.widget.ImageView desc="h_454f02" bounds=[32,1964][106,2038] children=1 flags=clickable
+                                      [19] id=- cls=android.view.View bounds=[32,1964][106,2038] children=0
+                                    [18] id=- cls=android.widget.Button desc="h_f2c204" bounds=[495,2022][590,2083] children=0 flags=clickable
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,2096][1080,2107] children=0
+                                [16] id=- cls=android.view.ViewGroup bounds=[0,2112][1080,2113] children=0
+                          [13] id=- cls=android.view.ViewGroup bounds=[0,1808][1080,2113] children=0 flags=invisible
+                    [10] id=com.facebook.orca:id/(name removed) cls=android.view.ViewGroup bounds=[0,2113][1080,2277] children=6
+                      [11] id=- cls=android.widget.Button desc="h_5eeeaf" bounds=[0,2115][106,2277] children=0 flags=clickable
+                      [11] id=- cls=android.widget.Button desc="h_d66fda" bounds=[106,2115][212,2277] children=0 flags=clickable,longClickable
+                      [11] id=- cls=android.widget.Button desc="h_a240ce" bounds=[212,2115][318,2277] children=0 flags=clickable,longClickable
+                      [11] id=- cls=android.widget.Button desc="h_3d9a23" bounds=[318,2115][424,2277] children=0 flags=clickable,longClickable
+                      [11] id=- cls=android.view.ViewGroup bounds=[424,2137][964,2253] children=2
+                        [12] id=- cls=android.widget.EditText text="Message" desc="h_95f90d" bounds=[424,2137][864,2253] children=0 flags=clickable,longClickable,editable
+                        [12] id=- cls=android.widget.Button desc="h_9ca346" bounds=[864,2145][964,2245] children=0 flags=clickable
+                      [11] id=- cls=android.view.ViewGroup bounds=[964,2115][1080,2277] children=1
+                        [12] id=- cls=android.widget.Button desc="h_ca665c" bounds=[964,2115][1080,2277] children=0 flags=clickable
+          [5] id=com.facebook.orca:id/(name removed) cls=android.widget.FrameLayout bounds=[0,108][1080,2277] children=0
+      [3] id=com.facebook.orca:id/(name removed) cls=android.view.View bounds=[0,2277][1080,2340] children=0
